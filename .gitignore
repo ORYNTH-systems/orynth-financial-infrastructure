@@ -1,0 +1,36 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Build / generated
+build/
+dist/
+*.egg-info/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local temporary material
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+
+# Generated verification output
+coverage/
+htmlcov/
+
+# Do not silently ingest external historical source packages
+_external/
+_recovery/
