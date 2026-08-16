@@ -1,0 +1,7 @@
+﻿"runtime_surface","formal_surface","claim_scope"
+"types.py","F1 typed state/effect/remediation classes","Definitions"
+"effect_engine.py","Partial-effect model and classification precedence","F1-LEM-001; F1-SAF-001; F1-SAF-002"
+"residual_engine.py","Typed residual divergence","F1-THM-009"
+"remediation_engine.py","Compensation / reversal / recursive remediation","F1-THM-001; F1-THM-002; F1-THM-003; F1-THM-004; F1-THM-007; F1-LEM-002; F1-THM-010"
+"reconciliation_engine.py","Reconciliation / equivalence / continuity","F1-THM-005; F1-THM-006; F1-THM-008; F1-THM-009; F1-SAF-003"
+"test_f1_reference_runtime.py","Executable examples and countermodels","All 9 counterexample obligations"

@@ -1,0 +1,6 @@
+﻿"rule_id","condition","global_class"
+"F1-ECLASS-001","All required dimensions NO_EFFECT and evidence sufficient","E_NO_EFFECT"
+"F1-ECLASS-002","All required dimensions FULL_MATCH","E_COMPLETED"
+"F1-ECLASS-003","At least one intended-corresponding effect plus at least one NO_EFFECT/PARTIAL_MATCH and no dominant contradiction","E_PARTIAL"
+"F1-ECLASS-004","Any CONTRADICTORY_EFFECT or OVER_EFFECT combined with other observed effects","E_MIXED"
+"F1-ECLASS-005","Material required dimension INDETERMINATE and safe classification unavailable","E_INDETERMINATE"

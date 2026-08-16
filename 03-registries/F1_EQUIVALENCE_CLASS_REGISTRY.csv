@@ -1,0 +1,4 @@
+﻿"equivalence_id","name","requires_projection","implies_history_equivalence"
+"F1-EQ-001","PROJECTED_ECONOMIC_EQUIVALENCE","YES","NO"
+"F1-EQ-002","FULL_CURRENT_STATE_EQUIVALENCE","NO","NO"
+"F1-EQ-003","HISTORICAL_EQUIVALENCE","NO","YES"

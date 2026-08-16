@@ -1,0 +1,2 @@
+﻿"recovery_id","subject","recovered_path","exists","canonical_owner","ownership_status","note"
+"FIN-RECOVERY-001","Banking Reasoning Lab","C:\Users\18177\cigcs-reference-lab\sgc-constitutional-paper\simulation-integrity-lab\healthcare-reasoning-lab\banking-reasoning-lab","True","ORYNTH-systems/banking-reasoning-lab","NON-CANONICAL RECOVERED COPY","Recovered nested copy does not supersede standalone private GitHub repository ownership."

@@ -1,0 +1,4 @@
+﻿"class_id","name","residual_may_remain","history_must_be_explainable"
+"F1-RECON-001","RECONCILED","YES","YES"
+"F1-RECON-002","DIVERGENT","YES","YES_OR_PARTIAL"
+"F1-RECON-003","INDETERMINATE","UNKNOWN","NO"

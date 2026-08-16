@@ -4,6 +4,6 @@
 "FIN-DEP-003","AOMS","Current-state reconciliation","State-transition and orchestration surfaces","aoms-reference-runtime","NO"
 "FIN-DEP-004","Proof-of-Block","Governed refusal and evidence semantics","Financial denial and post-effect evidence profiles","proof-of-block","NO"
 "FIN-DEP-005","UES","Exchange and pre-effect settlement governance","F1-F3 foundational settlement layer","UES recovered canonical artifact package","NO"
-"FIN-DEP-006","Banking Reasoning Lab","Historical banking financial-state machinery","Domain correspondence / candidate promotion","UNRESOLVED","NO"
+"FIN-DEP-006","Banking Reasoning Lab","Canonical banking-domain financial object/state/reasoning and execution research surface","Inherited banking-domain substrate; candidate primitives require explicit reconciliation before promotion","ORYNTH-systems/banking-reasoning-lab","NO"
 "FIN-DEP-007","Morning Star Finance","Constitutional financial governance specialization","Cross-architecture correspondence","morning-star","NO"
 "FIN-DEP-008","DEI","Financially consequential execution-integrity formalization","Direct parent publication of F1-F8","DEI publication / settlement-demo reference surface","NO"

@@ -1,0 +1,47 @@
+﻿[
+  {
+    "counterexample_id": "F1-CE-001",
+    "claim_id": "F1-THM-001",
+    "description": "Compensation required while admission denied"
+  },
+  {
+    "counterexample_id": "F1-CE-002",
+    "claim_id": "F1-THM-002",
+    "description": "Reversal required while admission denied"
+  },
+  {
+    "counterexample_id": "F1-CE-003",
+    "claim_id": "F1-THM-003",
+    "description": "Exact compensation with non-equivalent history"
+  },
+  {
+    "counterexample_id": "F1-CE-004",
+    "claim_id": "F1-THM-004",
+    "description": "Exact reversal with non-equivalent history"
+  },
+  {
+    "counterexample_id": "F1-CE-005",
+    "claim_id": "F1-THM-005",
+    "description": "Reconciled execution history with broken continuity"
+  },
+  {
+    "counterexample_id": "F1-CE-006",
+    "claim_id": "F1-THM-006",
+    "description": "Function restored after demonstrated continuity break"
+  },
+  {
+    "counterexample_id": "F1-CE-007",
+    "claim_id": "F1-LEM-002",
+    "description": "Parent remediation admitted while child admission absent"
+  },
+  {
+    "counterexample_id": "F1-CE-008",
+    "claim_id": "F1-THM-008",
+    "description": "Equal projected economic state with distinct histories"
+  },
+  {
+    "counterexample_id": "F1-CE-009",
+    "claim_id": "F1-THM-009",
+    "description": "Residual resolved after historical continuity break"
+  }
+]

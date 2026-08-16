@@ -1,0 +1,7 @@
+﻿"outcome_id","name","precedence"
+"F1-DO-001","NO_EFFECT","4"
+"F1-DO-002","PARTIAL_MATCH","5"
+"F1-DO-003","FULL_MATCH","3"
+"F1-DO-004","OVER_EFFECT","2"
+"F1-DO-005","CONTRADICTORY_EFFECT","2"
+"F1-DO-006","INDETERMINATE","1"

@@ -1,0 +1,6 @@
+﻿"edge_type_id","name","source_type","target_type"
+"F1-EDGE-001","COMPENSATES","ExecutionEvent","ExecutionEvent"
+"F1-EDGE-002","REVERSES","ExecutionEvent","ExecutionEvent"
+"F1-EDGE-003","RECONCILES_EFFECT_OF","ReconciliationRecord","ExecutionEvent"
+"F1-EDGE-004","CONTAINS_AFTER","ContainmentRecord","ExecutionEvent"
+"F1-EDGE-005","REMEDIATES","ExecutionEvent","ExecutionEvent"

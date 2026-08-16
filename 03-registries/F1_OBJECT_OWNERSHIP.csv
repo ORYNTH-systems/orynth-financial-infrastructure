@@ -1,0 +1,8 @@
+﻿"object_id","object_name","f1_ownership","source_owner","status"
+"FIN-OBJ-013","SettlementObject","INHERITED_AND_EXTENDED","financial-infrastructure","BOUNDARY_DEFINED"
+"FIN-OBJ-014","EconomicState","INHERITED_AND_EXTENDED","financial-infrastructure","BOUNDARY_DEFINED"
+"FIN-OBJ-019","EconomicEffect","F1_PRIMARY","financial-infrastructure","BOUNDARY_DEFINED"
+"FIN-OBJ-020","PartialEffect","F1_PRIMARY","financial-infrastructure","BOUNDARY_DEFINED"
+"FIN-OBJ-021","CompensationInstruction","F1_PRIMARY","financial-infrastructure","BOUNDARY_DEFINED"
+"FIN-OBJ-022","ReversalInstruction","F1_PRIMARY","financial-infrastructure","BOUNDARY_DEFINED"
+"FIN-OBJ-023","EvidenceObject","INHERITED_PROFILE","financial-infrastructure","BOUNDARY_DEFINED"

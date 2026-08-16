@@ -1,0 +1,7 @@
+﻿"mode_id","name","formal_condition","example"
+"F1-PART-001","PARTIAL_QUANTITY","0_i < O_i < I_i on a valid ordered quantitative dimension","60 of intended 100 units transferred"
+"F1-PART-002","PARTIAL_PARTY_COVERAGE","Observed affected-party set is a non-empty proper subset of intended party set","2 of 3 intended counterparties updated"
+"F1-PART-003","PARTIAL_OBLIGATION_DISCHARGE","At least one but not all required obligations reach intended state","principal obligation discharged but fee obligation remains open"
+"F1-PART-004","PARTIAL_STATE_PROPAGATION","Observed consequential mutation graph is a proper subgraph of intended propagation graph","internal ledger updated but downstream settlement state not propagated"
+"F1-PART-005","PARTIAL_RESOURCE_COVERAGE","At least one but not all intended financial resources receive the intended mutation","one account updated while another required account remains unchanged"
+"F1-PART-006","MIXED_OR_CONTRADICTORY","Intended-corresponding and contradictory/over-effect dimensions coexist","cash moved correctly but ownership registered to wrong party"

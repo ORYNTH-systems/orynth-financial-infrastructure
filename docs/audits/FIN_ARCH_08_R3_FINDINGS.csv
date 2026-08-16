@@ -1,0 +1,4 @@
+﻿"check_id","severity","subject","finding"
+"R3-BANK-003","ERROR","BANKING_LAB_BINDING.md","Banking binding does not preserve canonical-owner and non-canonical-copy distinction."
+"R3-WARN-001","WARNING","Runtime boundary completeness","Full proof that every consequential runtime mutation traverses FI-CORE-004 remains deferred until executable runtime implementation exists."
+"R3-WARN-002","WARNING","Independent evidence verifier","Independent verification of FI-EVD-001 output remains deferred to the verification architecture."
