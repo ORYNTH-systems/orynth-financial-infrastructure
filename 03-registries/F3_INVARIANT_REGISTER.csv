@@ -1,0 +1,29 @@
+﻿Invariant_ID,Family,Invariant,Status
+F3-INV-001,FIN-FIN,Execution alone cannot establish finality,OPEN
+F3-INV-002,FIN-FIN,Effect occurrence alone cannot establish obligation satisfaction,OPEN
+F3-INV-003,FIN-FIN,Obligation satisfaction alone cannot establish custody validity,OPEN
+F3-INV-004,FIN-FIN,Custody possession cannot establish custody authority,OPEN
+F3-INV-005,FIN-FIN,Custody possession cannot establish finality,OPEN
+F3-INV-006,FIN-FIN,Custody transfer occurrence cannot establish custody transfer completion,OPEN
+F3-INV-007,FIN-FIN,Atomic completion cannot establish finality,OPEN
+F3-INV-008,FIN-FIN,Consensus cannot establish finality,OPEN
+F3-INV-009,FIN-FIN,Reconciliation cannot establish finality,OPEN
+F3-INV-010,FIN-FIN,Balance equality cannot establish historical identity,OPEN
+F3-INV-011,FIN-FIN,Finality does not imply irreversibility,OPEN
+F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+F3-INV-014,FIN-FIN,Finality does not imply consequential closure,OPEN
+F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+F3-INV-017,FIN-FIN,Post-finality contradiction does not imply historical non-occurrence,OPEN
+F3-INV-018,FIN-FIN,Evidence of finality cannot create authority to declare finality,OPEN
+F3-INV-019,FIN-FIN,Current finality requires current applicable authority,OPEN
+F3-INV-020,FIN-FIN,Current finality requires valid applicable scope,OPEN
+F3-INV-021,FIN-FIN,Current finality requires sufficient admissible evidence,OPEN
+F3-INV-022,FIN-FIN,Current finality is blocked by unresolved applicable finality conflict,OPEN
+F3-INV-023,FIN-FIN,Current finality is blocked by unresolved obligation residual where satisfaction is required,OPEN
+F3-INV-024,FIN-FIN,Current finality is blocked by invalid required custody state,OPEN
+F3-INV-025,FIN-FIN,Historical finality classification must survive later invalidation as historical evidence,OPEN
+F3-INV-026,FIN-FIN,Finality invalidation must not silently overwrite prior state history,OPEN
+F3-INV-027,FIN-FIN,Reopenability must be explicitly classified rather than inferred from closure alone,OPEN
+F3-INV-028,FIN-FIN,Closure witness records justification but cannot self-authorize closure,OPEN

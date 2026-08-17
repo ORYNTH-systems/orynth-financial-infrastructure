@@ -1,0 +1,15 @@
+﻿Object_ID,Object_Name,Owner,Status
+F3-O-001,Financial Obligation,F3,FORMALIZED
+F3-O-002,Obligation Performance,F3,FORMALIZED
+F3-O-003,Obligation Residual,F3,FORMALIZED
+F3-O-004,Custody State,F3,FORMALIZED
+F3-O-005,Custody Authority,F3,FORMALIZED
+F3-O-006,Custody Transfer,F3,FORMALIZED
+F3-O-007,Finality Requirement Set,F3,FORMALIZED
+F3-O-008,Finality Evidence Set,F3,FORMALIZED
+F3-O-009,Finality Classification,F3,FORMALIZED
+F3-O-010,Consequential Closure,F3,FORMALIZED
+F3-O-011,Reopenability State,F3,FORMALIZED
+F3-O-012,Finality Conflict,F3,FORMALIZED
+F3-O-013,Post-Finality Contradiction,F3,FORMALIZED
+F3-O-014,Closure Witness,F3,FORMALIZED

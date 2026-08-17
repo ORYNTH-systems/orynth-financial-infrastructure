@@ -1,0 +1,41 @@
+﻿PO_ID,Type,Statement,Status
+F3-PO-001,NON-EQUIV,Prove execution is insufficient for finality,OPEN
+F3-PO-002,NON-EQUIV,Prove effect occurrence is insufficient for obligation satisfaction,OPEN
+F3-PO-003,NON-EQUIV,Prove obligation satisfaction is insufficient for custody validity,OPEN
+F3-PO-004,NON-EQUIV,Prove custody possession is insufficient for custody authority,OPEN
+F3-PO-005,NON-EQUIV,Prove custody possession is insufficient for finality,OPEN
+F3-PO-006,NON-EQUIV,Prove custody transfer occurrence is insufficient for custody transfer completion,OPEN
+F3-PO-007,NON-EQUIV,Prove atomic completion is insufficient for finality,OPEN
+F3-PO-008,NON-EQUIV,Prove consensus is insufficient for finality,OPEN
+F3-PO-009,NON-EQUIV,Prove reconciliation is insufficient for finality,OPEN
+F3-PO-010,NON-EQUIV,Prove finality is insufficient for irreversibility,OPEN
+F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+F3-PO-013,NON-EQUIV,Prove finality is insufficient for consequential closure,OPEN
+F3-PO-014,SAFETY,Prove unresolved finality conflict blocks current finality,OPEN
+F3-PO-015,SAFETY,Prove invalid required custody state blocks current finality,OPEN
+F3-PO-016,SAFETY,Prove unresolved required obligation residual blocks current finality,OPEN
+F3-PO-017,SAFETY,Prove stale or invalid authority blocks current finality,OPEN
+F3-PO-018,SAFETY,Prove invalid scope blocks current finality,OPEN
+F3-PO-019,TRACEABILITY,Prove every current final classification has a reconstructable closure witness,OPEN
+F3-PO-020,TRACEABILITY,Prove closure witness cannot act as authority source,OPEN
+F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+F3-PO-022,HISTORY,Prove invalidation preserves prior classification history,OPEN
+F3-PO-023,HISTORY,Prove post-finality contradiction does not erase historical occurrence,OPEN
+F3-PO-024,TRANSITION,Prove closure transitions require eligibility rather than endpoint equality alone,OPEN
+F3-PO-025,TRANSITION,Prove reopened state requires explicit admissible transition,OPEN
+F3-PO-026,COUNTEREXAMPLE,Construct execution-complete but non-final state,OPEN
+F3-PO-027,COUNTEREXAMPLE,Construct consensus-complete but non-final state,OPEN
+F3-PO-028,COUNTEREXAMPLE,Construct atomic-complete but non-final state,OPEN
+F3-PO-029,COUNTEREXAMPLE,Construct reconciled but non-final state,OPEN
+F3-PO-030,COUNTEREXAMPLE,Construct custody-possession without custody authority,OPEN
+F3-PO-031,COUNTEREXAMPLE,Construct final but reversible state,OPEN
+F3-PO-032,COUNTEREXAMPLE,Construct final but continuity-not-preserved state,OPEN
+F3-PO-033,COUNTEREXAMPLE,Construct closed but validly reopenable state,OPEN
+F3-PO-034,COUNTEREXAMPLE,Construct historically final state later invalidated by contradiction,OPEN
+F3-PO-035,RUNTIME-CONF,Verify reference classifier rejects execution-only finality,OPEN
+F3-PO-036,RUNTIME-CONF,Verify reference classifier rejects consensus-only finality,OPEN
+F3-PO-037,RUNTIME-CONF,Verify reference classifier rejects custody-possession-only authority,OPEN
+F3-PO-038,RUNTIME-CONF,Verify reference classifier rejects unresolved-conflict finality,OPEN
+F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+F3-PO-040,RUNTIME-CONF,Verify reference classifier exposes post-finality contradiction explicitly,OPEN

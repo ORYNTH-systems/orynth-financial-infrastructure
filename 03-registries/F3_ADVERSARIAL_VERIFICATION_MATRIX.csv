@@ -1,0 +1,15 @@
+﻿Case_ID,Attack_Surface,Attempted_Collapse,Expected_Result,Status
+F3-ADV-001,Execution,execution==finality,BLOCK,REGISTERED
+F3-ADV-002,Consensus,consensus==finality,BLOCK,REGISTERED
+F3-ADV-003,Atomicity,atomic-complete==finality,BLOCK,REGISTERED
+F3-ADV-004,Reconciliation,reconciled==final,BLOCK,REGISTERED
+F3-ADV-005,Custody,custody-possession==custody-authority,BLOCK,REGISTERED
+F3-ADV-006,Custody,custody-possession==finality,BLOCK,REGISTERED
+F3-ADV-007,Obligation,execution-complete-with-residual==finality,BLOCK,REGISTERED
+F3-ADV-008,Authority,stale-authority==current-authority,BLOCK,REGISTERED
+F3-ADV-009,Scope,invalid-scope compensated-by-consensus,BLOCK,REGISTERED
+F3-ADV-010,Evidence,insufficient-evidence compensated-by-other-valid-factors,BLOCK,REGISTERED
+F3-ADV-011,Transition,endpoint-state==valid-transition,BLOCK,REGISTERED
+F3-ADV-012,NonVacuity,empty-requirements==finality,BLOCK,REGISTERED
+F3-ADV-013,History,reopening==historical-erasure,BLOCK,REGISTERED
+F3-ADV-014,Contradiction,post-finality-contradiction==historical-nonoccurrence,BLOCK,REGISTERED

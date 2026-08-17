@@ -1,0 +1,19 @@
+﻿Relation_ID,Left_Side,Right_Side,Status
+F3-NE-001,execution,finality,REQUIRED
+F3-NE-002,effect occurrence,obligation satisfaction,REQUIRED
+F3-NE-003,obligation satisfaction,custody validity,REQUIRED
+F3-NE-004,custody possession,custody authority,REQUIRED
+F3-NE-005,custody possession,finality,REQUIRED
+F3-NE-006,custody transfer occurrence,custody transfer completion,REQUIRED
+F3-NE-007,atomic completion,finality,REQUIRED
+F3-NE-008,consensus,finality,REQUIRED
+F3-NE-009,reconciliation,finality,REQUIRED
+F3-NE-010,balance equality,historical identity,REQUIRED
+F3-NE-011,finality,irreversibility,REQUIRED
+F3-NE-012,finality,continuity preservation,REQUIRED
+F3-NE-013,finality,historical identity,REQUIRED
+F3-NE-014,finality,consequential closure,REQUIRED
+F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+F3-NE-016,reopening,erasure of historical finality,REQUIRED
+F3-NE-017,post-finality contradiction,historical non-occurrence,REQUIRED
+F3-NE-018,evidence of finality,authority to declare finality,REQUIRED

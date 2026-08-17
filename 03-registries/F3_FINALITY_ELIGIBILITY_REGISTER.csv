@@ -1,0 +1,11 @@
+﻿Requirement_ID,Requirement,Failure_Effect,Status
+FE-01,Applicable obligation requirements satisfied,BLOCK,FORMALIZED
+FE-02,Required custody state valid,BLOCK,FORMALIZED
+FE-03,Applicable authority valid and current,BLOCK,FORMALIZED
+FE-04,Applicable scope valid,BLOCK,FORMALIZED
+FE-05,Temporal validity current,BLOCK,FORMALIZED
+FE-06,Required evidence admissible and sufficient,BLOCK,FORMALIZED
+FE-07,No unresolved applicable finality conflict,BLOCK,FORMALIZED
+FE-08,No current blocking contradiction,BLOCK,FORMALIZED
+FE-09,Requested transition valid,BLOCK,FORMALIZED
+FE-10,Requirement set non-vacuous,BLOCK,FORMALIZED

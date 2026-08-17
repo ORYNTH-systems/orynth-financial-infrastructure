@@ -1,0 +1,13 @@
+﻿Section,Primary_Source,Claim_Class
+1 Problem Boundary,06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md,BOUNDARY
+2 Canonical Objects,06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md,FORMALIZATION
+3 State Algebra,06-f3-discovery/formal/F3_STATE_ALGEBRA.md,FORMALIZATION
+4 Relation Algebra,06-f3-discovery/formal/F3_RELATION_ALGEBRA.md,FORMALIZATION
+5 Non-Equivalence Algebra,06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md,FORMALIZATION
+6 Transition System,06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md,FORMALIZATION
+7 Finality Eligibility Semantics,06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md,FORMALIZATION
+8 Positive Proof Discharge,06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md,FORMALLY-PROVED
+9 Counterexample Discharge,06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md,COUNTEREXAMPLE-DISCHARGED
+10 Claim-Class Doctrine,03-registries/F3_PROOF_DISCHARGE_REGISTRY.csv,CLASSIFICATION
+11 Registry Status Doctrine,06-f3-discovery/F3_REGISTRY_STATUS_DOCTRINE.md,TRACEABILITY
+12 Release-Candidate Statement,03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv,RELEASE-CONTROL

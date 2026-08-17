@@ -1,0 +1,15 @@
+﻿Artifact,Role,Status
+F3_CANONICAL_MANUSCRIPT.md,Canonical publication source,RELEASE-CANDIDATE
+FIN_F3_01B_PROBLEM_BOUNDARY.md,Frozen problem boundary,SOURCE
+F3_CANONICAL_OBJECTS.md,Canonical object definitions,SOURCE
+F3_STATE_ALGEBRA.md,State algebra,SOURCE
+F3_RELATION_ALGEBRA.md,Relation algebra,SOURCE
+F3_NON_EQUIVALENCE_ALGEBRA.md,Semantic separations,SOURCE
+F3_TRANSITION_SYSTEM.md,Transition semantics,SOURCE
+F3_FINALITY_ELIGIBILITY_SEMANTICS.md,Eligibility semantics,SOURCE
+F3_POSITIVE_PROOF_DISCHARGE.md,Formal/structural proof evidence,SOURCE
+F3_COUNTEREXAMPLE_DISCHARGE.md,Counterexample evidence,SOURCE
+F3_PROOF_DISCHARGE_REGISTRY.csv,Current proof disposition,SOURCE
+F3_RUNTIME_CONFORMANCE_MATRIX.csv,Runtime conformance evidence,SOURCE
+F3_WHOLE_CROSS_AUDIT_REGISTER.csv,Whole-F3 cross-audit,SOURCE
+F3_REGISTRY_STATUS_DOCTRINE.md,Registration/current-status semantics,SOURCE

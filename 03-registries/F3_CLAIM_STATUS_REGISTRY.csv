@@ -1,0 +1,6 @@
+﻿Claim_Class,Meaning,Allowed_Status
+FORMAL-PROOF,Mathematical or logical proof under stated assumptions,OPEN
+COUNTEREXAMPLE-DISCHARGE,Non-implication established by explicit counterexample,OPEN
+REFERENCE-RUNTIME-CONFORMANCE,Reference implementation behavior matches formalized requirement,OPEN
+TRACEABILITY,Artifact-to-claim or state-to-evidence linkage demonstrated,OPEN
+HISTORICAL-PRESERVATION,Prior valid classification remains reconstructable after later transition,OPEN

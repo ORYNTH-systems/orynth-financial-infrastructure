@@ -1,0 +1,7 @@
+﻿PO_ID,Runtime_Requirement,Test_Surface,Disposition
+F3-PO-035,Reject execution-only finality,tests/f3/test_f3_runtime.py::test_execution_only_does_not_create_finality,REFERENCE-RUNTIME-CONFORMANT
+F3-PO-036,Reject consensus-only finality,tests/f3/test_f3_runtime.py::test_consensus_only_does_not_create_finality,REFERENCE-RUNTIME-CONFORMANT
+F3-PO-037,Reject custody-possession-only authority,tests/f3/test_f3_runtime.py::test_custody_possession_does_not_create_custody_authority,REFERENCE-RUNTIME-CONFORMANT
+F3-PO-038,Reject unresolved-conflict finality,tests/f3/test_f3_runtime.py::test_unresolved_finality_conflict_blocks_finality,REFERENCE-RUNTIME-CONFORMANT
+F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+F3-PO-040,Expose post-finality contradiction explicitly,tests/f3/test_f3_runtime.py::test_post_finality_contradiction_is_explicit,REFERENCE-RUNTIME-CONFORMANT
