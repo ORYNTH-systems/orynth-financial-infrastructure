@@ -1,0 +1,8 @@
+﻿"state","determinate","may_execute_more","irreversible","continuity_preserved","meaning"
+"FINAL","YES","PROFILE-DEPENDENT","NO-INFERENCE","NO-INFERENCE","All applicable finality requirements satisfied for identified profile/domain."
+"NOT-FINAL","YES","PROFILE-DEPENDENT","NO","NO-INFERENCE","At least one applicable finality requirement determinately unsatisfied."
+"FINALITY-PENDING","NO","PROFILE-DEPENDENT","NO-INFERENCE","NO-INFERENCE","Required finality event, window, dependency, or recognition remains pending."
+"FINALITY-CONFLICTED","NO","BLOCKED-UNTIL-RULE","NO-INFERENCE","NO-INFERENCE","Mutually incompatible finality-relevant claims prevent determination."
+"FINALITY-INDETERMINATE","NO","PROFILE-DEPENDENT","NO-INFERENCE","NO-INFERENCE","Evidence insufficient for finality determination."
+"FINALITY-REVALIDATION-REQUIRED","NO","NO-AUTO","NO-INFERENCE","NO-INFERENCE","Prior determination cannot be safely reused without current reevaluation."
+"FINALITY-RECONSTRUCTION-REQUIRED","NO","NO-AUTO","NO-INFERENCE","NO-INFERENCE","Prior execution/evidence/state must be reconstructed before finality evaluation."

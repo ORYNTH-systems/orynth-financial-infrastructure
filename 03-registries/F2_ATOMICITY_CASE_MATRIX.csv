@@ -1,0 +1,7 @@
+﻿"case_id","condition","expected","f1_mapping"
+"F2-ATM-CASE-001","No required consequential leg has recognized effect","ATOMIC-NO-EFFECT","NO-EFFECT"
+"F2-ATM-CASE-002","Strict nonempty subset of required consequential effects recognized","ATOMIC-PARTIAL","PARTIAL"
+"F2-ATM-CASE-003","All AP-required leg effects satisfied with sufficient evidence","ATOMIC-COMPLETE","COMPLETED-WITHIN-PROFILE"
+"F2-ATM-CASE-004","Evidence insufficient to determine required-effect composition","ATOMIC-INDETERMINATE","INDETERMINATE"
+"F2-ATM-CASE-005","Consensus achieved but no recognized economic effects","NOT-AUTO-COMPLETE","EFFECT-CLASSIFIER-CONTROLS"
+"F2-ATM-CASE-006","All required effects later repaired after earlier partial execution","HISTORY-REMAINS-PARTIAL-THEN-REPAIRED","HISTORICAL-PERSISTENCE"

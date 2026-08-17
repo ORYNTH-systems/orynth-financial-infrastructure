@@ -1,0 +1,5 @@
+﻿"state","determinate","authority_effect","admissibility_effect","execution_effect","finality_effect"
+"CONSENSUS-ACHIEVED","YES","NONE","NONE","NONE","NONE"
+"CONSENSUS-NOT-ACHIEVED","YES","NONE","PROFILE-DEPENDENT-BLOCK-POSSIBLE","NONE","NONE"
+"CONSENSUS-CONFLICTED","NO","NONE","NO-AUTO-ADMISSION","NONE","NONE"
+"CONSENSUS-INDETERMINATE","NO","NONE","NO-AUTO-ADMISSION","NONE","NONE"

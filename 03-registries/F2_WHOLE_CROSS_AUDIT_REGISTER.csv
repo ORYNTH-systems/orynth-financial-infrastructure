@@ -1,0 +1,8 @@
+﻿"audit_id","surface","result","severity","unresolved"
+"F2-AUD-001","Required corpus","PASS","NONE","NO"
+"F2-AUD-002","Proof discharge","PASS","NONE","NO"
+"F2-AUD-003","Runtime claim separation","PASS","NONE","NO"
+"F2-AUD-004","Pinned runtime regression","PASS","NONE","NO"
+"F2-AUD-005","Adversarial verification","PASS","NONE","NO"
+"F2-AUD-006","Manuscript semantic boundaries","PASS","NONE","NO"
+"F2-AUD-007","Publication metadata cleanliness","PASS","NONE","NO"

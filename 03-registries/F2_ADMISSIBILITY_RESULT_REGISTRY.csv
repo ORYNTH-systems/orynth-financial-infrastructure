@@ -1,0 +1,6 @@
+﻿"state","execution_permitted","execution_occurred","finality_effect","meaning"
+"ADMIT","YES","NO","NONE","All applicable current distributed admission conditions satisfied."
+"BLOCK","NO","NO","NONE","Current execution is determinately prohibited."
+"DEFER","NO","NO","NONE","Required preconditions remain unresolved or pending."
+"REVALIDATE","NO","NO","NONE","Current authority, scope, state, or temporal conditions require reevaluation."
+"RECONSTRUCT","NO","NO","NONE","Prior state/evidence must be reconstructed before admission can be decided."

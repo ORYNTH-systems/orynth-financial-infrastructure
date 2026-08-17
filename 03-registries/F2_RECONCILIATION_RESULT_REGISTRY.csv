@@ -1,0 +1,7 @@
+﻿"state","determinate","state_mutation","finality_implied","continuity_implied"
+"RECONCILED","YES","NO","NO","NO"
+"RECONCILED-WITH-RESIDUAL-CONFLICT","YES-CONTEXTUAL","NO","NO","NO"
+"REVALIDATION-REQUIRED","NO","NO","NO","NO"
+"RECONSTRUCTION-REQUIRED","NO","NO","NO","NO"
+"UNRESOLVED","YES-CONFLICT-REMAINS","NO","NO","NO"
+"INDETERMINATE","NO","NO","NO","NO"

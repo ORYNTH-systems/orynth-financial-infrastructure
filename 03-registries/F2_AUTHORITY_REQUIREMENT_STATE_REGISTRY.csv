@@ -1,0 +1,8 @@
+﻿"state","terminal_for_requirement","authority_complete_eligible","meaning"
+"SATISFIED","YES","YES","Applicable authority requirement determinately satisfied."
+"UNSATISFIED","YES","NO","Applicable authority requirement determinately not satisfied."
+"CONFLICTED","NO","NO","Competing authority claims prevent determinate satisfaction."
+"STALE","YES","NO","Authority existed historically but is not current for evaluation."
+"OUT-OF-SCOPE","YES","NO","Authority claim does not cover required scope."
+"INAPPLICABLE","YES","EXCLUDED","Requirement determinately does not apply under active profile."
+"INDETERMINATE","NO","NO","Evidence or applicability is insufficient for determination."
