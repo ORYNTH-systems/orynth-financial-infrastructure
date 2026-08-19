@@ -1,0 +1,4440 @@
+﻿# FIN-F4-03 — State / Classification Algebra Discovery and Freeze
+
+Status: COMPLETE — PASS
+
+## Verified base
+
+- branch: master
+- HEAD: 5866e0551e15fd2ebd12a04183db3be8ae032764
+- origin/master: 5866e0551e15fd2ebd12a04183db3be8ae032764
+- inherited object/type freeze: FIN-F4-02-R1
+- working family: Ledger-State Finality, Record Integrity, and Reopenable Financial State
+
+## Scope
+
+This pass freezes the minimum F4 state/classification algebra supported by repository evidence and the canonical F4 object model.
+
+This pass does not freeze transition legality, decision semantics, invariants, proof obligations, runtime behavior, or publication structure.
+
+## Canonical state / classification domains
+
+### F4-SD-001 — Representation Status
+
+Frozen values:
+
+- UNREPRESENTED
+- REPRESENTED
+- INCOMPLETE
+- CONTRADICTORY
+- UNDETERMINED
+
+Evidence hits observed in this pass: 109
+
+### F4-SD-002 — Record Commitment Status
+
+Frozen values:
+
+- UNCOMMITTED
+- PENDING
+- COMMITTED
+- CONFLICTED
+- INVALIDATED
+
+Evidence hits observed in this pass: 158
+
+### F4-SD-003 — Finality Representation Status
+
+Frozen values:
+
+- NOT_REPRESENTED
+- PENDING
+- REPRESENTED
+- HISTORICAL
+- REOPENED
+- CONFLICTED
+- INVALIDATED
+
+Evidence hits observed in this pass: 178
+
+### F4-SD-004 — Historical Record Status
+
+Frozen values:
+
+- ABSENT
+- CURRENT
+- HISTORICAL
+- SUPERSEDED
+- CONFLICTED
+- UNDETERMINED
+
+Evidence hits observed in this pass: 237
+
+### F4-SD-005 — Reopening Status
+
+Frozen values:
+
+- CLOSED
+- REOPENABLE
+- REOPEN_PENDING
+- REOPENED
+- REOPEN_DENIED
+
+Evidence hits observed in this pass: 322
+
+### F4-SD-006 — Contradiction Status
+
+Frozen values:
+
+- NONE
+- DETECTED
+- UNRESOLVED
+- RESOLVED
+- BLOCKING
+
+Evidence hits observed in this pass: 658
+
+### F4-SD-007 — Reconstruction Status
+
+Frozen values:
+
+- NOT_REQUIRED
+- REQUIRED
+- IN_PROGRESS
+- RECONSTRUCTED
+- FAILED
+
+Evidence hits observed in this pass: 502
+
+### F4-SD-008 — Custody Representation Status
+
+Frozen values:
+
+- UNREPRESENTED
+- REPRESENTED
+- PARTIAL
+- CONFLICTED
+- INVALID
+
+Evidence hits observed in this pass: 15
+
+### F4-SD-009 — Record-State Continuity Classification
+
+Frozen values:
+
+- UNCLASSIFIED
+- PRESERVED
+- DISRUPTED
+- RECONSTRUCTED
+- NOT_ESTABLISHED
+
+Evidence hits observed in this pass: 2057
+
+
+## Composite F4 state
+
+The frozen composite F4 state is:
+
+Psi4_t = (R_t, M_t, F_t, H_t, Q_t, X_t, K_t, C_t, N_t, E_t, A_t, sigma_t, tau_t)
+
+where:
+
+- R_t : representation status
+- M_t : record commitment status
+- F_t : finality representation status
+- H_t : historical record status
+- Q_t : reopening status
+- X_t : contradiction status
+- K_t : reconstruction status
+- C_t : custody representation status
+- N_t : record-state continuity classification
+- E_t : evidence state inherited for evaluation
+- A_t : applicable authority/admissibility context
+- sigma_t : scope context
+- tau_t : temporal context
+
+## Algebraic separation requirements
+
+- representation status != underlying financial state
+- commitment status != finality status
+- finality representation != underlying F3 finality classification
+- historical status != current operability
+- reopenability != reopening occurrence
+- contradiction detection != contradiction resolution
+- reconstruction status != continuity classification
+- custody representation != custody authority
+- continuity reconstruction != historical identity restoration
+
+## F3 inheritance boundary
+
+F4 does not redefine F3 obligation, custody, finality, or consequential-closure state domains.
+
+F4 records, represents, classifies, reopens, contradicts, or reconstructs record-state consequences surrounding those underlying financial-state determinations.
+
+The following distinction remains mandatory:
+
+**final financial state != ledger representation of final financial state**
+
+## Evidence appendix
+
+- F4-SD-001 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:89 | term=represented | Once economic effect may have occurred, uncertainty must remain explicitly represented.
+- F4-SD-001 | 02-core/invariants/FIN-CMP_INVARIANTS.md:19 | term=represented | **Normative rule:** A compensating transaction SHALL be represented as a new financially consequential execution event.
+- F4-SD-001 | 02-core/invariants/FIN-FIN_INVARIANTS.md:33 | term=represented | **Normative rule:** Finality SHALL be represented explicitly and SHALL NOT be inferred solely from elapsed time technical completion or ledger inclusion.
+- F4-SD-001 | 02-core/invariants/FIN-REV_INVARIANTS.md:19 | term=represented | **Normative rule:** A reversal SHALL be represented as a new financially consequential execution event.
+- F4-SD-001 | 02-core/invariants/FIN-SET_INVARIANTS.md:5 | term=represented | Keep execution, settlement progression, reconciliation, and finality independently represented.
+- F4-SD-001 | 02-core/invariants/INVARIANT_APPLICABILITY_MODEL.md:46 | term=represented | Post-effect invariant failure SHALL NOT be represented as NO_EFFECT when economic mutation may already have occurred.
+- F4-SD-001 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:5 | term=represented | Financial execution state is not represented as a single linear lifecycle.
+- F4-SD-001 | 02-core/states/EFFECT_STATE_MODEL.md:57 | term=represented | Multiple heterogeneous or conflicting effects exist and cannot be represented honestly as a single simpler effect class.
+- F4-SD-001 | 02-core/states/FINANCIAL_STATE_MODEL.md:44 | term=represented | A financially consequential execution has been represented but has not yet received execution authority.
+- F4-SD-001 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:11 | term=represented | A transition is represented as:
+- F4-SD-001 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:96 | term=represented | Principal represented by a human operator.
+- F4-SD-001 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:99 | term=represented | Principal represented by an institution.
+- F4-SD-001 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:158 | term=represented | Asset represented through digital or cryptographic state.
+- F4-SD-001 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:164 | term=represented | Asset represented through tokenized state.
+- F4-SD-001 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:211 | term=representation | Canonical representation of financially relevant current state.
+- F4-SD-001 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:298 | term=representation | Canonical transaction representation submitted to a ledger.
+- F4-SD-001 | 03-registries/F1_ADVERSARIAL_VERIFICATION_MATRIX.csv:19 | term=represented | "F1-ADV-018","F1-TRACE-CNT-007","Claim reconstruction without represented prior break","INDETERMINATE","INDETERMINATE","PASS"
+- F4-SD-001 | 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:5 | term=represented | "F1-TRACE-REV-006","PARTIAL","RUNTIME-CONFORMANT","Origin and reversal/repair identities remain independently represented; returned ledger values cannot mutate retained records","REFERENCE-RUNTIME-IN-MEMORY"
+- F4-SD-001 | 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:7 | term=represented | "F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"
+- F4-SD-001 | 03-registries/INVARIANT_REGISTRY.csv:19 | term=represented | "FIN-SET-002","SETTLEMENT","Settlement State Must Be Explicit","Settlement SHALL NOT be represented by a single binary success/failure flag when partial, provisional, reversed, reconciled, or indeterminate states are possible.","Settlement lifecycle","FIN-ARCH-04","F1"
+- F4-SD-001 | 03-registries/INVARIANT_REGISTRY.csv:26 | term=represented | "FIN-REV-001","REVERSAL","Reversal Is New Execution","A reversal SHALL be represented as a distinct financially consequential execution event.","Reversal","FIN-ARCH-04","F1"
+- F4-SD-001 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:22 | term=representation | "FIN-PO-021","FIN-CMP-001","THEOREM","Compensation Is New Execution","Prove that a compensation operation is representationally and causally distinct from the originating execution and therefore constitutes a new financially consequential execution event.","Compensation","FIN-ARCH-04","F1","OPEN","","","",""
+- F4-SD-001 | 05-distributed-settlement/boundaries/F2_FORMALIZATION_SEQUENCE.md:55 | term=represented | No runtime result SHALL be represented as formal proof.
+- F4-SD-001 | 05-distributed-settlement/evidence/FIN_F2_09_RESULT.md:43 | term=represented | All required FIN-F2-09 proof obligations are represented in the proof
+- F4-SD-001 | 05-distributed-settlement/evidence/FIN_F2_09_RESULT.md:48 | term=represented | Formal proof is not represented as runtime conformance.
+- F4-SD-001 | 05-distributed-settlement/evidence/FIN_F2_09_RESULT.md:50 | term=represented | Counterexample discharge is not represented as positive theorem proof.
+- F4-SD-001 | 05-distributed-settlement/formal/F2_DISTRIBUTED_AUTHORITY_ALGEBRA.md:5 | term=represented | This artifact defines how authority is represented across multiple
+- F4-SD-001 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:6 | term=represented | state represented across a distributed settlement path remains
+- F4-SD-001 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:50 | term=represented | S_d(t) may be represented by:
+- F4-SD-001 | 05-distributed-settlement/formal/F2_PARTICIPANT_ALGEBRA.md:113 | term=representation | as the predicate that actor a possesses a valid identity representation
+- F4-SD-001 | 05-distributed-settlement/formal/F2_PARTICIPANT_ALGEBRA.md:168 | term=represented | iff every actor required by the active profile is represented in the
+- F4-SD-001 | 05-distributed-settlement/proofs/F2_CLAIM_STATUS_DOCTRINE.md:35 | term=represented | No runtime test result may be represented as PROVED.
+- F4-SD-001 | 05-distributed-settlement/proofs/F2_CLAIM_STATUS_DOCTRINE.md:37 | term=represented | No proof result may be represented as REFERENCE-RUNTIME-CONFORMANT before
+- F4-SD-001 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:304 | term=represented | Universal non-implication coverage remains represented separately in the
+- F4-SD-001 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:158 | term=represented | An undefined transition must not be represented as successful execution.
+- F4-SD-001 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:256 | term=represented | - 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:5 | pattern=ledger | "F1-TRACE-REV-006","PARTIAL","RUNTIME-CONFORMANT","Origin and reversal/repair identities remain independently represented; returned ledger values cannot mutate retained records","REFERENCE-RUNTIME-IN-MEMORY"
+- F4-SD-001 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:257 | term=represented | - 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:7 | pattern=continuity | "F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"
+- F4-SD-001 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:734 | term=represented | - 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:45 | pattern=ledger | **Basis:** Origin and reversal/repair identities remain independently represented; returned ledger values cannot mutate retained records
+- F4-SD-001 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:735 | term=represented | - 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:65 | pattern=continuity | **Basis:** Reconstructed continuity requires represented violation and remains distinct from PRESERVED
+- F4-SD-001 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:767 | term=represented | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:736 | pattern=ledger | The reference ledger preserves separately represented originating, repair,
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=representation | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:39 | term=representation | F4 inherits those distinctions and moves into the representation and persistence problem:
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:41 | term=representation | **final financial state != ledger representation of final financial state**
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:51 | term=representation | - state representation != valid transition
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:179 | term=representation | - 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:39 | F4 inherits those distinctions and moves into the representation and persistence problem:
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:855 | term=representation | - ledger-state representation
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:857 | term=representation | - finality representation
+- F4-SD-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:863 | term=representation | - ledger / custody representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:32 | term=representation | ### F4-O-001 — Ledger-State Representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:34 | term=representation | **Ledger-State Representation**
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:36 | term=representation | A typed representation of financial state recorded or represented within a ledger or record system.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:36 | term=represented | A typed representation of financial state recorded or represented within a ledger or record system.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:38 | term=representation | It is representational rather than constitutive of authority.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:40 | term=representation | A ledger-state representation may accurately, inaccurately, incompletely, historically, or contradictorily represent an underlying financial state.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:48 | term=representation | A record-state object whose representation has crossed the applicable commitment boundary of the record system.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:56 | term=representation | ### F4-O-003 — Finality Representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:58 | term=representation | **Finality Representation**
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:60 | term=representation | A ledger or record representation asserting, recording, or preserving the finality classification of a financial state.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:62 | term=representation | The representation of finality is distinct from the conditions that make the underlying financial state final.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:70 | term=representation | A typed historical representation preserving the existence and identity of an earlier record state.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:90 | term=representation | A typed contradiction object identifying incompatible record-state assertions, representations, histories, or commitments.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:112 | term=representation | The object preserves the distinction between record representation and underlying financial finality.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:116 | term=representation | ### F4-O-009 — Ledger/Custody Representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:118 | term=representation | **Ledger/Custody Representation**
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:120 | term=representation | A typed record representation of custody state, custody transfer, or custody-related financial position.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:139 | term=representation | - financial state != ledger-state representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:140 | term=representation | - ledger-state representation != authority
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:158 | term=representation | **final financial state != ledger representation of final financial state**
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:163 | term=representation | 2. ledger or record representation;
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:164 | term=representation | 3. commitment of that representation;
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:165 | term=representation | 4. representation of finality;
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:170 | term=representation | 9. custody representation;
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:194 | term=representation | F4 MUST NOT collapse record representation into the underlying F3 financial-state determination.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:227 | term=representation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=ledger-state | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:228 | term=representation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=state representation | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:229 | term=representation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:41 | term=ledger representation | **final financial state != ledger representation of final financial state**
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:230 | term=representation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:51 | term=state representation | - state representation != valid transition
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:231 | term=representation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:855 | term=ledger-state | - ledger-state representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:232 | term=representation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:855 | term=state representation | - ledger-state representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:241 | term=representation | - F4-O-003 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:857 | term=finality representation | - finality representation
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:331 | term=representation | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=historical identity | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-001 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:496 | term=representation | - F4-O-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:863 | term=custody representation | - ledger / custody representation
+- F4-SD-001 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:213 | term=represented | **Attack:** Claim reconstruction without represented prior break
+- F4-SD-001 | 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:45 | term=represented | **Basis:** Origin and reversal/repair identities remain independently represented; returned ledger values cannot mutate retained records
+- F4-SD-001 | 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:65 | term=represented | **Basis:** Reconstructed continuity requires represented violation and remains distinct from PRESERVED
+- F4-SD-001 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:36 | term=represented | separately so that implementation evidence is not represented as mathematical
+- F4-SD-001 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:37 | term=represented | proof and mathematical results are not represented as production certification.
+- F4-SD-001 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:105 | term=represented | The boundary can be represented by an applicability predicate:
+- F4-SD-001 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:736 | term=represented | The reference ledger preserves separately represented originating, repair,
+- F4-SD-001 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:769 | term=represented | - claim reconstruction without a represented prior break.
+- F4-SD-001 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:784 | term=represented | recovery must be represented as history-preserving execution rather than
+- F4-SD-001 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:955 | term=represented | or represented in the proof registry as:
+- F4-SD-001 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1163 | term=represented | It is not represented as:
+- F4-SD-001 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:807 | term=represented | An undefined transition must not be represented as successful execution.
+- F4-SD-001 | formal-proofs/FIN-EFF_PROOF_OBLIGATIONS.md:19 | term=representation | **Counterexample condition:** Two materially distinct effect classes collapse to the same representation or earlier effect history is lost after remediation.
+- F4-SD-001 | formal-proofs/FIN-EFF_PROOF_OBLIGATIONS.md:43 | term=representation | **Counterexample condition:** Two materially distinct effect classes collapse to the same representation or earlier effect history is lost after remediation.
+- F4-SD-001 | formal-proofs/FIN-EFF_PROOF_OBLIGATIONS.md:67 | term=representation | **Counterexample condition:** Two materially distinct effect classes collapse to the same representation or earlier effect history is lost after remediation.
+- F4-SD-001 | formal-proofs/FIN-EFF_PROOF_OBLIGATIONS.md:91 | term=representation | **Counterexample condition:** Two materially distinct effect classes collapse to the same representation or earlier effect history is lost after remediation.
+- F4-SD-001 | formal-proofs/FIN-EFF_PROOF_OBLIGATIONS.md:115 | term=representation | **Counterexample condition:** Two materially distinct effect classes collapse to the same representation or earlier effect history is lost after remediation.
+- F4-SD-001 | formal-proofs/FIN-REV_PROOF_OBLIGATIONS.md:19 | term=representation | **Counterexample condition:** Reversal executes without independent admission or causes the original execution/effect to disappear from historical representation.
+- F4-SD-001 | formal-proofs/FIN-REV_PROOF_OBLIGATIONS.md:43 | term=representation | **Counterexample condition:** Reversal executes without independent admission or causes the original execution/effect to disappear from historical representation.
+- F4-SD-001 | formal-proofs/FIN-REV_PROOF_OBLIGATIONS.md:67 | term=representation | **Counterexample condition:** Reversal executes without independent admission or causes the original execution/effect to disappear from historical representation.
+- F4-SD-001 | formal-proofs/FIN-REV_PROOF_OBLIGATIONS.md:91 | term=representation | **Counterexample condition:** Reversal executes without independent admission or causes the original execution/effect to disappear from historical representation.
+- F4-SD-001 | formal-proofs/FIN-REV_PROOF_OBLIGATIONS.md:115 | term=representation | **Counterexample condition:** Reversal executes without independent admission or causes the original execution/effect to disappear from historical representation.
+- F4-SD-001 | formal-proofs/FIN-SET_PROOF_OBLIGATIONS.md:15 | term=represented | **Formal target:** Show that settlement progression remains separately represented from execution completion and that each consequential settlement mutation preserves explicit lineage.
+- F4-SD-001 | formal-proofs/FIN-SET_PROOF_OBLIGATIONS.md:39 | term=represented | **Formal target:** Show that settlement progression remains separately represented from execution completion and that each consequential settlement mutation preserves explicit lineage.
+- F4-SD-001 | formal-proofs/FIN-SET_PROOF_OBLIGATIONS.md:63 | term=represented | **Formal target:** Show that settlement progression remains separately represented from execution completion and that each consequential settlement mutation preserves explicit lineage.
+- F4-SD-001 | formal-proofs/FIN-SET_PROOF_OBLIGATIONS.md:87 | term=represented | **Formal target:** Show that settlement progression remains separately represented from execution completion and that each consequential settlement mutation preserves explicit lineage.
+- F4-SD-001 | formal-proofs/FIN-SET_PROOF_OBLIGATIONS.md:111 | term=represented | **Formal target:** Show that settlement progression remains separately represented from execution completion and that each consequential settlement mutation preserves explicit lineage.
+- F4-SD-002 | 03-registries/F1_CONTINUITY_CASES.csv:11 | term=commitment | "F1-CNT-X010","Evidence cannot determine whether external commitment caused a continuity break before recovery","EXPECTED","UNKNOWN","POSSIBLE","INDETERMINATE","Unknown break cannot be classified preserved"
+- F4-SD-002 | 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:2 | term=commitment | "F1-EFR-001","Observed != Committed","YES","Observation may precede or lag commitment"
+- F4-SD-002 | 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:2 | term=committed | "F1-EFR-001","Observed != Committed","YES","Observation may precede or lag commitment"
+- F4-SD-002 | 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:3 | term=commitment | "F1-EFR-002","Committed != Final","YES","Commitment does not establish financial finality"
+- F4-SD-002 | 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:3 | term=committed | "F1-EFR-002","Committed != Final","YES","Commitment does not establish financial finality"
+- F4-SD-002 | 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:6 | term=committed | "F1-EFR-005","Local Rollback != External Effect Erasure","YES","Externally committed economic mutation survives local rollback semantics"
+- F4-SD-002 | 03-registries/F1_EFFECT_SET_REGISTRY.csv:4 | term=commitment | "F1-SET-003","M_com","Committed Mutation Set","Mutations established to have crossed an applicable commitment boundary","Commitment state"
+- F4-SD-002 | 03-registries/F1_EFFECT_SET_REGISTRY.csv:4 | term=committed | "F1-SET-003","M_com","Committed Mutation Set","Mutations established to have crossed an applicable commitment boundary","Commitment state"
+- F4-SD-002 | 03-registries/F1_RECONCILIATION_CASES.csv:4 | term=commitment | "F1-REC-C003","Partial settlement with unresolved counterparty commitment","PARTIAL","UNRESOLVED","PENDING","RECONCILIATION-INDETERMINATE"
+- F4-SD-002 | 03-registries/F1_RECONCILIATION_CASES.csv:5 | term=committed | "F1-REC-C004","Evidence sources materially conflict on whether an external transfer committed","CONFLICTING","UNKNOWN","CONFLICTING","RECONCILIATION-FAILED"
+- F4-SD-002 | 03-registries/F1_REVERSAL_CASES.csv:7 | term=commitment | "F1-REV-C006","Reversal execution becomes indeterminate after external commitment uncertainty","YES","YES","YES","REVERSAL-INDETERMINATE","Attempted reversal does not imply successful reversal"
+- F4-SD-002 | 03-registries/F1_REVERSAL_CASES.csv:8 | term=committed | "F1-REV-C007","Local database rollback succeeds but external transfer remains committed","UNKNOWN","PARTIAL","N/A","LOCAL-ROLLBACK-NOT-REVERSAL","Technical rollback is not economic reversal"
+- F4-SD-002 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:6 | term=commitment | "Committed(a,q,o,t)","CommitmentPredicate","F2","FIN-F2-03"
+- F4-SD-002 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:6 | term=committed | "Committed(a,q,o,t)","CommitmentPredicate","F2","FIN-F2-03"
+- F4-SD-002 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:7 | term=commitment | "CommitmentValid(c,t)","CommitmentValidity","F2","FIN-F2-03"
+- F4-SD-002 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:8 | term=commitment | "K(q,t)","CommitmentSet","F2","FIN-F2-03"
+- F4-SD-002 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:9 | term=commitment | "K_req(q,t)","RequiredCommitmentSet","F2","FIN-F2-03"
+- F4-SD-002 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:10 | term=commitment | "CommitmentComplete(q,t)","CommitmentCompleteness","F2","FIN-F2-03"
+- F4-SD-002 | 03-registries/F2_03_INVARIANT_REGISTER.csv:5 | term=commitment | "F2-COM-001","COMMITMENT","Commitment does not imply authority.","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_INVARIANT_REGISTER.csv:6 | term=commitment | "F2-COM-002","COMMITMENT","Commitment completeness does not imply execution.","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_INVARIANT_REGISTER.csv:7 | term=commitment | "F2-COM-003","COMMITMENT","Revocation of commitment is not financial reversal.","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_INVARIANT_REGISTER.csv:8 | term=commitment | "F2-COM-004","COMMITMENT","Historical commitment existence survives later invalidity.","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_INVARIANT_REGISTER.csv:16 | term=commitment | "F2-SEP-002","SEPARATION","Agreement != Commitment != Consensus != Authority != Admissibility != Execution != Finality.","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_NON_IMPLICATION_REGISTRY.csv:7 | term=commitment | "F2-COM-NI-001","CommitmentComplete","AuthorityComplete","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_NON_IMPLICATION_REGISTRY.csv:8 | term=commitment | "F2-COM-NI-002","CommitmentComplete","Consensus","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_NON_IMPLICATION_REGISTRY.csv:9 | term=commitment | "F2-COM-NI-003","CommitmentComplete","Admissible","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_NON_IMPLICATION_REGISTRY.csv:10 | term=commitment | "F2-COM-NI-004","CommitmentComplete","Executed","LOCKED"
+- F4-SD-002 | 03-registries/F2_03_NON_IMPLICATION_REGISTRY.csv:11 | term=commitment | "F2-COM-NI-005","CommitmentComplete","SettlementFinal","LOCKED"
+- F4-SD-002 | 03-registries/F2_04_INVARIANT_REGISTER.csv:3 | term=commitment | "F2-ADM-002","ADMISSIBILITY","Commitment completeness does not imply distributed admissibility.","LOCKED"
+- F4-SD-002 | 03-registries/F2_04_NON_IMPLICATION_REGISTRY.csv:3 | term=commitment | "F2-ADM-NI-002","CommitmentComplete","Admissible_d","LOCKED"
+- F4-SD-002 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:4 | term=commitment | "COMMITMENT-CONFLICT","NO","PROFILE-DEPENDENT","YES"
+- F4-SD-002 | 03-registries/F2_EXECUTION_BOUNDARY_REQUIREMENT_MATRIX.csv:4 | term=commitment | "CommitmentRequirementsSatisfied","YES","NO","DEFER/BLOCK"
+- F4-SD-002 | 03-registries/F2_MANUSCRIPT_CLAIM_REGISTRY.csv:3 | term=commitment | "Agreement / commitment / consensus distinction","FIN-F2-03","FORMAL-DEFINITION","YES"
+- F4-SD-002 | 03-registries/F2_OBJECT_OWNERSHIP_REGISTRY.csv:13 | term=commitment | "CommitmentSet","F2","INTRODUCE"
+- F4-SD-002 | 05-distributed-settlement/boundaries/F2_FORMALIZATION_SEQUENCE.md:10 | term=commitment | Agreement / commitment / consensus semantics
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_02_RESULT.md:61 | term=commitment | Commitment semantics remain FIN-F2-03.
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:7 | term=commitment | FIN-F2-03 — Agreement / Commitment / Consensus Semantics
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:27 | term=commitment | Commitment semantics
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:29 | term=commitment | Commitment validity
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:31 | term=commitment | Commitment completeness
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:33 | term=commitment | Commitment revocation distinction
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:49 | term=commitment | Agreement != Commitment
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:53 | term=commitment | Commitment != Consensus
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:57 | term=commitment | Commitment != Authority
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_04_RESULT.md:63 | term=commitment | Agreement != Commitment
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_04_RESULT.md:65 | term=commitment | Commitment != Consensus
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:45 | term=commitment | COMMITMENT-CONFLICT
+- F4-SD-002 | 05-distributed-settlement/evidence/FIN_F2_12_RESULT.md:26 | term=commitment | - commitment
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:1 | term=commitment | # F2 Agreement / Commitment / Consensus Relationship Map
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:6 | term=commitment | Agreement != Commitment
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:10 | term=commitment | Commitment != Consensus
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:14 | term=commitment | Commitment != Authority
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:20 | term=commitment | Commitment != Admissibility
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:26 | term=commitment | Commitment != Execution
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:32 | term=commitment | Commitment != Finality
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:38 | term=commitment | A profile MAY require agreement before commitment.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:40 | term=commitment | A profile MAY require commitment before consensus.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_COMMITMENT_CONSENSUS_RELATIONSHIPS.md:44 | term=commitment | A profile MAY require commitments from a consensus-defined set.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_AGREEMENT_SEMANTICS.md:6 | term=commitment | state, value, ordering, commitment, or transition.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:1 | term=commitment | # FIN-F2-03 — Commitment Semantics
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:5 | term=commitment | A commitment is a recorded binding or protocol-recognized undertaking
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:8 | term=commitment | Commitment is distinct from:
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:19 | term=commitment | ## 2. Commitment Object
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:23 | term=commitment | Commitment c = {
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:24 | term=commitment | commitment_id,
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:38 | term=commitment | ## 3. Commitment Predicate
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:40 | term=committed | Committed(a,q,o,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:42 | term=commitment | means that actor a has a recognized commitment concerning obligation o
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:45 | term=committed | Committed does not imply:
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:59 | term=commitment | ## 4. Commitment Validity
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:63 | term=commitment | CommitmentValid(c,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:65 | term=commitment | iff the commitment:
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:74 | term=commitment | Commitment validity is not authority validity.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:78 | term=commitment | ## 5. Commitment Set
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:84 | term=commitment | as the set of recognized commitments for q at t.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:88 | term=commitment | denotes the required commitment set under the active profile.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:92 | term=commitment | ## 6. Commitment Completeness
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:96 | term=commitment | CommitmentComplete(q,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:98 | term=commitment | iff every required commitment obligation has a corresponding valid
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:99 | term=commitment | commitment.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:101 | term=commitment | CommitmentComplete != AuthorityComplete
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:103 | term=commitment | CommitmentComplete != AgreementComplete
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:105 | term=commitment | CommitmentComplete != Consensus
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:107 | term=commitment | CommitmentComplete != Admissible
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:109 | term=commitment | CommitmentComplete != Executed
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:111 | term=commitment | CommitmentComplete != Final
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:115 | term=commitment | ## 7. Conditional Commitment
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:117 | term=commitment | A commitment may be conditional.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:119 | term=commitment | ConditionalCommitment(c,psi)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:129 | term=commitment | A revocable commitment may transition to:
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:137 | term=commitment | Revocation concerns a commitment state.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:143 | term=commitment | ## 9. Failure of Commitment
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:145 | term=commitment | A commitment may fail to produce execution.
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:149 | term=committed | Committed(a,q,o,t) !=> Executed(q,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:153 | term=commitment | CommitmentComplete(q,t) !=> EffectOccurred(q,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_COMMITMENT_SEMANTICS.md:159 | term=commitment | If a commitment was validly issued and later revoked, expired, consumed,
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:13 | term=commitment | commitment completeness
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:37 | term=commitment | - commitment requirements
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:70 | term=commitment | CommitmentRequirementsSatisfied(q_d,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:100 | term=commitment | ## 6. Commitment and Admissibility
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:102 | term=commitment | CommitmentComplete(q_d,t) !=> Admissible_d(q_d,t)
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:104 | term=commitment | A complete commitment set may still:
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:213 | term=commitment | commitment
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:6 | term=commitment | claims, commitments, authority assertions, effect histories, or finality
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:63 | term=commitment | COMMITMENT-CONFLICT
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:78 | term=commitment | - commitments
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:25 | term=commitment | - commitment records
+- F4-SD-002 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:102 | term=commitment | Applies where previously valid authority, scope, commitment, consensus,
+- F4-SD-002 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:122 | term=commitment | - which commitments remain live
+- F4-SD-002 | 05-distributed-settlement/inheritance/F2_INHERITED_OBJECT_MAP.md:46 | term=commitment | - commitment sets
+- F4-SD-002 | 05-distributed-settlement/objects/F2_CANONICAL_OBJECTS.md:53 | term=commitment | Commitment
+- F4-SD-002 | 05-distributed-settlement/objects/F2_CANONICAL_OBJECTS.md:55 | term=commitment | CommitmentSet
+- F4-SD-002 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:32 | term=commitment | agreement, commitment, authorization, or effectuation across multiple
+- F4-SD-002 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:112 | term=commitment | - distributed commitment
+- F4-SD-002 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:108 | term=commitment | - commitment;
+- F4-SD-002 | 06-f3-discovery/release/FIN_F3_11_RELEASE_COMMIT_AUDIT.md:13 | term=committed | - committed F3 files: 33
+- F4-SD-002 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:143 | term=commitment | - 03-registries/F1_CONTINUITY_CASES.csv:11 | pattern=continuity | "F1-CNT-X010","Evidence cannot determine whether external commitment caused a continuity break before recovery","EXPECTED","UNKNOWN","POSSIBLE","INDETERMINATE","Unknown break cannot be classified preserved"
+- F4-SD-002 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:182 | term=commitment | - 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:3 | pattern=finality | "F1-EFR-002","Committed != Final","YES","Commitment does not establish financial finality"
+- F4-SD-002 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:182 | term=committed | - 03-registries/F1_EFFECT_RELATION_REGISTRY.csv:3 | pattern=finality | "F1-EFR-002","Committed != Final","YES","Commitment does not establish financial finality"
+- F4-SD-002 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:269 | term=commitment | - 03-registries/F2_03_INVARIANT_REGISTER.csv:16 | pattern=finality | "F2-SEP-002","SEPARATION","Agreement != Commitment != Consensus != Authority != Admissibility != Execution != Finality.","LOCKED"
+- F4-SD-002 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:744 | term=commitment | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:186 | pattern=finality | Commitment does not by itself establish authority, legitimacy, or finality.
+- F4-SD-002 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:820 | term=commitment | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:253 | pattern=obligation | as a recognized commitment by actor a concerning obligation o under
+- F4-SD-002 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:48 | term=commitment | - record commitment != irreversibility
+- F4-SD-002 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:48 | term=record commitment | - record commitment != irreversibility
+- F4-SD-002 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:856 | term=committed | - committed financial record state
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:44 | term=committed | ### F4-O-002 — Committed Financial Record
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:46 | term=committed | **Committed Financial Record**
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:48 | term=commitment | A record-state object whose representation has crossed the applicable commitment boundary of the record system.
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:50 | term=commitment | Commitment identifies persistence or accepted record placement under the applicable record semantics.
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:52 | term=commitment | Commitment does not by itself establish financial finality, authority, irreversibility, or historical identity.
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:80 | term=committed | A typed reopening object representing that a previously committed or finality-associated record state has entered a permitted or required reconsideration path.
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:90 | term=commitment | A typed contradiction object identifying incompatible record-state assertions, representations, histories, or commitments.
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:141 | term=commitment | - record commitment != finality
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:141 | term=record commitment | - record commitment != finality
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:164 | term=commitment | 3. commitment of that representation;
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:239 | term=commitment | - F4-O-002 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:48 | term=record commitment | - record commitment != irreversibility
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:239 | term=record commitment | - F4-O-002 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:48 | term=record commitment | - record commitment != irreversibility
+- F4-SD-002 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:240 | term=committed | - F4-O-002 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:856 | term=committed financial | - committed financial record state
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:20 | term=committed | separates intended, observed, committed, economically recognized, and unresolved
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:78 | term=committed | - observed effect is not necessarily committed effect;
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:79 | term=committed | - committed effect is not necessarily final effect;
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:123 | term=committed | This distinction is necessary for asynchronous, multi-party, externally committed,
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:177 | term=committed | ## 3.3 Committed Mutation
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:183 | term=commitment | as intended mutations established to have crossed their applicable commitment
+- F4-SD-002 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:186 | term=commitment | Commitment does not by itself establish authority, legitimacy, or finality.
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:77 | term=commitment | - what commitments exist,
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:247 | term=commitment | # 6. Commitment
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:251 | term=committed | Committed(a,q,o,t)
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:253 | term=commitment | as a recognized commitment by actor a concerning obligation o under
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:256 | term=commitment | Commitment validity and authority validity are distinct.
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:262 | term=commitment | as the recognized commitment set and:
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:266 | term=commitment | as the required commitment set.
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:268 | term=commitment | Commitment completeness does not imply:
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:280 | term=commitment | Commitment revocation is also distinct from financial reversal.
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:344 | term=commitment | CommitmentRequirementsSatisfied
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:584 | term=commitment | COMMITMENT-CONFLICT
+- F4-SD-002 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1187 | term=commitment | FIN-F2-03 — Agreement / Commitment / Consensus Semantics
+- F4-SD-002 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:118 | term=commitment | - commitment;
+- F4-SD-003 | 02-core/invariants/FIN-FIN_INVARIANTS.md:73 | term=reopened | ## FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-003 | 02-core/invariants/FIN-FIN_INVARIANTS.md:77 | term=reopened | **Applies to:** Reopened finality
+- F4-SD-003 | 02-core/states/FINALITY_CLASSIFICATION_MODEL.md:20 | term=reopened | REOPENED,
+- F4-SD-003 | 02-core/states/FINALITY_CLASSIFICATION_MODEL.md:49 | term=reopened | ### REOPENED
+- F4-SD-003 | 03-registries/F2_06_INVARIANT_REGISTER.csv:15 | term=historical finality | "F2-FIN-014","FINALITY","Later reversal does not erase historical finality status.","LOCKED"
+- F4-SD-003 | 03-registries/F3_INVARIANT_REGISTER.csv:17 | term=historical finality | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-003 | 03-registries/F3_INVARIANT_REGISTER.csv:26 | term=historical finality | F3-INV-025,FIN-FIN,Historical finality classification must survive later invalidation as historical evidence,OPEN
+- F4-SD-003 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | term=historical finality | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-003 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | term=historical finality | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-003 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:26 | term=reopened | F3-PO-025,TRANSITION,Prove reopened state requires explicit admissible transition,OPEN
+- F4-SD-003 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | term=historical finality | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-003 | 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | term=historical finality | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-003 | 03-registries/F3_TRANSITION_REGISTRY.csv:4 | term=reopened | F3-T-003,OBLIGATION,OBLIGATION_SATISFIED,OBLIGATION_REOPENED,FORMALIZED
+- F4-SD-003 | 03-registries/F3_TRANSITION_REGISTRY.csv:17 | term=reopened | F3-T-016,FINALITY,FINALITY_DOMAIN_COMPLETE,FINALITY_REOPENED,FORMALIZED
+- F4-SD-003 | 03-registries/F3_TRANSITION_REGISTRY.csv:19 | term=reopened | F3-T-018,FINALITY,FINALITY_REOPENED,FINALITY_PENDING,FORMALIZED
+- F4-SD-003 | 03-registries/F3_TRANSITION_REGISTRY.csv:24 | term=reopened | F3-T-023,CLOSURE,CLOSURE_COMPLETE,CLOSURE_REOPENED,FORMALIZED
+- F4-SD-003 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:246 | term=historical finality | Historical finality evidence may persist while current finality requires
+- F4-SD-003 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:426 | term=historical finality | Historical finality and later state change may both be true.
+- F4-SD-003 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:214 | term=reopened | - reopened state invalidates prior current-final classification without erasing historical classification;
+- F4-SD-003 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:99 | term=reopened | The current classification of whether a previously closed or final state may validly be reopened under governing rules.
+- F4-SD-003 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:163 | term=reopened | If a previously closed state is validly reopened:
+- F4-SD-003 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:37 | term=historical finality | reopening != erasure of historical finality
+- F4-SD-003 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:16 | term=reopened | OBLIGATION_REOPENED,
+- F4-SD-003 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:46 | term=reopened | FINALITY_REOPENED,
+- F4-SD-003 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:60 | term=reopened | CLOSURE_REOPENED,
+- F4-SD-003 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:62 | term=reopened | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-003 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:101 | term=reopened | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-003 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:107 | term=reopened | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-003 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:122 | term=reopened | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-003 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:150 | term=historical finality | Historical finality must remain reconstructable.
+- F4-SD-003 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:234 | term=historical finality | Current state becomes FINALITY_INVALIDATED while historical finality remains recorded.
+- F4-SD-003 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:116 | term=historical finality | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:121 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-003 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:125 | term=historical finality | Historical finality remains reconstructable.
+- F4-SD-003 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:183 | term=reopened | -> CLOSURE_REOPENED
+- F4-SD-003 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:188 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-003 | 06-f3-discovery/runtime/f3_runtime/engine.py:51 | term=reopened | raise ValueError("Only a currently final state may be reopened.")
+- F4-SD-003 | 06-f3-discovery/runtime/f3_runtime/engine.py:55 | term=reopened | classification="FINALITY_REOPENED",
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:303 | term=historical finality | - 03-registries/F2_06_INVARIANT_REGISTER.csv:15 | pattern=finality | "F2-FIN-014","FINALITY","Later reversal does not erase historical finality status.","LOCKED"
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:459 | term=historical finality | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=finality | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:460 | term=historical finality | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=reopen | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:472 | term=historical finality | - 03-registries/F3_INVARIANT_REGISTER.csv:26 | pattern=finality | F3-INV-025,FIN-FIN,Historical finality classification must survive later invalidation as historical evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:499 | term=historical finality | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=finality | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:500 | term=historical finality | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=reopen | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:547 | term=historical finality | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=finality | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:548 | term=historical finality | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=reopen | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:551 | term=reopened | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:26 | pattern=reopen | F3-PO-025,TRANSITION,Prove reopened state requires explicit admissible transition,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:559 | term=historical finality | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=finality | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:560 | term=historical finality | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=reopen | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:566 | term=historical finality | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=finality | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:567 | term=historical finality | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=reopen | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:571 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:4 | pattern=obligation | F3-T-003,OBLIGATION,OBLIGATION_SATISFIED,OBLIGATION_REOPENED,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:572 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:4 | pattern=reopen | F3-T-003,OBLIGATION,OBLIGATION_SATISFIED,OBLIGATION_REOPENED,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:585 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:17 | pattern=finality | F3-T-016,FINALITY,FINALITY_DOMAIN_COMPLETE,FINALITY_REOPENED,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:586 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:17 | pattern=reopen | F3-T-016,FINALITY,FINALITY_DOMAIN_COMPLETE,FINALITY_REOPENED,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:588 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:19 | pattern=finality | F3-T-018,FINALITY,FINALITY_REOPENED,FINALITY_PENDING,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:589 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:19 | pattern=reopen | F3-T-018,FINALITY,FINALITY_REOPENED,FINALITY_PENDING,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:594 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:24 | pattern=closure | F3-T-023,CLOSURE,CLOSURE_COMPLETE,CLOSURE_REOPENED,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:595 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:24 | pattern=reopen | F3-T-023,CLOSURE,CLOSURE_COMPLETE,CLOSURE_REOPENED,FORMALIZED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:996 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:224 | pattern=reopen | - reopened state invalidates prior current-final classification without erasing historical classification;
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1045 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:379 | pattern=reopen | The current classification of whether a previously closed or final state may validly be reopened under governing rules.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1060 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:423 | pattern=obligation | OBLIGATION_REOPENED,
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1061 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:423 | pattern=reopen | OBLIGATION_REOPENED,
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1080 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:453 | pattern=finality | FINALITY_REOPENED,
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1081 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:453 | pattern=reopen | FINALITY_REOPENED,
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1089 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:467 | pattern=closure | CLOSURE_REOPENED,
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1090 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:467 | pattern=reopen | CLOSURE_REOPENED,
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1148 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=finality | reopening != erasure of historical finality
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1149 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=reopen | reopening != erasure of historical finality
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1158 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:711 | pattern=obligation | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1159 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:711 | pattern=reopen | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1172 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:750 | pattern=finality | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1173 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:750 | pattern=reopen | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1175 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:756 | pattern=finality | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1176 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:756 | pattern=reopen | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1181 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:771 | pattern=closure | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1182 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:771 | pattern=reopen | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1191 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:799 | pattern=finality | Historical finality must remain reconstructable.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1224 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:976 | pattern=reopen | If a previously closed state is validly reopened:
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1272 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=finality | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1273 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=reopen | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1275 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1128 | pattern=finality | -> FINALITY_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1276 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1128 | pattern=reopen | -> FINALITY_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1277 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1132 | pattern=finality | Historical finality remains reconstructable.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1290 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1190 | pattern=closure | -> CLOSURE_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1291 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1190 | pattern=reopen | -> CLOSURE_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1293 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1195 | pattern=finality | -> FINALITY_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1294 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1195 | pattern=reopen | -> FINALITY_REOPENED
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1345 | term=historical finality | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1441 | pattern=finality | Current state becomes FINALITY_INVALIDATED while historical finality remains recorded.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1515 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1516 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1517 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1528 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1529 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1530 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1542 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1543 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1544 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1556 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1557 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1558 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1559 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:107 | pattern=finality | ## PO-FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1560 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:107 | pattern=reopen | ## PO-FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1570 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1571 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1572 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1942 | term=reopened | - tests/f3/test_f3_runtime.py:89 | pattern=finality | reopened = reopen_finality(final)
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1943 | term=reopened | - tests/f3/test_f3_runtime.py:89 | pattern=reopen | reopened = reopen_finality(final)
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1944 | term=reopened | - tests/f3/test_f3_runtime.py:91 | pattern=finality | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1945 | term=reopened | - tests/f3/test_f3_runtime.py:91 | pattern=reopen | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1946 | term=reopened | - tests/f3/test_f3_runtime.py:92 | pattern=finality | assert reopened.historical_finality_preserved is True
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1947 | term=reopened | - tests/f3/test_f3_runtime.py:92 | pattern=reopen | assert reopened.historical_finality_preserved is True
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2010 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:162 | pattern=finality | reopened = reopen_finality(final)
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2011 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:162 | pattern=reopen | reopened = reopen_finality(final)
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2012 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:164 | pattern=finality | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2013 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:164 | pattern=reopen | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2014 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:165 | pattern=finality | assert reopened.historical_finality_preserved is True
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2015 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:165 | pattern=reopen | assert reopened.historical_finality_preserved is True
+- F4-SD-003 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2016 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:168 | pattern=reopen | def test_non_final_state_cannot_be_reopened_as_if_previously_final():
+- F4-SD-003 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:857 | term=finality representation | - finality representation
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:56 | term=finality representation | ### F4-O-003 — Finality Representation
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:58 | term=finality representation | **Finality Representation**
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:72 | term=reopened | Historical persistence does not imply that the state remains currently operative, admissible, authoritative, or unreopened.
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:241 | term=finality representation | - F4-O-003 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:857 | term=finality representation | - finality representation
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:360 | term=historical finality | - F4-O-005 | 03-registries/F3_INVARIANT_REGISTER.csv:17 | term=reopening | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:362 | term=historical finality | - F4-O-005 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | term=reopening | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:363 | term=historical finality | - F4-O-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | term=reopening | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:364 | term=historical finality | - F4-O-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | term=reopening | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:365 | term=historical finality | - F4-O-005 | 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | term=reopening | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:367 | term=historical finality | - F4-O-005 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:37 | term=reopening | reopening != erasure of historical finality
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:370 | term=historical finality | - F4-O-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:116 | term=reopening | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:377 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:459 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=finality | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:378 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:460 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=reopen | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:381 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:499 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=finality | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:382 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:500 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=reopen | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:383 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:547 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=finality | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:384 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:548 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=reopen | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:385 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:559 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=finality | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:386 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:560 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=reopen | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:387 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:566 | term=reopening | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=finality | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:388 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:567 | term=reopening | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=reopen | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:391 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1148 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=finality | reopening != erasure of historical finality
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:392 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1149 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=reopen | reopening != erasure of historical finality
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:394 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1272 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=finality | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:395 | term=historical finality | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1273 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=reopen | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:431 | term=historical finality | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | term=reopening | reopening != erasure of historical finality
+- F4-SD-003 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:433 | term=historical finality | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | term=reopening | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:224 | term=reopened | - reopened state invalidates prior current-final classification without erasing historical classification;
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:379 | term=reopened | The current classification of whether a previously closed or final state may validly be reopened under governing rules.
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:423 | term=reopened | OBLIGATION_REOPENED,
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:453 | term=reopened | FINALITY_REOPENED,
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:467 | term=reopened | CLOSURE_REOPENED,
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | term=historical finality | reopening != erasure of historical finality
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:711 | term=reopened | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:750 | term=reopened | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:756 | term=reopened | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:771 | term=reopened | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:799 | term=historical finality | Historical finality must remain reconstructable.
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:976 | term=reopened | If a previously closed state is validly reopened:
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | term=historical finality | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1128 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1132 | term=historical finality | Historical finality remains reconstructable.
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1190 | term=reopened | -> CLOSURE_REOPENED
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1195 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-003 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1441 | term=historical finality | Current state becomes FINALITY_INVALIDATED while historical finality remains recorded.
+- F4-SD-003 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:107 | term=reopened | ## PO-FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-003 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-003 | tests/f3/test_f3_runtime.py:89 | term=reopened | reopened = reopen_finality(final)
+- F4-SD-003 | tests/f3/test_f3_runtime.py:91 | term=reopened | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-003 | tests/f3/test_f3_runtime.py:92 | term=reopened | assert reopened.historical_finality_preserved is True
+- F4-SD-003 | tests/f3_adversarial/test_f3_adversarial.py:162 | term=reopened | reopened = reopen_finality(final)
+- F4-SD-003 | tests/f3_adversarial/test_f3_adversarial.py:164 | term=reopened | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-003 | tests/f3_adversarial/test_f3_adversarial.py:165 | term=reopened | assert reopened.historical_finality_preserved is True
+- F4-SD-003 | tests/f3_adversarial/test_f3_adversarial.py:168 | term=reopened | def test_non_final_state_cannot_be_reopened_as_if_previously_final():
+- F4-SD-004 | 02-core/invariants/FIN-REC_INVARIANTS.md:33 | term=historical state | **Normative rule:** Reconstructed historical state SHALL NOT be classified as restored continuity merely because historical state can be reconstructed.
+- F4-SD-004 | 02-core/invariants/FIN-REV_INVARIANTS.md:63 | term=historical state | **Applies to:** Historical state
+- F4-SD-004 | 02-core/OBJECT_NON_EQUIVALENCE_RULES.md:25 | term=historical state | Economic Balance Equivalence != Historical State Equivalence
+- F4-SD-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:42 | term=historical state | Historical state has been reconstructed from surviving evidence.
+- F4-SD-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:58 | term=historical record | Observed history has been reconciled sufficiently to establish a coherent historical record.
+- F4-SD-004 | 02-core/states/FINANCIAL_STATE_MODEL.md:146 | term=historical state | REVERSED does not erase historical state or evidence.
+- F4-SD-004 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:153 | term=historical state | BALANCE RESTORED -> HISTORICAL STATE RESTORED
+- F4-SD-004 | 02-core/transitions/FINANCIAL_TRANSITION_ALGEBRA.md:156 | term=historical state | Historical states SHALL NOT be overwritten merely because a later lifecycle exists.
+- F4-SD-004 | 03-registries/F1_COMPENSATION_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-CMP-R007","Economic equivalence != historical identity","YES"
+- F4-SD-004 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-004 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:7 | term=historical identity | "F1-MC-006","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CMP-004","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-004 | 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:10 | term=historical identity | "Economic equivalence vs historical identity","NEW","F1","FORMALIZE/PROVE"
+- F4-SD-004 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:9 | term=historical identity | "F1-NEQ-CMP-004","COMPENSATION","NON-EQUIVALENCE","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_COMPENSATION_PROOFS.md","NO"
+- F4-SD-004 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:15 | term=historical identity | "F1-NEQ-REV-005","REVERSAL","NON-EQUIVALENCE","Successful reversal does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_REVERSAL_PROOFS.md","NO"
+- F4-SD-004 | 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-REC-R007","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-REV-R007","Successful Reversal != Historical Identity","YES"
+- F4-SD-004 | 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:9 | term=historical identity | "F1-REV-R008","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 03-registries/F2_07_INVARIANT_REGISTER.csv:21 | term=historical identity | "F2-REC-008","RECONCILIATION","Economic branch convergence does not imply historical identity.","LOCKED"
+- F4-SD-004 | 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:15 | term=historical identity | "F2-NI-011","Economic endpoint equivalence does not imply historical identity.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-011"
+- F4-SD-004 | 03-registries/F3_INVARIANT_REGISTER.csv:11 | term=historical identity | F3-INV-010,FIN-FIN,Balance equality cannot establish historical identity,OPEN
+- F4-SD-004 | 03-registries/F3_INVARIANT_REGISTER.csv:14 | term=historical identity | F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+- F4-SD-004 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:11 | term=historical identity | F3-NE-010,balance equality,historical identity,REQUIRED
+- F4-SD-004 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:14 | term=historical identity | F3-NE-013,finality,historical identity,REQUIRED
+- F4-SD-004 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:13 | term=historical identity | F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+- F4-SD-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:29 | term=historical identity | Economic equivalence != historical identity.
+- F4-SD-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:166 | term=historical identity | - no material historical identity discontinuity occurred
+- F4-SD-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:206 | term=historical identity | - material historical identity break
+- F4-SD-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:218 | term=historical state | historical state and evidence were later rebuilt to establish a usable
+- F4-SD-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:263 | term=historical state | Continuity concerns historical state lineage.
+- F4-SD-004 | 05-distributed-settlement/formal/F2_FORK_DIVERGENCE_SEMANTICS.md:147 | term=historical identity | this does not establish historical identity.
+- F4-SD-004 | 05-distributed-settlement/inheritance/F2_INHERITED_OBJECT_MAP.md:33 | term=historical identity | | economic equivalence != historical identity | inherited invariant | F1 |
+- F4-SD-004 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:182 | term=historical state | Historical state reconstructed
+- F4-SD-004 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:220 | term=historical identity | ## CE-011 — Endpoint Equivalence != Historical Identity
+- F4-SD-004 | 05-distributed-settlement/proofs/F2_FORMAL_PROOF_SUMMARY.md:50 | term=historical identity | - endpoint economic equivalence does not establish historical identity
+- F4-SD-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:41 | term=historical identity | != historical identity
+- F4-SD-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:87 | term=historical identity | - historical identity distinctions.
+- F4-SD-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:99 | term=historical identity | economic equivalence == historical identity
+- F4-SD-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:182 | term=historical identity | finality != historical identity
+- F4-SD-004 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:25 | term=historical identity | balance equality != historical identity
+- F4-SD-004 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:31 | term=historical identity | finality != historical identity
+- F4-SD-004 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:181 | term=historical identity | ## CE-12 — Final But Historical Identity Different
+- F4-SD-004 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:190 | term=historical identity | finality != historical identity
+- F4-SD-004 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:123 | term=historical record | from historical record destruction.
+- F4-SD-004 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:141 | term=historical state | preserves prior classification as historical state.
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:130 | term=historical identity | - 03-registries/F1_COMPENSATION_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CMP-R007","Economic equivalence != historical identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:168 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:169 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:191 | term=historical identity | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:7 | pattern=historical identity | "F1-MC-006","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CMP-004","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:201 | term=historical identity | - 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:10 | pattern=historical identity | "Economic equivalence vs historical identity","NEW","F1","FORMALIZE/PROVE"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:208 | term=historical identity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:9 | pattern=historical identity | "F1-NEQ-CMP-004","COMPENSATION","NON-EQUIVALENCE","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_COMPENSATION_PROOFS.md","NO"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:209 | term=historical identity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:15 | pattern=historical identity | "F1-NEQ-REV-005","REVERSAL","NON-EQUIVALENCE","Successful reversal does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_REVERSAL_PROOFS.md","NO"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:228 | term=historical identity | - 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-REC-R007","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:247 | term=historical identity | - 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-REV-R007","Successful Reversal != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:248 | term=historical identity | - 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:9 | pattern=historical identity | "F1-REV-R008","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:311 | term=historical identity | - 03-registries/F2_07_INVARIANT_REGISTER.csv:21 | pattern=historical identity | "F2-REC-008","RECONCILIATION","Economic branch convergence does not imply historical identity.","LOCKED"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:402 | term=historical identity | - 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:15 | pattern=historical identity | "F2-NI-011","Economic endpoint equivalence does not imply historical identity.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-011"
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:448 | term=historical identity | - 03-registries/F3_INVARIANT_REGISTER.csv:11 | pattern=historical identity | F3-INV-010,FIN-FIN,Balance equality cannot establish historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:453 | term=historical identity | - 03-registries/F3_INVARIANT_REGISTER.csv:14 | pattern=finality | F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:454 | term=historical identity | - 03-registries/F3_INVARIANT_REGISTER.csv:14 | pattern=historical identity | F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:488 | term=historical identity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:11 | pattern=historical identity | F3-NE-010,balance equality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:493 | term=historical identity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:14 | pattern=finality | F3-NE-013,finality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:494 | term=historical identity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:14 | pattern=historical identity | F3-NE-013,finality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:533 | term=historical identity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:13 | pattern=finality | F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:534 | term=historical identity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:13 | pattern=historical identity | F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:718 | term=historical identity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:101 | pattern=historical identity | **Statement:** Economic restoration after compensation does not imply historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:719 | term=historical identity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:173 | pattern=historical identity | **Statement:** Successful reversal does not imply historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:740 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:86 | pattern=historical identity | - economic equivalence is not historical identity;
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:745 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:352 | pattern=historical identity | It does not establish historical identity because the history of S_2 includes the
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:760 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:655 | pattern=historical identity | ## 9.4 Economic Equivalence and Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:776 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:826 | pattern=historical identity | - that compensation restores historical identity;
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:788 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:956 | pattern=historical identity | historical identity.
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:793 | term=historical identity | - 15-publications/F1/manuscript/F1_MANUSCRIPT_CLAIM_DOCTRINE.md:72 | pattern=historical identity | ECONOMIC EQUIVALENCE -> HISTORICAL IDENTITY
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:808 | term=historical identity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:108 | pattern=historical identity | - historical identity,
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:814 | term=historical identity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:127 | pattern=historical identity | **economic equivalence != historical identity**
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:888 | term=historical identity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1133 | pattern=historical identity | Economic Equivalence != Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:914 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:51 | pattern=historical identity | != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:939 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:97 | pattern=historical identity | - historical identity distinctions.
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:940 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:109 | pattern=historical identity | economic equivalence == historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:973 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:192 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:974 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:192 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1137 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:627 | pattern=historical identity | balance equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1142 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:633 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1143 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:633 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1331 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1388 | pattern=historical identity | ## CE-12 — Final But Historical Identity Different
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1332 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1397 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1333 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1397 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1351 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1475 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1352 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1475 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2032 | term=historical identity | - finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=historical identity | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:35 | term=historical identity | - historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:47 | term=historical identity | - ledger equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:858 | term=historical record | - historical record state
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:52 | term=historical identity | Commitment does not by itself establish financial finality, authority, irreversibility, or historical identity.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:66 | term=historical record | ### F4-O-004 — Historical Record State
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:68 | term=historical record | **Historical Record State**
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:102 | term=historical identity | Reconstruction does not automatically restore historical identity or continuity.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:143 | term=historical identity | - record equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:227 | term=historical identity | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=ledger-state | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:228 | term=historical identity | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=state representation | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:242 | term=historical state | - F4-O-004 | 02-core/invariants/FIN-REC_INVARIANTS.md:33 | term=historical state | **Normative rule:** Reconstructed historical state SHALL NOT be classified as restored continuity merely because historical state can be reconstructed.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:243 | term=historical state | - F4-O-004 | 02-core/invariants/FIN-REV_INVARIANTS.md:63 | term=historical state | **Applies to:** Historical state
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:244 | term=historical state | - F4-O-004 | 02-core/OBJECT_NON_EQUIVALENCE_RULES.md:25 | term=historical state | Economic Balance Equivalence != Historical State Equivalence
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:245 | term=historical state | - F4-O-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:42 | term=historical state | Historical state has been reconstructed from surviving evidence.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:246 | term=historical record | - F4-O-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:58 | term=historical record | Observed history has been reconciled sufficiently to establish a coherent historical record.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:247 | term=historical state | - F4-O-004 | 02-core/states/FINANCIAL_STATE_MODEL.md:146 | term=historical state | REVERSED does not erase historical state or evidence.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:248 | term=historical state | - F4-O-004 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:153 | term=historical state | BALANCE RESTORED -> HISTORICAL STATE RESTORED
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:249 | term=historical state | - F4-O-004 | 02-core/transitions/FINANCIAL_TRANSITION_ALGEBRA.md:156 | term=historical state | Historical states SHALL NOT be overwritten merely because a later lifecycle exists.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:250 | term=historical identity | - F4-O-004 | 03-registries/F1_COMPENSATION_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-CMP-R007","Economic equivalence != historical identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:251 | term=historical identity | - F4-O-004 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:252 | term=historical identity | - F4-O-004 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:7 | term=historical identity | "F1-MC-006","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CMP-004","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:253 | term=historical identity | - F4-O-004 | 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:10 | term=historical identity | "Economic equivalence vs historical identity","NEW","F1","FORMALIZE/PROVE"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:254 | term=historical identity | - F4-O-004 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:9 | term=historical identity | "F1-NEQ-CMP-004","COMPENSATION","NON-EQUIVALENCE","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_COMPENSATION_PROOFS.md","NO"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:255 | term=historical identity | - F4-O-004 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:15 | term=historical identity | "F1-NEQ-REV-005","REVERSAL","NON-EQUIVALENCE","Successful reversal does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_REVERSAL_PROOFS.md","NO"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:256 | term=historical identity | - F4-O-004 | 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-REC-R007","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:257 | term=historical identity | - F4-O-004 | 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-REV-R007","Successful Reversal != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:258 | term=historical identity | - F4-O-004 | 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:9 | term=historical identity | "F1-REV-R008","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:259 | term=historical identity | - F4-O-004 | 03-registries/F2_07_INVARIANT_REGISTER.csv:21 | term=historical identity | "F2-REC-008","RECONCILIATION","Economic branch convergence does not imply historical identity.","LOCKED"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:260 | term=historical identity | - F4-O-004 | 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:15 | term=historical identity | "F2-NI-011","Economic endpoint equivalence does not imply historical identity.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-011"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:261 | term=historical identity | - F4-O-004 | 03-registries/F3_INVARIANT_REGISTER.csv:11 | term=historical identity | F3-INV-010,FIN-FIN,Balance equality cannot establish historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:262 | term=historical identity | - F4-O-004 | 03-registries/F3_INVARIANT_REGISTER.csv:14 | term=historical identity | F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:263 | term=historical identity | - F4-O-004 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:11 | term=historical identity | F3-NE-010,balance equality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:264 | term=historical identity | - F4-O-004 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:14 | term=historical identity | F3-NE-013,finality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:265 | term=historical identity | - F4-O-004 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:13 | term=historical identity | F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:266 | term=historical identity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:29 | term=historical identity | Economic equivalence != historical identity.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:267 | term=historical identity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:166 | term=historical identity | - no material historical identity discontinuity occurred
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:268 | term=historical identity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:206 | term=historical identity | - material historical identity break
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:269 | term=historical state | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:218 | term=historical state | historical state and evidence were later rebuilt to establish a usable
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:270 | term=historical state | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:263 | term=historical state | Continuity concerns historical state lineage.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:271 | term=historical identity | - F4-O-004 | 05-distributed-settlement/formal/F2_FORK_DIVERGENCE_SEMANTICS.md:147 | term=historical identity | this does not establish historical identity.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:272 | term=historical identity | - F4-O-004 | 05-distributed-settlement/inheritance/F2_INHERITED_OBJECT_MAP.md:33 | term=historical identity | | economic equivalence != historical identity | inherited invariant | F1 |
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:273 | term=historical state | - F4-O-004 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:182 | term=historical state | Historical state reconstructed
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:274 | term=historical identity | - F4-O-004 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:220 | term=historical identity | ## CE-011 — Endpoint Equivalence != Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:275 | term=historical identity | - F4-O-004 | 05-distributed-settlement/proofs/F2_FORMAL_PROOF_SUMMARY.md:50 | term=historical identity | - endpoint economic equivalence does not establish historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:276 | term=historical identity | - F4-O-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:41 | term=historical identity | != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:277 | term=historical identity | - F4-O-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:87 | term=historical identity | - historical identity distinctions.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:278 | term=historical identity | - F4-O-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:99 | term=historical identity | economic equivalence == historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:279 | term=historical identity | - F4-O-004 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:182 | term=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:280 | term=historical identity | - F4-O-004 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:25 | term=historical identity | balance equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:281 | term=historical identity | - F4-O-004 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:31 | term=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:282 | term=historical identity | - F4-O-004 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:181 | term=historical identity | ## CE-12 — Final But Historical Identity Different
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:283 | term=historical identity | - F4-O-004 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:190 | term=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:284 | term=historical record | - F4-O-004 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:123 | term=historical record | from historical record destruction.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:285 | term=historical state | - F4-O-004 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:141 | term=historical state | preserves prior classification as historical state.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:286 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:130 | term=historical identity | - 03-registries/F1_COMPENSATION_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CMP-R007","Economic equivalence != historical identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:287 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:168 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:288 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:169 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:289 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:191 | term=historical identity | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:7 | pattern=historical identity | "F1-MC-006","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CMP-004","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:290 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:201 | term=historical identity | - 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:10 | pattern=historical identity | "Economic equivalence vs historical identity","NEW","F1","FORMALIZE/PROVE"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:291 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:208 | term=historical identity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:9 | pattern=historical identity | "F1-NEQ-CMP-004","COMPENSATION","NON-EQUIVALENCE","Economic restoration after compensation does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_COMPENSATION_PROOFS.md","NO"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:292 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:209 | term=historical identity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:15 | pattern=historical identity | "F1-NEQ-REV-005","REVERSAL","NON-EQUIVALENCE","Successful reversal does not imply historical identity","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_REVERSAL_PROOFS.md","NO"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:293 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:228 | term=historical identity | - 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-REC-R007","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:294 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:247 | term=historical identity | - 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-REV-R007","Successful Reversal != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:295 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:248 | term=historical identity | - 03-registries/F1_REVERSAL_RELATION_REGISTRY.csv:9 | pattern=historical identity | "F1-REV-R008","Economic Equivalence != Historical Identity","YES"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:296 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:311 | term=historical identity | - 03-registries/F2_07_INVARIANT_REGISTER.csv:21 | pattern=historical identity | "F2-REC-008","RECONCILIATION","Economic branch convergence does not imply historical identity.","LOCKED"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:297 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:402 | term=historical identity | - 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:15 | pattern=historical identity | "F2-NI-011","Economic endpoint equivalence does not imply historical identity.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-011"
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:298 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:448 | term=historical identity | - 03-registries/F3_INVARIANT_REGISTER.csv:11 | pattern=historical identity | F3-INV-010,FIN-FIN,Balance equality cannot establish historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:299 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:453 | term=historical identity | - 03-registries/F3_INVARIANT_REGISTER.csv:14 | pattern=finality | F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:300 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:454 | term=historical identity | - 03-registries/F3_INVARIANT_REGISTER.csv:14 | pattern=historical identity | F3-INV-013,FIN-FIN,Finality does not imply historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:301 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:488 | term=historical identity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:11 | pattern=historical identity | F3-NE-010,balance equality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:302 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:493 | term=historical identity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:14 | pattern=finality | F3-NE-013,finality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:303 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:494 | term=historical identity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:14 | pattern=historical identity | F3-NE-013,finality,historical identity,REQUIRED
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:304 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:533 | term=historical identity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:13 | pattern=finality | F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:305 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:534 | term=historical identity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:13 | pattern=historical identity | F3-PO-012,NON-EQUIV,Prove finality is insufficient for historical identity,OPEN
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:306 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:718 | term=historical identity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:101 | pattern=historical identity | **Statement:** Economic restoration after compensation does not imply historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:307 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:719 | term=historical identity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:173 | pattern=historical identity | **Statement:** Successful reversal does not imply historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:308 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:740 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:86 | pattern=historical identity | - economic equivalence is not historical identity;
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:309 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:745 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:352 | pattern=historical identity | It does not establish historical identity because the history of S_2 includes the
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:310 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:760 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:655 | pattern=historical identity | ## 9.4 Economic Equivalence and Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:311 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:776 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:826 | pattern=historical identity | - that compensation restores historical identity;
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:312 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:788 | term=historical identity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:956 | pattern=historical identity | historical identity.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:313 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:793 | term=historical identity | - 15-publications/F1/manuscript/F1_MANUSCRIPT_CLAIM_DOCTRINE.md:72 | pattern=historical identity | ECONOMIC EQUIVALENCE -> HISTORICAL IDENTITY
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:314 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:808 | term=historical identity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:108 | pattern=historical identity | - historical identity,
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:315 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:814 | term=historical identity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:127 | pattern=historical identity | **economic equivalence != historical identity**
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:316 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:888 | term=historical identity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1133 | pattern=historical identity | Economic Equivalence != Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:317 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:914 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:51 | pattern=historical identity | != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:318 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:939 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:97 | pattern=historical identity | - historical identity distinctions.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:319 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:940 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:109 | pattern=historical identity | economic equivalence == historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:320 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:973 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:192 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:321 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:974 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:192 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:322 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1137 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:627 | pattern=historical identity | balance equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:323 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1142 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:633 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:324 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1143 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:633 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:325 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1331 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1388 | pattern=historical identity | ## CE-12 — Final But Historical Identity Different
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:326 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1332 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1397 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:327 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1333 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1397 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:328 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1351 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1475 | pattern=finality | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:329 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1352 | term=historical identity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1475 | pattern=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:330 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2032 | term=historical identity | - finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:331 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=historical identity | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:332 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:35 | term=historical identity | - historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:333 | term=historical identity | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:47 | term=historical identity | - ledger equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:334 | term=historical record | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:858 | term=historical record | - historical record state
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:335 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:101 | term=historical identity | **Statement:** Economic restoration after compensation does not imply historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:336 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:173 | term=historical identity | **Statement:** Successful reversal does not imply historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:337 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:86 | term=historical identity | - economic equivalence is not historical identity;
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:338 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:352 | term=historical identity | It does not establish historical identity because the history of S_2 includes the
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:339 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:655 | term=historical identity | ## 9.4 Economic Equivalence and Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:340 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:826 | term=historical identity | - that compensation restores historical identity;
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:341 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:956 | term=historical identity | historical identity.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:342 | term=historical identity | - F4-O-004 | 15-publications/F1/manuscript/F1_MANUSCRIPT_CLAIM_DOCTRINE.md:72 | term=historical identity | ECONOMIC EQUIVALENCE -> HISTORICAL IDENTITY
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:343 | term=historical identity | - F4-O-004 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:108 | term=historical identity | - historical identity,
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:344 | term=historical identity | - F4-O-004 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:127 | term=historical identity | **economic equivalence != historical identity**
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:345 | term=historical identity | - F4-O-004 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1133 | term=historical identity | Economic Equivalence != Historical Identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:346 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:51 | term=historical identity | != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:347 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:97 | term=historical identity | - historical identity distinctions.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:348 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:109 | term=historical identity | economic equivalence == historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:349 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:192 | term=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:350 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:627 | term=historical identity | balance equality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:351 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:633 | term=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:352 | term=historical record | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1130 | term=historical record | from historical record destruction.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:353 | term=historical state | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1148 | term=historical state | preserves prior classification as historical state.
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:354 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1388 | term=historical identity | ## CE-12 — Final But Historical Identity Different
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:355 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1397 | term=historical identity | finality != historical identity
+- F4-SD-004 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:356 | term=historical identity | - F4-O-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1475 | term=historical identity | finality != historical identity
+- F4-SD-004 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:101 | term=historical identity | **Statement:** Economic restoration after compensation does not imply historical identity
+- F4-SD-004 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:173 | term=historical identity | **Statement:** Successful reversal does not imply historical identity
+- F4-SD-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:86 | term=historical identity | - economic equivalence is not historical identity;
+- F4-SD-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:352 | term=historical identity | It does not establish historical identity because the history of S_2 includes the
+- F4-SD-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:655 | term=historical identity | ## 9.4 Economic Equivalence and Historical Identity
+- F4-SD-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:826 | term=historical identity | - that compensation restores historical identity;
+- F4-SD-004 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:956 | term=historical identity | historical identity.
+- F4-SD-004 | 15-publications/F1/manuscript/F1_MANUSCRIPT_CLAIM_DOCTRINE.md:72 | term=historical identity | ECONOMIC EQUIVALENCE -> HISTORICAL IDENTITY
+- F4-SD-004 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:108 | term=historical identity | - historical identity,
+- F4-SD-004 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:127 | term=historical identity | **economic equivalence != historical identity**
+- F4-SD-004 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1133 | term=historical identity | Economic Equivalence != Historical Identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:51 | term=historical identity | != historical identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:97 | term=historical identity | - historical identity distinctions.
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:109 | term=historical identity | economic equivalence == historical identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:192 | term=historical identity | finality != historical identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:627 | term=historical identity | balance equality != historical identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:633 | term=historical identity | finality != historical identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1130 | term=historical record | from historical record destruction.
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1148 | term=historical state | preserves prior classification as historical state.
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1388 | term=historical identity | ## CE-12 — Final But Historical Identity Different
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1397 | term=historical identity | finality != historical identity
+- F4-SD-004 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1475 | term=historical identity | finality != historical identity
+- F4-SD-005 | 02-core/invariants/FIN-FIN_INVARIANTS.md:73 | term=reopened | ## FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-005 | 02-core/invariants/FIN-FIN_INVARIANTS.md:77 | term=reopened | **Applies to:** Reopened finality
+- F4-SD-005 | 02-core/states/FINALITY_CLASSIFICATION_MODEL.md:20 | term=reopened | REOPENED,
+- F4-SD-005 | 02-core/states/FINALITY_CLASSIFICATION_MODEL.md:49 | term=reopened | ### REOPENED
+- F4-SD-005 | 02-core/transitions/FINANCIAL_TRANSITION_ALGEBRA.md:154 | term=reopening | New evidence, newly authorized remediation, legal reopening, or externally authoritative transition may create a new execution event.
+- F4-SD-005 | 03-registries/F3_ADVERSARIAL_VERIFICATION_MATRIX.csv:14 | term=reopening | F3-ADV-013,History,reopening==historical-erasure,BLOCK,REGISTERED
+- F4-SD-005 | 03-registries/F3_INVARIANT_REGISTER.csv:16 | term=reopening | F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+- F4-SD-005 | 03-registries/F3_INVARIANT_REGISTER.csv:17 | term=reopening | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-005 | 03-registries/F3_INVARIANT_REGISTER.csv:28 | term=reopenability | F3-INV-027,FIN-FIN,Reopenability must be explicitly classified rather than inferred from closure alone,OPEN
+- F4-SD-005 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:16 | term=reopening | F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+- F4-SD-005 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | term=reopening | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-005 | 03-registries/F3_OBJECT_REGISTRY.csv:12 | term=reopenability | F3-O-011,Reopenability State,F3,FORMALIZED
+- F4-SD-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | term=reopening | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:26 | term=reopened | F3-PO-025,TRANSITION,Prove reopened state requires explicit admissible transition,OPEN
+- F4-SD-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | term=reopening | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-005 | 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | term=reopening | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-005 | 03-registries/F3_TRANSITION_REGISTRY.csv:4 | term=reopened | F3-T-003,OBLIGATION,OBLIGATION_SATISFIED,OBLIGATION_REOPENED,FORMALIZED
+- F4-SD-005 | 03-registries/F3_TRANSITION_REGISTRY.csv:17 | term=reopened | F3-T-016,FINALITY,FINALITY_DOMAIN_COMPLETE,FINALITY_REOPENED,FORMALIZED
+- F4-SD-005 | 03-registries/F3_TRANSITION_REGISTRY.csv:19 | term=reopened | F3-T-018,FINALITY,FINALITY_REOPENED,FINALITY_PENDING,FORMALIZED
+- F4-SD-005 | 03-registries/F3_TRANSITION_REGISTRY.csv:24 | term=reopened | F3-T-023,CLOSURE,CLOSURE_COMPLETE,CLOSURE_REOPENED,FORMALIZED
+- F4-SD-005 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:70 | term=reopenability | 11. reopenability;
+- F4-SD-005 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:157 | term=reopenability | - reopenability predicate;
+- F4-SD-005 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:198 | term=reopenability | - reopenability;
+- F4-SD-005 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:214 | term=reopened | - reopened state invalidates prior current-final classification without erasing historical classification;
+- F4-SD-005 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:97 | term=reopenability | ### F3-O-011 — Reopenability State
+- F4-SD-005 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:99 | term=reopened | The current classification of whether a previously closed or final state may validly be reopened under governing rules.
+- F4-SD-005 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:163 | term=reopened | If a previously closed state is validly reopened:
+- F4-SD-005 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:35 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:37 | term=reopening | reopening != erasure of historical finality
+- F4-SD-005 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:16 | term=reopened | OBLIGATION_REOPENED,
+- F4-SD-005 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:46 | term=reopened | FINALITY_REOPENED,
+- F4-SD-005 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:60 | term=reopened | CLOSURE_REOPENED,
+- F4-SD-005 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:62 | term=reopened | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-005 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:101 | term=reopened | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-005 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:107 | term=reopened | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-005 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:122 | term=reopened | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-005 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:148 | term=reopening | Reopening or invalidation does not erase the earlier classification event.
+- F4-SD-005 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:220 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:116 | term=reopening | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:121 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:127 | term=reopening | Therefore reopening changes current classification without erasing the historical classification event.
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:180 | term=reopening | ## F3-PO-025 — Reopening Requires Explicit Admissible Transition
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:183 | term=reopened | -> CLOSURE_REOPENED
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:188 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:192 | term=reopening | Reopening is not inferred solely from new activity.
+- F4-SD-005 | 06-f3-discovery/runtime/f3_runtime/engine.py:51 | term=reopened | raise ValueError("Only a currently final state may be reopened.")
+- F4-SD-005 | 06-f3-discovery/runtime/f3_runtime/engine.py:55 | term=reopened | classification="FINALITY_REOPENED",
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:431 | term=reopening | - 03-registries/F3_ADVERSARIAL_VERIFICATION_MATRIX.csv:14 | pattern=reopen | F3-ADV-013,History,reopening==historical-erasure,BLOCK,REGISTERED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:457 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:16 | pattern=closure | F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:458 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:16 | pattern=reopen | F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:459 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=finality | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:460 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=reopen | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:474 | term=reopenability | - 03-registries/F3_INVARIANT_REGISTER.csv:28 | pattern=closure | F3-INV-027,FIN-FIN,Reopenability must be explicitly classified rather than inferred from closure alone,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:475 | term=reopenability | - 03-registries/F3_INVARIANT_REGISTER.csv:28 | pattern=reopen | F3-INV-027,FIN-FIN,Reopenability must be explicitly classified rather than inferred from closure alone,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:497 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:16 | pattern=closure | F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:498 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:16 | pattern=reopen | F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:499 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=finality | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:500 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=reopen | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:514 | term=reopenability | - 03-registries/F3_OBJECT_REGISTRY.csv:12 | pattern=reopen | F3-O-011,Reopenability State,F3,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:547 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=finality | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:548 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=reopen | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:551 | term=reopened | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:26 | pattern=reopen | F3-PO-025,TRANSITION,Prove reopened state requires explicit admissible transition,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:559 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=finality | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:560 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=reopen | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:566 | term=reopening | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=finality | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:567 | term=reopening | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=reopen | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:571 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:4 | pattern=obligation | F3-T-003,OBLIGATION,OBLIGATION_SATISFIED,OBLIGATION_REOPENED,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:572 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:4 | pattern=reopen | F3-T-003,OBLIGATION,OBLIGATION_SATISFIED,OBLIGATION_REOPENED,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:585 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:17 | pattern=finality | F3-T-016,FINALITY,FINALITY_DOMAIN_COMPLETE,FINALITY_REOPENED,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:586 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:17 | pattern=reopen | F3-T-016,FINALITY,FINALITY_DOMAIN_COMPLETE,FINALITY_REOPENED,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:588 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:19 | pattern=finality | F3-T-018,FINALITY,FINALITY_REOPENED,FINALITY_PENDING,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:589 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:19 | pattern=reopen | F3-T-018,FINALITY,FINALITY_REOPENED,FINALITY_PENDING,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:594 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:24 | pattern=closure | F3-T-023,CLOSURE,CLOSURE_COMPLETE,CLOSURE_REOPENED,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:595 | term=reopened | - 03-registries/F3_TRANSITION_REGISTRY.csv:24 | pattern=reopen | F3-T-023,CLOSURE,CLOSURE_COMPLETE,CLOSURE_REOPENED,FORMALIZED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:932 | term=reopenability | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:80 | pattern=reopen | 11. reopenability;
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:959 | term=reopenability | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:167 | pattern=reopen | - reopenability predicate;
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:984 | term=reopenability | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:208 | pattern=reopen | - reopenability;
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:996 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:224 | pattern=reopen | - reopened state invalidates prior current-final classification without erasing historical classification;
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1044 | term=reopenability | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:377 | pattern=reopen | ### F3-O-011 — Reopenability State
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1045 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:379 | pattern=reopen | The current classification of whether a previously closed or final state may validly be reopened under governing rules.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1060 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:423 | pattern=obligation | OBLIGATION_REOPENED,
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1061 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:423 | pattern=reopen | OBLIGATION_REOPENED,
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1080 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:453 | pattern=finality | FINALITY_REOPENED,
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1081 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:453 | pattern=reopen | FINALITY_REOPENED,
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1089 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:467 | pattern=closure | CLOSURE_REOPENED,
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1090 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:467 | pattern=reopen | CLOSURE_REOPENED,
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1146 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:637 | pattern=closure | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1147 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:637 | pattern=reopen | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1148 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=finality | reopening != erasure of historical finality
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1149 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=reopen | reopening != erasure of historical finality
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1158 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:711 | pattern=obligation | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1159 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:711 | pattern=reopen | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1172 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:750 | pattern=finality | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1173 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:750 | pattern=reopen | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1175 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:756 | pattern=finality | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1176 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:756 | pattern=reopen | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1181 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:771 | pattern=closure | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1182 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:771 | pattern=reopen | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1190 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:797 | pattern=reopen | Reopening or invalidation does not erase the earlier classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1224 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:976 | pattern=reopen | If a previously closed state is validly reopened:
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1272 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=finality | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1273 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=reopen | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1275 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1128 | pattern=finality | -> FINALITY_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1276 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1128 | pattern=reopen | -> FINALITY_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1278 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1134 | pattern=reopen | Therefore reopening changes current classification without erasing the historical classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1288 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1187 | pattern=reopen | ## F3-PO-025 — Reopening Requires Explicit Admissible Transition
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1290 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1190 | pattern=closure | -> CLOSURE_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1291 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1190 | pattern=reopen | -> CLOSURE_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1293 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1195 | pattern=finality | -> FINALITY_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1294 | term=reopened | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1195 | pattern=reopen | -> FINALITY_REOPENED
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1295 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1199 | pattern=reopen | Reopening is not inferred solely from new activity.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1341 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1427 | pattern=closure | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1342 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1427 | pattern=reopen | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1508 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:17 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1509 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:17 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1512 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:21 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1513 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:21 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1515 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1516 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1517 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1521 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:41 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1522 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:41 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1525 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:45 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1526 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:45 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1528 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1529 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1530 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1535 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:65 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1536 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:65 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1539 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:69 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1540 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:69 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1542 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1543 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1544 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1549 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:89 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1550 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:89 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1553 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:93 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1554 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:93 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1556 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1557 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1558 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1559 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:107 | pattern=finality | ## PO-FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1560 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:107 | pattern=reopen | ## PO-FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1563 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:113 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1564 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:113 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1567 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:117 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1568 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:117 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1570 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1571 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1572 | term=reopened | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1939 | term=reopening | - tests/f3/test_f3_runtime.py:87 | pattern=finality | def test_reopening_preserves_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1940 | term=reopening | - tests/f3/test_f3_runtime.py:87 | pattern=reopen | def test_reopening_preserves_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1942 | term=reopened | - tests/f3/test_f3_runtime.py:89 | pattern=finality | reopened = reopen_finality(final)
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1943 | term=reopened | - tests/f3/test_f3_runtime.py:89 | pattern=reopen | reopened = reopen_finality(final)
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1944 | term=reopened | - tests/f3/test_f3_runtime.py:91 | pattern=finality | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1945 | term=reopened | - tests/f3/test_f3_runtime.py:91 | pattern=reopen | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1946 | term=reopened | - tests/f3/test_f3_runtime.py:92 | pattern=finality | assert reopened.historical_finality_preserved is True
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1947 | term=reopened | - tests/f3/test_f3_runtime.py:92 | pattern=reopen | assert reopened.historical_finality_preserved is True
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2007 | term=reopening | - tests/f3_adversarial/test_f3_adversarial.py:160 | pattern=finality | def test_reopening_does_not_erase_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2008 | term=reopening | - tests/f3_adversarial/test_f3_adversarial.py:160 | pattern=reopen | def test_reopening_does_not_erase_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2010 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:162 | pattern=finality | reopened = reopen_finality(final)
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2011 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:162 | pattern=reopen | reopened = reopen_finality(final)
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2012 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:164 | pattern=finality | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2013 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:164 | pattern=reopen | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2014 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:165 | pattern=finality | assert reopened.historical_finality_preserved is True
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2015 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:165 | pattern=reopen | assert reopened.historical_finality_preserved is True
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2016 | term=reopened | - tests/f3_adversarial/test_f3_adversarial.py:168 | pattern=reopen | def test_non_final_state_cannot_be_reopened_as_if_previously_final():
+- F4-SD-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2035 | term=reopening | - reopening != historical erasure
+- F4-SD-005 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:50 | term=reopening | - record reopening != historical erasure
+- F4-SD-005 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:859 | term=reopening | - record reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:72 | term=reopened | Historical persistence does not imply that the state remains currently operative, admissible, authoritative, or unreopened.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:76 | term=reopening | ### F4-O-005 — Record Reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:78 | term=reopening | **Record Reopening**
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:80 | term=reopening | A typed reopening object representing that a previously committed or finality-associated record state has entered a permitted or required reconsideration path.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:82 | term=reopening | Reopening does not erase the historical existence of the earlier record state.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:100 | term=reopening | A typed reconstruction object representing the restoration or derivation of record state from admissible evidence after loss, contradiction, corruption, reopening, or incomplete persistence.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:145 | term=reopening | - record reopening != historical erasure
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:167 | term=reopening | 6. reopening;
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:187 | term=reopenability | - reopenability state
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:357 | term=reopening | - F4-O-005 | 02-core/transitions/FINANCIAL_TRANSITION_ALGEBRA.md:154 | term=reopening | New evidence, newly authorized remediation, legal reopening, or externally authoritative transition may create a new execution event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:358 | term=reopening | - F4-O-005 | 03-registries/F3_ADVERSARIAL_VERIFICATION_MATRIX.csv:14 | term=reopening | F3-ADV-013,History,reopening==historical-erasure,BLOCK,REGISTERED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:359 | term=reopening | - F4-O-005 | 03-registries/F3_INVARIANT_REGISTER.csv:16 | term=reopening | F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:360 | term=reopening | - F4-O-005 | 03-registries/F3_INVARIANT_REGISTER.csv:17 | term=reopening | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:361 | term=reopening | - F4-O-005 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:16 | term=reopening | F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:362 | term=reopening | - F4-O-005 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | term=reopening | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:363 | term=reopening | - F4-O-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | term=reopening | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:364 | term=reopening | - F4-O-005 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | term=reopening | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:365 | term=reopening | - F4-O-005 | 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | term=reopening | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:366 | term=reopening | - F4-O-005 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:35 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:367 | term=reopening | - F4-O-005 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:37 | term=reopening | reopening != erasure of historical finality
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:368 | term=reopening | - F4-O-005 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:148 | term=reopening | Reopening or invalidation does not erase the earlier classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:369 | term=reopening | - F4-O-005 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:220 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:370 | term=reopening | - F4-O-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:116 | term=reopening | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:371 | term=reopening | - F4-O-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:127 | term=reopening | Therefore reopening changes current classification without erasing the historical classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:372 | term=reopening | - F4-O-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:180 | term=reopening | ## F3-PO-025 — Reopening Requires Explicit Admissible Transition
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:373 | term=reopening | - F4-O-005 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:192 | term=reopening | Reopening is not inferred solely from new activity.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:374 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:431 | term=reopening | - 03-registries/F3_ADVERSARIAL_VERIFICATION_MATRIX.csv:14 | pattern=reopen | F3-ADV-013,History,reopening==historical-erasure,BLOCK,REGISTERED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:375 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:457 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:16 | pattern=closure | F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:376 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:458 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:16 | pattern=reopen | F3-INV-015,FIN-FIN,Consequential closure does not imply impossibility of reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:377 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:459 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=finality | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:378 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:460 | term=reopening | - 03-registries/F3_INVARIANT_REGISTER.csv:17 | pattern=reopen | F3-INV-016,FIN-FIN,Reopening does not erase historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:379 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:497 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:16 | pattern=closure | F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:380 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:498 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:16 | pattern=reopen | F3-NE-015,consequential closure,impossibility of reopening,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:381 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:499 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=finality | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:382 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:500 | term=reopening | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:17 | pattern=reopen | F3-NE-016,reopening,erasure of historical finality,REQUIRED
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:383 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:547 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=finality | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:384 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:548 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:22 | pattern=reopen | F3-PO-021,HISTORY,Prove reopening preserves historical finality evidence,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:385 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:559 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=finality | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:386 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:560 | term=reopening | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=reopen | F3-PO-039,RUNTIME-CONF,Verify reference classifier preserves historical finality after reopening,OPEN
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:387 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:566 | term=reopening | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=finality | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:388 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:567 | term=reopening | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=reopen | F3-PO-039,Preserve historical finality after reopening,tests/f3/test_f3_runtime.py::test_reopening_preserves_historical_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:389 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1146 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:637 | pattern=closure | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:390 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1147 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:637 | pattern=reopen | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:391 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1148 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=finality | reopening != erasure of historical finality
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:392 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1149 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | pattern=reopen | reopening != erasure of historical finality
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:393 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1190 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:797 | pattern=reopen | Reopening or invalidation does not erase the earlier classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:394 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1272 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=finality | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:395 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1273 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | pattern=reopen | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:396 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1278 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1134 | pattern=reopen | Therefore reopening changes current classification without erasing the historical classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:397 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1288 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1187 | pattern=reopen | ## F3-PO-025 — Reopening Requires Explicit Admissible Transition
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:398 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1295 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1199 | pattern=reopen | Reopening is not inferred solely from new activity.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:399 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1341 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1427 | pattern=closure | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:400 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1342 | term=reopening | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1427 | pattern=reopen | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:401 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1508 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:17 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:402 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1509 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:17 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:403 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1512 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:21 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:404 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1513 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:21 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:405 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1521 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:41 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:406 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1522 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:41 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:407 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1525 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:45 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:408 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1526 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:45 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:409 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1535 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:65 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:410 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1536 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:65 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:411 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1539 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:69 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:412 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1540 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:69 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:413 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1549 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:89 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:414 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1550 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:89 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:415 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1553 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:93 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:416 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1554 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:93 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:417 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1563 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:113 | pattern=finality | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:418 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1564 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:113 | pattern=reopen | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:419 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1567 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:117 | pattern=finality | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:420 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1568 | term=reopening | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:117 | pattern=reopen | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:421 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1939 | term=reopening | - tests/f3/test_f3_runtime.py:87 | pattern=finality | def test_reopening_preserves_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:422 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1940 | term=reopening | - tests/f3/test_f3_runtime.py:87 | pattern=reopen | def test_reopening_preserves_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:423 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2007 | term=reopening | - tests/f3_adversarial/test_f3_adversarial.py:160 | pattern=finality | def test_reopening_does_not_erase_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:424 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2008 | term=reopening | - tests/f3_adversarial/test_f3_adversarial.py:160 | pattern=reopen | def test_reopening_does_not_erase_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:425 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2035 | term=reopening | - reopening != historical erasure
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:426 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:50 | term=record reopening | - record reopening != historical erasure
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:427 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:50 | term=reopening | - record reopening != historical erasure
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:428 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:859 | term=record reopening | - record reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:429 | term=reopening | - F4-O-005 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:859 | term=reopening | - record reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:430 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:637 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:431 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | term=reopening | reopening != erasure of historical finality
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:432 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:797 | term=reopening | Reopening or invalidation does not erase the earlier classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:433 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | term=reopening | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:434 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1134 | term=reopening | Therefore reopening changes current classification without erasing the historical classification event.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:435 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1187 | term=reopening | ## F3-PO-025 — Reopening Requires Explicit Admissible Transition
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:436 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1199 | term=reopening | Reopening is not inferred solely from new activity.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:437 | term=reopening | - F4-O-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1427 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:438 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:17 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:439 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:21 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:440 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:41 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:441 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:45 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:442 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:65 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:443 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:69 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:444 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:89 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:445 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:93 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:446 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:113 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:447 | term=reopening | - F4-O-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:117 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:448 | term=reopening | - F4-O-005 | tests/f3/test_f3_runtime.py:87 | term=reopening | def test_reopening_preserves_historical_finality():
+- F4-SD-005 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:449 | term=reopening | - F4-O-005 | tests/f3_adversarial/test_f3_adversarial.py:160 | term=reopening | def test_reopening_does_not_erase_historical_finality():
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:80 | term=reopenability | 11. reopenability;
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:167 | term=reopenability | - reopenability predicate;
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:208 | term=reopenability | - reopenability;
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:224 | term=reopened | - reopened state invalidates prior current-final classification without erasing historical classification;
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:377 | term=reopenability | ### F3-O-011 — Reopenability State
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:379 | term=reopened | The current classification of whether a previously closed or final state may validly be reopened under governing rules.
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:423 | term=reopened | OBLIGATION_REOPENED,
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:453 | term=reopened | FINALITY_REOPENED,
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:467 | term=reopened | CLOSURE_REOPENED,
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:637 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:639 | term=reopening | reopening != erasure of historical finality
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:711 | term=reopened | OBLIGATION_SATISFIED -> OBLIGATION_REOPENED
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:750 | term=reopened | FINALITY_DOMAIN_COMPLETE -> FINALITY_REOPENED
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:756 | term=reopened | FINALITY_REOPENED -> FINALITY_PENDING
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:771 | term=reopened | CLOSURE_COMPLETE -> CLOSURE_REOPENED
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:797 | term=reopening | Reopening or invalidation does not erase the earlier classification event.
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:976 | term=reopened | If a previously closed state is validly reopened:
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1123 | term=reopening | ## F3-PO-021 — Reopening Preserves Historical Finality Evidence
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1128 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1134 | term=reopening | Therefore reopening changes current classification without erasing the historical classification event.
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1187 | term=reopening | ## F3-PO-025 — Reopening Requires Explicit Admissible Transition
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1190 | term=reopened | -> CLOSURE_REOPENED
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1195 | term=reopened | -> FINALITY_REOPENED
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1199 | term=reopening | Reopening is not inferred solely from new activity.
+- F4-SD-005 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1427 | term=reopening | consequential closure != impossibility of reopening
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:17 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:21 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:41 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:45 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:65 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:69 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:89 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:93 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:107 | term=reopened | ## PO-FIN-FIN-005 — Reopened Finality Requires Explicit Authority
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:113 | term=reopening | **Required premises:** Settlement history; finality model; governing conditions; evidence; reopening authority if applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:117 | term=reopening | **Evidence requirement:** Finality-classification record; conditions; evidence basis; reopening evidence where applicable.
+- F4-SD-005 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | term=reopened | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-005 | tests/f3/test_f3_runtime.py:87 | term=reopening | def test_reopening_preserves_historical_finality():
+- F4-SD-005 | tests/f3/test_f3_runtime.py:89 | term=reopened | reopened = reopen_finality(final)
+- F4-SD-005 | tests/f3/test_f3_runtime.py:91 | term=reopened | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-005 | tests/f3/test_f3_runtime.py:92 | term=reopened | assert reopened.historical_finality_preserved is True
+- F4-SD-005 | tests/f3_adversarial/test_f3_adversarial.py:160 | term=reopening | def test_reopening_does_not_erase_historical_finality():
+- F4-SD-005 | tests/f3_adversarial/test_f3_adversarial.py:162 | term=reopened | reopened = reopen_finality(final)
+- F4-SD-005 | tests/f3_adversarial/test_f3_adversarial.py:164 | term=reopened | assert reopened.classification == "FINALITY_REOPENED"
+- F4-SD-005 | tests/f3_adversarial/test_f3_adversarial.py:165 | term=reopened | assert reopened.historical_finality_preserved is True
+- F4-SD-005 | tests/f3_adversarial/test_f3_adversarial.py:168 | term=reopened | def test_non_final_state_cannot_be_reopened_as_if_previously_final():
+- F4-SD-006 | 02-core/components/FIN-COMP-030_Jurisdiction_Conflict_Resolver.md:1 | term=conflict | # FIN-COMP-030 — Jurisdiction Conflict Resolver
+- F4-SD-006 | 02-core/components/FIN-COMP-030_Jurisdiction_Conflict_Resolver.md:9 | term=conflict | Represent and evaluate conflicting jurisdictional constraints without silently collapsing them.
+- F4-SD-006 | 02-core/components/FIN-COMP-030_Jurisdiction_Conflict_Resolver.md:17 | term=conflict | JurisdictionConflictAssessment
+- F4-SD-006 | 02-core/components/FIN-COMP-030_Jurisdiction_Conflict_Resolver.md:21 | term=conflict | Jurisdiction conflict state
+- F4-SD-006 | 02-core/interfaces/FIN-IF-028_JurisdictionConflictInterface.md:1 | term=conflict | # FIN-IF-028 — JurisdictionConflictInterface
+- F4-SD-006 | 02-core/interfaces/FIN-IF-028_JurisdictionConflictInterface.md:17 | term=conflict | JurisdictionConflictAssessment
+- F4-SD-006 | 02-core/invariants/FIN-JUR_INVARIANTS.md:59 | term=conflict | ## FIN-JUR-004 — Jurisdiction Conflict Must Be Explicit
+- F4-SD-006 | 02-core/invariants/FIN-JUR_INVARIANTS.md:61 | term=conflict | **Normative rule:** Conflicting applicable jurisdictional constraints SHALL remain explicitly representable and SHALL NOT be silently collapsed.
+- F4-SD-006 | 02-core/invariants/FIN-JUR_INVARIANTS.md:63 | term=conflict | **Applies to:** Jurisdiction conflict
+- F4-SD-006 | 02-core/states/EFFECT_STATE_MODEL.md:57 | term=conflict | Multiple heterogeneous or conflicting effects exist and cannot be represented honestly as a single simpler effect class.
+- F4-SD-006 | 02-core/states/FINALITY_CLASSIFICATION_MODEL.md:47 | term=conflict | Competing finality claims or unresolved authoritative conflicts exist.
+- F4-SD-006 | 03-registries/COMPONENT_REGISTRY.csv:26 | term=conflict | "FI-JUR-002","Jurisdiction Conflict Controller","JURISDICTION","Detect unresolved conflicting jurisdictional constraints and prevent silent permissive collapse.","JurisdictionState set;AuthorityReference;PolicyState","Resolved constraint set or BLOCK/INDETERMINATE","UAA;AOMS","F7"
+- F4-SD-006 | 03-registries/F1_ADVERSARIAL_VERIFICATION_MATRIX.csv:13 | term=conflict | "F1-ADV-012","EFFECT-CLASSIFIER","Supply conflicting occurrence and non-occurrence evidence","INDETERMINATE","INDETERMINATE","PASS"
+- F4-SD-006 | 03-registries/F1_EFFECT_CLASSIFICATION_RULES.csv:4 | term=contradiction | "F1-ECLASS-003","At least one intended-corresponding effect plus at least one NO_EFFECT/PARTIAL_MATCH and no dominant contradiction","E_PARTIAL"
+- F4-SD-006 | 03-registries/F1_RECONCILIATION_CASES.csv:5 | term=conflict | "F1-REC-C004","Evidence sources materially conflict on whether an external transfer committed","CONFLICTING","UNKNOWN","CONFLICTING","RECONCILIATION-FAILED"
+- F4-SD-006 | 03-registries/F1_RECONCILIATION_STATE_REGISTRY.csv:7 | term=conflict | "F1-REC-S006","RECONCILIATION-FAILED","Reconciliation cannot establish an accepted state due to irreconcilable conflict or failure criteria"
+- F4-SD-006 | 03-registries/F1_REVERSAL_OUTCOME_REGISTRY.csv:8 | term=conflict | "F1-REV-007","REV_INTERVENING_CONFLICT","CONFLICT","YES"
+- F4-SD-006 | 03-registries/F1_REVERSAL_TRANSITIONS.csv:11 | term=conflict | "F1-REV-TR-010","R_REVERSAL_REQUIRED","REVERSAL_INTERVENING_CONFLICT","R_REMEDIATION_FAILED","NO"
+- F4-SD-006 | 03-registries/F1_REVERSIBILITY_CLASS_REGISTRY.csv:6 | term=conflict | "F1-REVTYPE-005","CONFLICTED_BY_INTERVENING_STATE","NO"
+- F4-SD-006 | 03-registries/F2_02_DEFINITION_REGISTRY.csv:14 | term=conflict | "AuthorityConflict(q,t)","DistributedAuthorityConflict","F2","FIN-F2-02"
+- F4-SD-006 | 03-registries/F2_02_INVARIANT_REGISTER.csv:13 | term=conflict | "F2-AUTH-009","AUTHORITY","Authority conflict cannot be resolved solely by majority, consensus, validator count, execution order, or possession.","LOCKED"
+- F4-SD-006 | 03-registries/F2_03_DEFINITION_REGISTRY.csv:5 | term=conflict | "AgreementConflict(q,phi,t)","AgreementConflict","F2","FIN-F2-03"
+- F4-SD-006 | 03-registries/F2_05_INVARIANT_REGISTER.csv:14 | term=conflict | "F2-PARTIAL-005","PARTIAL-DISTRIBUTED","Partiality and conflict are distinct properties.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_DEFINITION_REGISTRY.csv:2 | term=conflict | "Conflict(q_d,t)","DistributedConflictPredicate","F2","FIN-F2-07"
+- F4-SD-006 | 03-registries/F2_07_DEFINITION_REGISTRY.csv:3 | term=conflict | "ConflictClass(q_d,t)","ConflictClassification","F2","FIN-F2-07"
+- F4-SD-006 | 03-registries/F2_07_DEFINITION_REGISTRY.csv:9 | term=conflict | "ObservationConflict(q_d,o,t)","ObservationConflictPredicate","F2","FIN-F2-07"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:2 | term=conflict | "F2-CONF-001","CONFLICT","Conflict is distinct from indeterminacy.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:3 | term=conflict | "F2-CONF-002","CONFLICT","Conflict does not imply partial effect.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:4 | term=conflict | "F2-CONF-003","CONFLICT","Partial effect does not imply conflict.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:5 | term=conflict | "F2-CONF-004","CONFLICT","Conflict does not imply fork.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:6 | term=conflict | "F2-CONF-005","CONFLICT","Resolved conflict remains historically evidenced.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:12 | term=conflict | "F2-OBS-002","OBSERVATION","Observation conflict does not imply effect conflict.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_INVARIANT_REGISTER.csv:22 | term=conflict | "F2-SEP-006","SEPARATION","Conflict != Fork != Reconciliation != Restoration != Finality != ContinuityPreserved.","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:2 | term=conflict | "F2-CONF-NI-001","Conflict","PartialEffect","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:3 | term=conflict | "F2-CONF-NI-002","PartialEffect","Conflict","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:4 | term=conflict | "F2-CONF-NI-003","Conflict","Fork","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:14 | term=conflict | "F2-CONF-NI-013","ResolvedConflict","HistoricallyUnconflicted","LOCKED"
+- F4-SD-006 | 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:15 | term=conflict | "F2-CONF-NI-014","ObservationConflict","EffectConflict","LOCKED"
+- F4-SD-006 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:4 | term=conflict | "F2-ADV-003","Conflicted consensus promoted to achieved","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:13 | term=conflict | "F2-ADV-012","Conflicted finality promoted to FINAL","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:16 | term=conflict | "F2-ADV-015","Material conflict auto-reconciled without governing rule","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:18 | term=conflict | "F2-ADV-017","Residual conflict erased","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 03-registries/F2_AUTHORITY_REQUIREMENT_STATE_REGISTRY.csv:4 | term=conflict | "CONFLICTED","NO","NO","Competing authority claims prevent determinate satisfaction."
+- F4-SD-006 | 03-registries/F2_COMMITMENT_STATE_REGISTRY.csv:9 | term=conflict | "CONFLICTED","NONE","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:1 | term=conflict | "conflict_class","auto_resolve","finality_impact","history_persists"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:2 | term=conflict | "AUTHORITY-CONFLICT","NO","PROFILE-DEPENDENT-BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:3 | term=conflict | "AGREEMENT-CONFLICT","NO","PROFILE-DEPENDENT","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:4 | term=conflict | "COMMITMENT-CONFLICT","NO","PROFILE-DEPENDENT","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:5 | term=conflict | "CONSENSUS-CONFLICT","NO","PROFILE-DEPENDENT-BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:6 | term=conflict | "EXECUTION-ORDER-CONFLICT","NO","PROFILE-DEPENDENT-BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:7 | term=conflict | "EFFECT-CONFLICT","NO","BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:8 | term=conflict | "OBSERVATION-CONFLICT","NO","PROFILE-DEPENDENT","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:9 | term=conflict | "FINALITY-CONFLICT","NO","BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:10 | term=conflict | "CROSS-DOMAIN-CONFLICT","NO","BLOCK-CROSS-DOMAIN","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:11 | term=conflict | "EVIDENCE-CONFLICT","NO","PROFILE-DEPENDENT-BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:12 | term=conflict | "STATE-CONFLICT","NO","PROFILE-DEPENDENT-BLOCK","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:13 | term=conflict | "MULTI-CLASS-CONFLICT","NO","BLOCK-UNTIL-CLASSIFIED","YES"
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:2 | term=conflict | "F2-CONF-CASE-001","Two observations differ only by valid evaluation time","NO-SUBSTANTIVE-CONFLICT","Temporal mismatch alone is not contradiction."
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:2 | term=contradiction | "F2-CONF-CASE-001","Two observations differ only by valid evaluation time","NO-SUBSTANTIVE-CONFLICT","Temporal mismatch alone is not contradiction."
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:3 | term=conflict | "F2-CONF-CASE-002","Two observations differ only by valid scope","NO-SUBSTANTIVE-CONFLICT","Scope mismatch must be evaluated before conflict."
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:4 | term=conflict | "F2-CONF-CASE-003","Two effect histories are mutually incompatible","EFFECT-CONFLICT","Reconciliation required."
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:7 | term=conflict | "F2-CONF-CASE-006","Material conflict resolved by explicit governing rule","RECONCILED","Historical conflict remains evidenced."
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:8 | term=conflict | "F2-CONF-CASE-007","Conflict remains but is non-blocking for scoped decision","RECONCILED-WITH-RESIDUAL-CONFLICT","Residual conflict retained."
+- F4-SD-006 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:11 | term=conflict | "F2-CONF-CASE-010","Well-evidenced conflict has no governing resolution rule","UNRESOLVED","Unresolved is not indeterminate."
+- F4-SD-006 | 03-registries/F2_CONSENSUS_STATE_REGISTRY.csv:4 | term=conflict | "CONSENSUS-CONFLICTED","NO","NONE","NO-AUTO-ADMISSION","NONE","NONE"
+- F4-SD-006 | 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:8 | term=conflict | "F2-CONT-CASE-007","Conflict reconciled but historical fork required reconstruction","RECONSTRUCTED-OR-BROKEN-PER-EVIDENCE","Reconciled does not imply preserved."
+- F4-SD-006 | 03-registries/F2_CROSS_DOMAIN_FINALITY_MATRIX.csv:4 | term=conflict | "FINAL","FINALITY-CONFLICTED","FAILED","NOT-FINAL"
+- F4-SD-006 | 03-registries/F2_CROSS_DOMAIN_FINALITY_MATRIX.csv:7 | term=conflict | "FINAL","FINAL","CONFLICTED","NOT-FINAL"
+- F4-SD-006 | 03-registries/F2_EXECUTION_BOUNDARY_REQUIREMENT_MATRIX.csv:11 | term=conflict | "NoUnresolvedBlockingConflict","YES","NO","DEFER/RECONSTRUCT/BLOCK"
+- F4-SD-006 | 03-registries/F2_FINALITY_CASE_MATRIX.csv:5 | term=conflict | "F2-FIN-CASE-004","One required finality domain conflicted","FINALITY-CONFLICTED","Required domain conflict blocks cross-domain finality."
+- F4-SD-006 | 03-registries/F2_FINALITY_REQUIREMENT_STATE_REGISTRY.csv:5 | term=conflict | "CONFLICTED","NO","Competing finality-relevant evidence prevents determination."
+- F4-SD-006 | 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:5 | term=conflict | "FINALITY-CONFLICTED","NO","BLOCKED-UNTIL-RULE","NO-INFERENCE","NO-INFERENCE","Mutually incompatible finality-relevant claims prevent determination."
+- F4-SD-006 | 03-registries/F2_MANUSCRIPT_CLAIM_REGISTRY.csv:8 | term=conflict | "Conflict / fork / reconciliation","FIN-F2-07","FORMAL-DEFINITION","YES"
+- F4-SD-006 | 03-registries/F2_OBJECT_OWNERSHIP_REGISTRY.csv:23 | term=conflict | "ConflictRecord","F2","INTRODUCE"
+- F4-SD-006 | 03-registries/F2_RECONCILIATION_RESULT_REGISTRY.csv:3 | term=conflict | "RECONCILED-WITH-RESIDUAL-CONFLICT","YES-CONTEXTUAL","NO","NO","NO"
+- F4-SD-006 | 03-registries/F2_RECONCILIATION_RESULT_REGISTRY.csv:6 | term=conflict | "UNRESOLVED","YES-CONFLICT-REMAINS","NO","NO","NO"
+- F4-SD-006 | 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:3 | term=conflict | "Consensus conflict/indeterminacy separation","classify_consensus","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:6 | term=conflict | "Finality pending/conflicted/indeterminate separation","classify_finality","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 03-registries/F3_ADVERSARIAL_VERIFICATION_MATRIX.csv:15 | term=contradiction | F3-ADV-014,Contradiction,post-finality-contradiction==historical-nonoccurrence,BLOCK,REGISTERED
+- F4-SD-006 | 03-registries/F3_FINALITY_ELIGIBILITY_REGISTER.csv:8 | term=conflict | FE-07,No unresolved applicable finality conflict,BLOCK,FORMALIZED
+- F4-SD-006 | 03-registries/F3_FINALITY_ELIGIBILITY_REGISTER.csv:9 | term=contradiction | FE-08,No current blocking contradiction,BLOCK,FORMALIZED
+- F4-SD-006 | 03-registries/F3_INVARIANT_REGISTER.csv:18 | term=contradiction | F3-INV-017,FIN-FIN,Post-finality contradiction does not imply historical non-occurrence,OPEN
+- F4-SD-006 | 03-registries/F3_INVARIANT_REGISTER.csv:23 | term=conflict | F3-INV-022,FIN-FIN,Current finality is blocked by unresolved applicable finality conflict,OPEN
+- F4-SD-006 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:18 | term=contradiction | F3-NE-017,post-finality contradiction,historical non-occurrence,REQUIRED
+- F4-SD-006 | 03-registries/F3_OBJECT_REGISTRY.csv:13 | term=conflict | F3-O-012,Finality Conflict,F3,FORMALIZED
+- F4-SD-006 | 03-registries/F3_OBJECT_REGISTRY.csv:14 | term=contradiction | F3-O-013,Post-Finality Contradiction,F3,FORMALIZED
+- F4-SD-006 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:15 | term=conflict | F3-PO-014,SAFETY,Prove unresolved finality conflict blocks current finality,OPEN
+- F4-SD-006 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:24 | term=contradiction | F3-PO-023,HISTORY,Prove post-finality contradiction does not erase historical occurrence,OPEN
+- F4-SD-006 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:35 | term=contradiction | F3-PO-034,COUNTEREXAMPLE,Construct historically final state later invalidated by contradiction,OPEN
+- F4-SD-006 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:39 | term=conflict | F3-PO-038,RUNTIME-CONF,Verify reference classifier rejects unresolved-conflict finality,OPEN
+- F4-SD-006 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:41 | term=contradiction | F3-PO-040,RUNTIME-CONF,Verify reference classifier exposes post-finality contradiction explicitly,OPEN
+- F4-SD-006 | 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:5 | term=conflict | F3-PO-038,Reject unresolved-conflict finality,tests/f3/test_f3_runtime.py::test_unresolved_finality_conflict_blocks_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-006 | 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:7 | term=contradiction | F3-PO-040,Expose post-finality contradiction explicitly,tests/f3/test_f3_runtime.py::test_post_finality_contradiction_is_explicit,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-006 | 03-registries/F3_TRANSITION_REGISTRY.csv:10 | term=conflict | F3-T-009,CUSTODY,CUSTODY_TRANSFER_COMPLETE,CUSTODY_CONFLICTED,FORMALIZED
+- F4-SD-006 | 03-registries/F3_TRANSITION_REGISTRY.csv:15 | term=conflict | F3-T-014,FINALITY,FINALITY_PENDING,FINALITY_CONFLICTED,FORMALIZED
+- F4-SD-006 | 03-registries/F3_TRANSITION_REGISTRY.csv:16 | term=conflict | F3-T-015,FINALITY,FINALITY_LOCAL,FINALITY_CONFLICTED,FORMALIZED
+- F4-SD-006 | 03-registries/F3_TRANSITION_REGISTRY.csv:25 | term=conflict | F3-T-024,CLOSURE,CLOSURE_COMPLETE,CLOSURE_CONFLICTED,FORMALIZED
+- F4-SD-006 | 03-registries/INTERFACE_REGISTRY.csv:26 | term=conflict | "FI-IF-025","ResolveJurisdictionConflict","FI-JUR-002","jurisdiction states + authority + policy","constraint set|BLOCK|INDETERMINATE"
+- F4-SD-006 | 03-registries/INVARIANT_REGISTRY.csv:30 | term=conflict | "FIN-REC-001","RECONCILIATION","Post-Effect Ambiguity Requires Reconciliation","If post-effect financial state is partial, conflicting, or indeterminate, reconciliation SHALL be required before finality or continuity is asserted.","Post-effect state","FIN-ARCH-04","F1"
+- F4-SD-006 | 03-registries/INVARIANT_REGISTRY.csv:52 | term=conflict | "FIN-JUR-003","JURISDICTION","Conflict Cannot Be Silently Resolved","Conflicting jurisdictional constraints SHALL NOT be silently collapsed into a permissive execution decision.","Cross-jurisdiction execution","UAA + FIN-ARCH-03","F7"
+- F4-SD-006 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:52 | term=conflict | "FIN-PO-051","FIN-JUR-003","SAFETY","Conflict Cannot Be Silently Resolved","Prove that conflicting jurisdictional constraints cannot silently collapse into a permissive execution decision.","Cross-jurisdiction execution","UAA + FIN-ARCH-03","F7","OPEN","","","",""
+- F4-SD-006 | 03-registries/STATE_OWNERSHIP_REGISTRY.csv:17 | term=conflict | "Jurisdiction conflict state","FIN-COMP-030","NO"
+- F4-SD-006 | 05-distributed-settlement/boundaries/F2_FORMALIZATION_SEQUENCE.md:22 | term=conflict | Conflict / fork / inconsistent observation reconciliation
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_02_RESULT.md:33 | term=conflict | - authority conflict
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:25 | term=conflict | Agreement conflict
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:43 | term=conflict | Consensus conflict
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:73 | term=conflict | CONSENSUS-CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:87 | term=conflict | Conflict / inconsistent observation reconciliation: FIN-F2-07
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_04_RESULT.md:83 | term=conflict | Conflict / inconsistent-observation reconciliation:
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_05_RESULT.md:89 | term=conflict | Conflict / inconsistent-observation reconciliation:
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_06_RESULT.md:51 | term=conflict | FINALITY-CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_06_RESULT.md:90 | term=conflict | Conflict / inconsistent-observation reconciliation:
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:7 | term=conflict | FIN-F2-07 — Conflict / Fork / Inconsistent-Observation Reconciliation
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:19 | term=conflict | Distributed conflict predicate
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:21 | term=conflict | Conflict classes
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:37 | term=conflict | Historical persistence of resolved conflict
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:39 | term=conflict | ## Conflict Classes
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:41 | term=conflict | AUTHORITY-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:43 | term=conflict | AGREEMENT-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:45 | term=conflict | COMMITMENT-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:47 | term=conflict | CONSENSUS-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:49 | term=conflict | EXECUTION-ORDER-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:51 | term=conflict | EFFECT-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:53 | term=conflict | OBSERVATION-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:55 | term=conflict | FINALITY-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:57 | term=conflict | CROSS-DOMAIN-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:59 | term=conflict | EVIDENCE-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:61 | term=conflict | STATE-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:63 | term=conflict | MULTI-CLASS-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:69 | term=conflict | RECONCILED-WITH-RESIDUAL-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:81 | term=conflict | Conflict != Indeterminacy
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:83 | term=conflict | Conflict != PartialEffect
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:85 | term=conflict | Conflict != Fork
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:103 | term=conflict | ResolvedConflict != HistoricallyUnconflicted
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:107 | term=conflict | Resolution does not erase prior conflict, fork, inconsistent observation,
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:35 | term=conflict | - consensus conflict collapse
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:42 | term=conflict | - conflicted / pending / indeterminate finality collapse
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:46 | term=conflict | - residual conflict erasure
+- F4-SD-006 | 05-distributed-settlement/evidence/FIN_F2_12_RESULT.md:34 | term=conflict | - conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_AGREEMENT_SEMANTICS.md:100 | term=conflict | ## 6. Agreement Conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_AGREEMENT_SEMANTICS.md:104 | term=conflict | AgreementConflict(q,phi,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_AGREEMENT_SEMANTICS.md:109 | term=conflict | Agreement conflict is not an authority conflict.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:39 | term=conflict | - conflict treatment
+- F4-SD-006 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:297 | term=conflict | conflict reconciliation
+- F4-SD-006 | 05-distributed-settlement/formal/F2_AUTHORITY_REQUIREMENT_SCHEMA.md:28 | term=conflict | CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_AUTHORITY_REQUIREMENT_SCHEMA.md:40 | term=conflict | CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:37 | term=conflict | - conflict treatment
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:87 | term=conflict | CONSENSUS-CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:116 | term=conflict | ## 8. Consensus Conflicted
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:118 | term=conflict | CONSENSUS-CONFLICTED applies where recognized evidence contains mutually
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:122 | term=conflict | Conflict shall not be silently mapped to achieved or not-achieved.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CROSS_DOMAIN_FINALITY.md:57 | term=conflict | D_3 = FINALITY-CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CROSS_DOMAIN_FINALITY.md:93 | term=conflict | ## 8. Cross-Domain Conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CROSS_DOMAIN_FINALITY.md:96 | term=conflict | states, cross-domain finality remains unavailable until the conflict is
+- F4-SD-006 | 05-distributed-settlement/formal/F2_CROSS_DOMAIN_FINALITY.md:99 | term=conflict | Conflict reconciliation is deferred to FIN-F2-07.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:84 | term=conflict | NoUnresolvedBlockingConflict(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:110 | term=conflict | - contain conflicting dependencies
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:128 | term=conflict | blocking conflicts
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:195 | term=conflict | - conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_AUTHORITY_ALGEBRA.md:195 | term=conflict | ## 11. Authority Conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_AUTHORITY_ALGEBRA.md:199 | term=conflict | AuthorityConflict(q,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_AUTHORITY_ALGEBRA.md:204 | term=conflict | Authority conflict SHALL NOT be resolved by:
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_AUTHORITY_ALGEBRA.md:220 | term=conflict | Conflict resolution requires an independently defined precedence or
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:1 | term=conflict | # FIN-F2-07 — Distributed Conflict Semantics
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:9 | term=conflict | Conflict is not automatically error.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:11 | term=conflict | Conflict is not automatically fraud.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:13 | term=conflict | Conflict is not automatically fork.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:15 | term=conflict | Conflict is not automatically partial effect.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:17 | term=conflict | Conflict is not automatically finality failure.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:19 | term=conflict | Conflict is a formal state requiring classification.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:23 | term=conflict | ## 2. Conflict Record
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:27 | term=conflict | ConflictRecord k = {
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:28 | term=conflict | conflict_id,
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:30 | term=conflict | conflict_class,
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:43 | term=conflict | ## 3. Conflict Predicate
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:47 | term=conflict | Conflict(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:55 | term=conflict | ## 4. Conflict Classes
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:57 | term=conflict | ConflictClass(q_d,t) may include:
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:59 | term=conflict | AUTHORITY-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:61 | term=conflict | AGREEMENT-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:63 | term=conflict | COMMITMENT-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:65 | term=conflict | CONSENSUS-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:67 | term=conflict | EXECUTION-ORDER-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:69 | term=conflict | EFFECT-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:71 | term=conflict | OBSERVATION-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:73 | term=conflict | FINALITY-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:75 | term=conflict | CROSS-DOMAIN-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:77 | term=conflict | EVIDENCE-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:79 | term=conflict | STATE-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:81 | term=conflict | MULTI-CLASS-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:85 | term=conflict | ## 5. Conflict != Indeterminacy
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:87 | term=conflict | Conflict and indeterminacy are distinct.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:89 | term=conflict | Conflict means incompatible recognized evidence exists.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:96 | term=conflict | conflicted but well-evidenced
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:98 | term=conflict | indeterminate without conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:100 | term=conflict | both conflicted and indeterminate
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:106 | term=conflict | ## 6. Conflict != Partial Effect
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:108 | term=conflict | Conflict(q_d,t) !=> PARTIAL(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:116 | term=conflict | PARTIAL(q_d,t) !=> Conflict(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:122 | term=conflict | ## 7. Conflict != Fork
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:124 | term=conflict | Conflict(q_d,t) !=> Fork(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:132 | term=conflict | ## 8. Conflict and Authority
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:134 | term=conflict | AuthorityConflict(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:146 | term=conflict | unless an explicit authority-precedence rule governs that exact conflict.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:150 | term=conflict | ## 9. Conflict and Finality
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:152 | term=conflict | FinalityConflict(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:154 | term=conflict | prevents automatic promotion to FINAL where the conflicting evidence is
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:157 | term=conflict | Conflict must be resolved, excluded as inapplicable, or determinately
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:164 | term=conflict | Once a material conflict has been observed and evidenced, later
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:165 | term=conflict | resolution does not erase the historical existence of the conflict.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONFLICT_SEMANTICS.md:167 | term=conflict | Resolved != Never Conflicted.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:83 | term=conflict | - conflicts
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:126 | term=conflict | - conflict tolerance
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:274 | term=conflict | conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:423 | term=conflict | - conflicts
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:6 | term=conflict | conflicting, forked, incomplete, stale, or inconsistent evidence.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:63 | term=conflict | RECONCILED-WITH-RESIDUAL-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:77 | term=conflict | RECONCILED means the material conflict set has been determinately
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:86 | term=conflict | RECONCILED != HISTORICALLY-UNCONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:90 | term=conflict | ## 6. RECONCILED-WITH-RESIDUAL-CONFLICT
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:93 | term=conflict | specific decision context while non-blocking or out-of-scope conflicts
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:96 | term=conflict | Residual conflict SHALL remain evidenced.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:131 | term=conflict | UNRESOLVED means a recognized material conflict remains and no governing
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:145 | term=conflict | UNRESOLVED may be well-evidenced conflict with no governing resolution.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:216 | term=conflict | A resolved conflict remains part of the historical execution record.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:223 | term=conflict | prior finality conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_INCONSISTENT_OBSERVATION_SEMANTICS.md:45 | term=conflict | ## 5. Observation Conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_INCONSISTENT_OBSERVATION_SEMANTICS.md:49 | term=conflict | ObservationConflict(q_d,o,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_INCONSISTENT_OBSERVATION_SEMANTICS.md:56 | term=conflict | ## 6. Inconsistent Observation != Effect Conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_INCONSISTENT_OBSERVATION_SEMANTICS.md:58 | term=conflict | ObservationConflict(q_d,o,t) !=> EffectConflict(q_d,t)
+- F4-SD-006 | 05-distributed-settlement/formal/F2_INCONSISTENT_OBSERVATION_SEMANTICS.md:94 | term=contradiction | substantive contradiction.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_INCONSISTENT_OBSERVATION_SEMANTICS.md:102 | term=contradiction | Temporal difference != contradiction.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:131 | term=conflict | ## 10. Conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:133 | term=conflict | Partiality and conflict are distinct.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:137 | term=conflict | partial without conflict
+- F4-SD-006 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:139 | term=conflict | conflicted without determinable partiality
+- F4-SD-006 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:141 | term=conflict | both partial and conflicted
+- F4-SD-006 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:145 | term=conflict | Conflict semantics are formalized later in FIN-F2-07.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:43 | term=conflict | - conflict exclusions
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:121 | term=conflict | CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:134 | term=conflict | CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:157 | term=conflict | FINALITY-CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:186 | term=conflict | conflict, reconstruction, or revalidation supersedes it.
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:203 | term=conflict | ## 11. FINALITY-CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:205 | term=conflict | FINALITY-CONFLICTED applies where recognized evidence contains mutually
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:209 | term=conflict | Conflict shall not be resolved by simply choosing:
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:273 | term=conflict | CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:320 | term=conflict | - conflict resolution
+- F4-SD-006 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:448 | term=conflict | - conflict
+- F4-SD-006 | 05-distributed-settlement/objects/F2_CANONICAL_OBJECTS.md:79 | term=conflict | ConflictRecord
+- F4-SD-006 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:159 | term=conflict | Conflict resolved
+- F4-SD-006 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:184 | term=conflict | Conflict then reconciled
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:16 | term=conflict | RequirementState.CONFLICTED,
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:46 | term=conflict | conflicted: bool = False,
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:50 | term=conflict | if conflicted:
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:51 | term=conflict | return ConsensusState.CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:122 | term=conflict | if any(state == RequirementState.CONFLICTED for state in states):
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:123 | term=conflict | return FinalityState.CONFLICTED
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:151 | term=conflict | material_conflict: bool,
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:152 | term=conflict | residual_nonblocking_conflict: bool = False,
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:168 | term=conflict | if material_conflict and not governing_rule_available:
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:171 | term=conflict | if residual_nonblocking_conflict:
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/engine.py:172 | term=conflict | return ReconciliationState.RECONCILED_WITH_RESIDUAL_CONFLICT
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/models.py:8 | term=conflict | CONFLICTED = "CONFLICTED"
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/models.py:18 | term=conflict | CONFLICTED = "CONSENSUS-CONFLICTED"
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/models.py:41 | term=conflict | CONFLICTED = "FINALITY-CONFLICTED"
+- F4-SD-006 | 05-distributed-settlement/runtime/f2_runtime/models.py:49 | term=conflict | RECONCILED_WITH_RESIDUAL_CONFLICT = "RECONCILED-WITH-RESIDUAL-CONFLICT"
+- F4-SD-006 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:55 | term=conflict | 10. remains classifiable under partial or conflicting execution.
+- F4-SD-006 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:118 | term=conflict | - conflicting participant observations
+- F4-SD-006 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:71 | term=contradiction | 12. post-finality contradiction;
+- F4-SD-006 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:73 | term=conflict | 14. finality conflict state;
+- F4-SD-006 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:156 | term=conflict | - finality conflict predicate;
+- F4-SD-006 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:188 | term=contradiction | closed obligation != impossible future contradiction
+- F4-SD-006 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:215 | term=contradiction | - post-finality contradiction requires explicit treatment rather than silent state overwrite.
+- F4-SD-006 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:229 | term=conflict | - conflicting custody records;
+- F4-SD-006 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:32 | term=conflict | - CONFLICTING
+- F4-SD-006 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:103 | term=conflict | ### F3-O-012 — Finality Conflict
+- F4-SD-006 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:105 | term=conflict | A conflict in which two or more admissible or purportedly admissible states, records, authorities, or evidence sets yield incompatible finality conclusions.
+- F4-SD-006 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:109 | term=contradiction | ### F3-O-013 — Post-Finality Contradiction
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:74 | term=conflict | FE-07 — Conflict Condition
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:76 | term=conflict | No unresolved applicable Finality Conflict exists.
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:78 | term=conflict | If an unresolved conflict exists:
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:84 | term=contradiction | FE-08 — Contradiction Condition
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:86 | term=contradiction | No current blocking contradiction exists.
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:88 | term=contradiction | Post-finality contradiction must be explicitly processed if discovered after classification.
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:141 | term=conflict | FB-07 unresolved finality conflict
+- F4-SD-006 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:143 | term=contradiction | FB-08 post-finality contradiction requiring revalidation
+- F4-SD-006 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:39 | term=contradiction | post-finality contradiction != historical non-occurrence
+- F4-SD-006 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:56 | term=conflict | 2. no unresolved applicable Finality Conflict exists;
+- F4-SD-006 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:62 | term=contradiction | 8. no blocking contradiction exists.
+- F4-SD-006 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:82 | term=conflict | ### FinalityConflictExists
+- F4-SD-006 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:84 | term=conflict | FinalityConflictExists(Ψ_t)
+- F4-SD-006 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:90 | term=contradiction | ### PostFinalityContradiction
+- F4-SD-006 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:92 | term=contradiction | PostFinalityContradiction(Ψ_t, e_new)
+- F4-SD-006 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:15 | term=conflict | OBLIGATION_CONFLICTED,
+- F4-SD-006 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:30 | term=conflict | CUSTODY_CONFLICTED,
+- F4-SD-006 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:45 | term=conflict | FINALITY_CONFLICTED,
+- F4-SD-006 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:61 | term=conflict | CLOSURE_CONFLICTED,
+- F4-SD-006 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:80 | term=conflict | CUSTODY_TRANSFER_COMPLETE -> CUSTODY_CONFLICTED
+- F4-SD-006 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:95 | term=conflict | FINALITY_PENDING -> FINALITY_CONFLICTED
+- F4-SD-006 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:98 | term=conflict | FINALITY_LOCAL -> FINALITY_CONFLICTED
+- F4-SD-006 | 06-f3-discovery/formal/F3_TRANSITION_SYSTEM.md:125 | term=conflict | CLOSURE_COMPLETE -> CLOSURE_CONFLICTED
+- F4-SD-006 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:81 | term=conflict | finality conflict = unresolved
+- F4-SD-006 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:141 | term=conflict | custody evidence remains conflicted
+- F4-SD-006 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:216 | term=contradiction | new admissible contradiction activates explicit reopen transition
+- F4-SD-006 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:238 | term=contradiction | post-finality contradiction != historical non-occurrence
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:13 | term=conflict | ## F3-PO-014 — Unresolved Finality Conflict Blocks Current Finality
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:19 | term=conflict | FE-07 requires no unresolved applicable Finality Conflict.
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:23 | term=conflict | FinalityConflictExists = true
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:27 | term=conflict | Thus an unresolved applicable finality conflict blocks current finality.
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:149 | term=contradiction | ## F3-PO-023 — Post-Finality Contradiction Does Not Erase Historical Occurrence
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:151 | term=contradiction | A contradiction discovered at t+1 changes the current evidentiary or finality state.
+- F4-SD-006 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:157 | term=contradiction | PostFinalityContradiction
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/__init__.py:2 | term=contradiction | from .engine import evaluate_finality, reopen_finality, apply_post_finality_contradiction
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/__init__.py:9 | term=contradiction | "apply_post_finality_contradiction",
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:28 | term=conflict | if request.finality_conflict:
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:29 | term=conflict | blockers.append("FINALITY_CONFLICT")
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:31 | term=contradiction | if request.blocking_contradiction:
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:32 | term=contradiction | blockers.append("CONTRADICTION")
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:61 | term=contradiction | def apply_post_finality_contradiction(previous: FinalityResult) -> FinalityResult:
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:63 | term=contradiction | raise ValueError("Post-finality contradiction requires a previously final state.")
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:68 | term=contradiction | blockers=["CONTRADICTION"],
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/engine.py:70 | term=contradiction | post_finality_contradiction=True,
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/models.py:24 | term=conflict | finality_conflict: bool = False
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/models.py:25 | term=contradiction | blocking_contradiction: bool = False
+- F4-SD-006 | 06-f3-discovery/runtime/f3_runtime/models.py:36 | term=contradiction | post_finality_contradiction: bool = False
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:312 | term=conflict | - 03-registries/F2_07_INVARIANT_REGISTER.csv:22 | pattern=continuity | "F2-SEP-006","SEPARATION","Conflict != Fork != Reconciliation != Restoration != Finality != ContinuityPreserved.","LOCKED"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:313 | term=conflict | - 03-registries/F2_07_INVARIANT_REGISTER.csv:22 | pattern=finality | "F2-SEP-006","SEPARATION","Conflict != Fork != Reconciliation != Restoration != Finality != ContinuityPreserved.","LOCKED"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:353 | term=conflict | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:13 | pattern=finality | "F2-ADV-012","Conflicted finality promoted to FINAL","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:362 | term=conflict | - 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:1 | pattern=finality | "conflict_class","auto_resolve","finality_impact","history_persists"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:363 | term=conflict | - 03-registries/F2_CONFLICT_CLASS_REGISTRY.csv:9 | pattern=finality | "FINALITY-CONFLICT","NO","BLOCK","YES"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:364 | term=conflict | - 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:10 | pattern=finality | "F2-CONF-CASE-009","Current authority or finality evidence stale","REVALIDATION-REQUIRED","Historical validity does not establish current validity."
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:369 | term=conflict | - 03-registries/F2_CROSS_DOMAIN_FINALITY_MATRIX.csv:4 | pattern=finality | "FINAL","FINALITY-CONFLICTED","FAILED","NOT-FINAL"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:375 | term=conflict | - 03-registries/F2_FINALITY_CASE_MATRIX.csv:5 | pattern=finality | "F2-FIN-CASE-004","One required finality domain conflicted","FINALITY-CONFLICTED","Required domain conflict blocks cross-domain finality."
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:384 | term=conflict | - 03-registries/F2_FINALITY_REQUIREMENT_STATE_REGISTRY.csv:5 | pattern=finality | "CONFLICTED","NO","Competing finality-relevant evidence prevents determination."
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:390 | term=conflict | - 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:5 | pattern=finality | "FINALITY-CONFLICTED","NO","BLOCKED-UNTIL-RULE","NO-INFERENCE","NO-INFERENCE","Mutually incompatible finality-relevant claims prevent determination."
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:406 | term=conflict | - 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:6 | pattern=finality | "Finality pending/conflicted/indeterminate separation","classify_finality","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:432 | term=contradiction | - 03-registries/F3_ADVERSARIAL_VERIFICATION_MATRIX.csv:15 | pattern=finality | F3-ADV-014,Contradiction,post-finality-contradiction==historical-nonoccurrence,BLOCK,REGISTERED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:436 | term=conflict | - 03-registries/F3_FINALITY_ELIGIBILITY_REGISTER.csv:8 | pattern=finality | FE-07,No unresolved applicable finality conflict,BLOCK,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:461 | term=contradiction | - 03-registries/F3_INVARIANT_REGISTER.csv:18 | pattern=finality | F3-INV-017,FIN-FIN,Post-finality contradiction does not imply historical non-occurrence,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:466 | term=conflict | - 03-registries/F3_INVARIANT_REGISTER.csv:23 | pattern=finality | F3-INV-022,FIN-FIN,Current finality is blocked by unresolved applicable finality conflict,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:501 | term=contradiction | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:18 | pattern=finality | F3-NE-017,post-finality contradiction,historical non-occurrence,REQUIRED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:515 | term=conflict | - 03-registries/F3_OBJECT_REGISTRY.csv:13 | pattern=finality | F3-O-012,Finality Conflict,F3,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:516 | term=contradiction | - 03-registries/F3_OBJECT_REGISTRY.csv:14 | pattern=finality | F3-O-013,Post-Finality Contradiction,F3,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:537 | term=conflict | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:15 | pattern=finality | F3-PO-014,SAFETY,Prove unresolved finality conflict blocks current finality,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:549 | term=contradiction | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:24 | pattern=finality | F3-PO-023,HISTORY,Prove post-finality contradiction does not erase historical occurrence,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:558 | term=conflict | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:39 | pattern=finality | F3-PO-038,RUNTIME-CONF,Verify reference classifier rejects unresolved-conflict finality,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:561 | term=contradiction | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:41 | pattern=finality | F3-PO-040,RUNTIME-CONF,Verify reference classifier exposes post-finality contradiction explicitly,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:565 | term=conflict | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:5 | pattern=finality | F3-PO-038,Reject unresolved-conflict finality,tests/f3/test_f3_runtime.py::test_unresolved_finality_conflict_blocks_finality,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:568 | term=contradiction | - 03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv:7 | pattern=finality | F3-PO-040,Expose post-finality contradiction explicitly,tests/f3/test_f3_runtime.py::test_post_finality_contradiction_is_explicit,REFERENCE-RUNTIME-CONFORMANT
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:578 | term=conflict | - 03-registries/F3_TRANSITION_REGISTRY.csv:10 | pattern=custody | F3-T-009,CUSTODY,CUSTODY_TRANSFER_COMPLETE,CUSTODY_CONFLICTED,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:583 | term=conflict | - 03-registries/F3_TRANSITION_REGISTRY.csv:15 | pattern=finality | F3-T-014,FINALITY,FINALITY_PENDING,FINALITY_CONFLICTED,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:584 | term=conflict | - 03-registries/F3_TRANSITION_REGISTRY.csv:16 | pattern=finality | F3-T-015,FINALITY,FINALITY_LOCAL,FINALITY_CONFLICTED,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:596 | term=conflict | - 03-registries/F3_TRANSITION_REGISTRY.csv:25 | pattern=closure | F3-T-024,CLOSURE,CLOSURE_COMPLETE,CLOSURE_CONFLICTED,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:633 | term=conflict | - 03-registries/INVARIANT_REGISTRY.csv:30 | pattern=continuity | "FIN-REC-001","RECONCILIATION","Post-Effect Ambiguity Requires Reconciliation","If post-effect financial state is partial, conflicting, or indeterminate, reconciliation SHALL be required before finality or continuity is asserted.","Post-effect state","FIN-ARCH-04","F1"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:634 | term=conflict | - 03-registries/INVARIANT_REGISTRY.csv:30 | pattern=finality | "FIN-REC-001","RECONCILIATION","Post-Effect Ambiguity Requires Reconciliation","If post-effect financial state is partial, conflicting, or indeterminate, reconciliation SHALL be required before finality or continuity is asserted.","Post-effect state","FIN-ARCH-04","F1"
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:830 | term=conflict | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:518 | pattern=finality | FINALITY-CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:841 | term=conflict | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:561 | pattern=finality | D_3 = FINALITY-CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:843 | term=conflict | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:594 | pattern=finality | FINALITY-CONFLICT
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:933 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:81 | pattern=finality | 12. post-finality contradiction;
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:935 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:83 | pattern=finality | 14. finality conflict state;
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:958 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:166 | pattern=finality | - finality conflict predicate;
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:978 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:198 | pattern=obligation | closed obligation != impossible future contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:997 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:225 | pattern=finality | - post-finality contradiction requires explicit treatment rather than silent state overwrite.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1002 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | pattern=custody | - conflicting custody records;
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1046 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:383 | pattern=finality | ### F3-O-012 — Finality Conflict
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1047 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:385 | pattern=finality | A conflict in which two or more admissible or purportedly admissible states, records, authorities, or evidence sets yield incompatible finality conclusions.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1048 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:389 | pattern=finality | ### F3-O-013 — Post-Finality Contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1059 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:422 | pattern=obligation | OBLIGATION_CONFLICTED,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1070 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:437 | pattern=custody | CUSTODY_CONFLICTED,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1079 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:452 | pattern=finality | FINALITY_CONFLICTED,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1091 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:468 | pattern=closure | CLOSURE_CONFLICTED,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1114 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:558 | pattern=finality | 2. no unresolved applicable Finality Conflict exists;
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1120 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:584 | pattern=finality | ### FinalityConflictExists
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1121 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:586 | pattern=finality | FinalityConflictExists(Ψ_t)
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1123 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:592 | pattern=finality | ### PostFinalityContradiction
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1124 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:594 | pattern=finality | PostFinalityContradiction(Ψ_t, e_new)
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1150 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:641 | pattern=finality | post-finality contradiction != historical non-occurrence
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1165 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:729 | pattern=custody | CUSTODY_TRANSFER_COMPLETE -> CUSTODY_CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1170 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:744 | pattern=finality | FINALITY_PENDING -> FINALITY_CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1171 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:747 | pattern=finality | FINALITY_LOCAL -> FINALITY_CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1183 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:774 | pattern=closure | CLOSURE_COMPLETE -> CLOSURE_CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1209 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:889 | pattern=finality | No unresolved applicable Finality Conflict exists.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1211 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:901 | pattern=finality | Post-finality contradiction must be explicitly processed if discovered after classification.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1220 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:954 | pattern=finality | FB-07 unresolved finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1221 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:956 | pattern=finality | FB-08 post-finality contradiction requiring revalidation
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1240 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1020 | pattern=finality | ## F3-PO-014 — Unresolved Finality Conflict Blocks Current Finality
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1242 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1026 | pattern=finality | FE-07 requires no unresolved applicable Finality Conflict.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1243 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1030 | pattern=finality | FinalityConflictExists = true
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1245 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1034 | pattern=finality | Thus an unresolved applicable finality conflict blocks current finality.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1282 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1156 | pattern=finality | ## F3-PO-023 — Post-Finality Contradiction Does Not Erase Historical Occurrence
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1283 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1158 | pattern=finality | A contradiction discovered at t+1 changes the current evidentiary or finality state.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1284 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1164 | pattern=finality | PostFinalityContradiction
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1313 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1288 | pattern=finality | finality conflict = unresolved
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1321 | term=conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1348 | pattern=custody | custody evidence remains conflicted
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1340 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1423 | pattern=reopen | new admissible contradiction activates explicit reopen transition
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1346 | term=contradiction | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1445 | pattern=finality | post-finality contradiction != historical non-occurrence
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1642 | term=contradiction | - formal-proofs/PROOF_STATUS_MODEL.md:67 | pattern=obligation | A counterexample or contradiction demonstrates the obligation does not currently hold.
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1818 | term=conflict | - tests/f2/test_f2_runtime.py:147 | pattern=finality | def test_finality_conflicted():
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1820 | term=conflict | - tests/f2/test_f2_runtime.py:151 | pattern=finality | ]) == FinalityState.CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1859 | term=conflict | - tests/f2_adversarial/test_f2_adversarial.py:163 | pattern=finality | def test_conflicted_finality_cannot_be_final():
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1861 | term=conflict | - tests/f2_adversarial/test_f2_adversarial.py:167 | pattern=finality | ]) == FinalityState.CONFLICTED
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1914 | term=contradiction | - tests/f3/test_f3_runtime.py:12 | pattern=finality | apply_post_finality_contradiction,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1919 | term=conflict | - tests/f3/test_f3_runtime.py:32 | pattern=finality | finality_conflict=False,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1935 | term=conflict | - tests/f3/test_f3_runtime.py:79 | pattern=finality | def test_unresolved_finality_conflict_blocks_finality():
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1937 | term=conflict | - tests/f3/test_f3_runtime.py:81 | pattern=finality | fully_valid_request(finality_conflict=True)
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1938 | term=conflict | - tests/f3/test_f3_runtime.py:84 | pattern=finality | assert "FINALITY_CONFLICT" in result.blockers
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1948 | term=contradiction | - tests/f3/test_f3_runtime.py:95 | pattern=finality | def test_post_finality_contradiction_is_explicit():
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1950 | term=contradiction | - tests/f3/test_f3_runtime.py:97 | pattern=finality | invalidated = apply_post_finality_contradiction(final)
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1952 | term=contradiction | - tests/f3/test_f3_runtime.py:100 | pattern=finality | assert invalidated.post_finality_contradiction is True
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1972 | term=contradiction | - tests/f3_adversarial/test_f3_adversarial.py:12 | pattern=finality | apply_post_finality_contradiction,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1977 | term=conflict | - tests/f3_adversarial/test_f3_adversarial.py:32 | pattern=finality | finality_conflict=False,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1982 | term=conflict | - tests/f3_adversarial/test_f3_adversarial.py:67 | pattern=finality | finality_conflict=True,
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1983 | term=conflict | - tests/f3_adversarial/test_f3_adversarial.py:71 | pattern=finality | assert "FINALITY_CONFLICT" in result.blockers
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2000 | term=contradiction | - tests/f3_adversarial/test_f3_adversarial.py:148 | pattern=finality | def test_post_finality_contradiction_preserves_history_but_invalidates_current_finality():
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2003 | term=contradiction | - tests/f3_adversarial/test_f3_adversarial.py:152 | pattern=finality | invalidated = apply_post_finality_contradiction(final)
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2006 | term=contradiction | - tests/f3_adversarial/test_f3_adversarial.py:156 | pattern=finality | assert invalidated.post_finality_contradiction is True
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2020 | term=contradiction | - tests/f3_adversarial/test_f3_adversarial.py:180 | pattern=finality | def test_post_finality_contradiction_requires_previous_finality():
+- F4-SD-006 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2022 | term=contradiction | - tests/f3_adversarial/test_f3_adversarial.py:186 | pattern=finality | apply_post_finality_contradiction(nonfinal)
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:20 | term=conflict | F4 addresses the boundary between financial finality as established in F3 and the ledger or record state that persists, represents, commits, reopens, or conflicts with that finality.
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:177 | term=conflict | - 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:20 | F4 addresses the boundary between financial finality as established in F3 and the ledger or record state that persists, represents, commits, reopens, or conflicts with that finality.
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:520 | term=conflict | - 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:20 | term=finality | F4 addresses the boundary between financial finality as established in F3 and the ledger or record state that persists, represents, commits, reopens, or conflicts with that finality.
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:521 | term=conflict | - 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:20 | term=ledger | F4 addresses the boundary between financial finality as established in F3 and the ledger or record state that persists, represents, commits, reopens, or conflicts with that finality.
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:860 | term=contradiction | - ledger contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:860 | term=ledger contradiction | - ledger contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:862 | term=conflict | - ledger / finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:86 | term=contradiction | ### F4-O-006 — Ledger Contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:86 | term=ledger contradiction | ### F4-O-006 — Ledger Contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:88 | term=contradiction | **Ledger Contradiction**
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:88 | term=ledger contradiction | **Ledger Contradiction**
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:90 | term=contradiction | A typed contradiction object identifying incompatible record-state assertions, representations, histories, or commitments.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:92 | term=contradiction | Contradiction is evidence of unresolved record integrity and does not by itself determine which competing state is authoritative.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:100 | term=contradiction | A typed reconstruction object representing the restoration or derivation of record state from admissible evidence after loss, contradiction, corruption, reopening, or incomplete persistence.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:106 | term=conflict | ### F4-O-008 — Ledger/Finality Conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:108 | term=conflict | **Ledger/Finality Conflict**
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:110 | term=conflict | A typed conflict object representing disagreement between ledger or record state and the applicable financial finality classification.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:147 | term=contradiction | - record contradiction != historical non-occurrence
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:147 | term=record contradiction | - record contradiction != historical non-occurrence
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:168 | term=contradiction | 7. contradiction;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:188 | term=conflict | - finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:189 | term=contradiction | - post-finality contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:450 | term=contradiction | - F4-O-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:860 | term=ledger contradiction | - ledger contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:450 | term=ledger contradiction | - F4-O-006 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:860 | term=ledger contradiction | - ledger contradiction
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:453 | term=conflict | - F4-O-008 | 03-registries/F3_FINALITY_ELIGIBILITY_REGISTER.csv:8 | term=finality conflict | FE-07,No unresolved applicable finality conflict,BLOCK,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:454 | term=conflict | - F4-O-008 | 03-registries/F3_INVARIANT_REGISTER.csv:23 | term=finality conflict | F3-INV-022,FIN-FIN,Current finality is blocked by unresolved applicable finality conflict,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:455 | term=conflict | - F4-O-008 | 03-registries/F3_OBJECT_REGISTRY.csv:13 | term=finality conflict | F3-O-012,Finality Conflict,F3,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:456 | term=conflict | - F4-O-008 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:15 | term=finality conflict | F3-PO-014,SAFETY,Prove unresolved finality conflict blocks current finality,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:457 | term=conflict | - F4-O-008 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:223 | term=finality conflict | prior finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:458 | term=conflict | - F4-O-008 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:73 | term=finality conflict | 14. finality conflict state;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:459 | term=conflict | - F4-O-008 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:156 | term=finality conflict | - finality conflict predicate;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:460 | term=conflict | - F4-O-008 | 06-f3-discovery/formal/F3_CANONICAL_OBJECTS.md:103 | term=finality conflict | ### F3-O-012 — Finality Conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:461 | term=conflict | - F4-O-008 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:76 | term=finality conflict | No unresolved applicable Finality Conflict exists.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:462 | term=conflict | - F4-O-008 | 06-f3-discovery/formal/F3_FINALITY_ELIGIBILITY_SEMANTICS.md:141 | term=finality conflict | FB-07 unresolved finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:463 | term=conflict | - F4-O-008 | 06-f3-discovery/formal/F3_RELATION_ALGEBRA.md:56 | term=finality conflict | 2. no unresolved applicable Finality Conflict exists;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:464 | term=conflict | - F4-O-008 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:81 | term=finality conflict | finality conflict = unresolved
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:465 | term=conflict | - F4-O-008 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:13 | term=finality conflict | ## F3-PO-014 — Unresolved Finality Conflict Blocks Current Finality
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:466 | term=conflict | - F4-O-008 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:19 | term=finality conflict | FE-07 requires no unresolved applicable Finality Conflict.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:467 | term=conflict | - F4-O-008 | 06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md:27 | term=finality conflict | Thus an unresolved applicable finality conflict blocks current finality.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:468 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:436 | term=finality conflict | - 03-registries/F3_FINALITY_ELIGIBILITY_REGISTER.csv:8 | pattern=finality | FE-07,No unresolved applicable finality conflict,BLOCK,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:469 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:466 | term=finality conflict | - 03-registries/F3_INVARIANT_REGISTER.csv:23 | pattern=finality | F3-INV-022,FIN-FIN,Current finality is blocked by unresolved applicable finality conflict,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:470 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:515 | term=finality conflict | - 03-registries/F3_OBJECT_REGISTRY.csv:13 | pattern=finality | F3-O-012,Finality Conflict,F3,FORMALIZED
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:471 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:537 | term=finality conflict | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:15 | pattern=finality | F3-PO-014,SAFETY,Prove unresolved finality conflict blocks current finality,OPEN
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:472 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:935 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:83 | pattern=finality | 14. finality conflict state;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:473 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:958 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:166 | pattern=finality | - finality conflict predicate;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:474 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1046 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:383 | pattern=finality | ### F3-O-012 — Finality Conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:475 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1114 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:558 | pattern=finality | 2. no unresolved applicable Finality Conflict exists;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:476 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1209 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:889 | pattern=finality | No unresolved applicable Finality Conflict exists.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:477 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1220 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:954 | pattern=finality | FB-07 unresolved finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:478 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1240 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1020 | pattern=finality | ## F3-PO-014 — Unresolved Finality Conflict Blocks Current Finality
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:479 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1242 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1026 | pattern=finality | FE-07 requires no unresolved applicable Finality Conflict.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:480 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1245 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1034 | pattern=finality | Thus an unresolved applicable finality conflict blocks current finality.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:481 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1313 | term=finality conflict | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1288 | pattern=finality | finality conflict = unresolved
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:482 | term=conflict | - F4-O-008 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:862 | term=finality conflict | - ledger / finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:483 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:83 | term=finality conflict | 14. finality conflict state;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:484 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:166 | term=finality conflict | - finality conflict predicate;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:485 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:383 | term=finality conflict | ### F3-O-012 — Finality Conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:486 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:558 | term=finality conflict | 2. no unresolved applicable Finality Conflict exists;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:487 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:889 | term=finality conflict | No unresolved applicable Finality Conflict exists.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:488 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:954 | term=finality conflict | FB-07 unresolved finality conflict
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:489 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1020 | term=finality conflict | ## F3-PO-014 — Unresolved Finality Conflict Blocks Current Finality
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:490 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1026 | term=finality conflict | FE-07 requires no unresolved applicable Finality Conflict.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:491 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1034 | term=finality conflict | Thus an unresolved applicable finality conflict blocks current finality.
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:492 | term=conflict | - F4-O-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1288 | term=finality conflict | finality conflict = unresolved
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:493 | term=conflict | - F4-O-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:229 | term=custody record | - conflicting custody records;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:494 | term=conflict | - F4-O-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1002 | term=custody record | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | pattern=custody | - conflicting custody records;
+- F4-SD-006 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:497 | term=conflict | - F4-O-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | term=custody record | - conflicting custody records;
+- F4-SD-006 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:141 | term=conflict | **Attack:** Supply conflicting occurrence and non-occurrence evidence
+- F4-SD-006 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:490 | term=contradiction | FAILED represents contradiction or failure of required acceptance conditions.
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:297 | term=conflict | - conflict treatment,
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:312 | term=conflict | CONSENSUS-CONFLICTED
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:358 | term=conflict | NoUnresolvedBlockingConflict
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:518 | term=conflict | FINALITY-CONFLICTED
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:561 | term=conflict | D_3 = FINALITY-CONFLICTED
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:569 | term=conflict | # 14. Conflict
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:573 | term=conflict | Conflict(q_d,t)
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:578 | term=conflict | Conflict classes include:
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:580 | term=conflict | AUTHORITY-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:582 | term=conflict | AGREEMENT-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:584 | term=conflict | COMMITMENT-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:586 | term=conflict | CONSENSUS-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:588 | term=conflict | EXECUTION-ORDER-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:590 | term=conflict | EFFECT-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:592 | term=conflict | OBSERVATION-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:594 | term=conflict | FINALITY-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:596 | term=conflict | CROSS-DOMAIN-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:598 | term=conflict | EVIDENCE-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:600 | term=conflict | STATE-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:602 | term=conflict | MULTI-CLASS-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:604 | term=conflict | Conflict is distinct from:
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:612 | term=conflict | A conflict can be well-evidenced.
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:658 | term=conflict | Observation conflict may result from:
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:674 | term=conflict | ObservationConflict != EffectConflict
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:699 | term=conflict | RECONCILED-WITH-RESIDUAL-CONFLICT
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:935 | term=conflict | - unresolved conflict auto-reconciliation,
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1078 | term=conflict | partial effect, divergent observation, branch conflict, reconciliation,
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1117 | term=conflict | Conflict != Fork
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1119 | term=conflict | Conflict != Partial Effect
+- F4-SD-006 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1195 | term=conflict | FIN-F2-07 — Conflict / Fork / Inconsistent-Observation Reconciliation
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:81 | term=contradiction | 12. post-finality contradiction;
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:83 | term=conflict | 14. finality conflict state;
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:166 | term=conflict | - finality conflict predicate;
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:198 | term=contradiction | closed obligation != impossible future contradiction
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:225 | term=contradiction | - post-finality contradiction requires explicit treatment rather than silent state overwrite.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | term=conflict | - conflicting custody records;
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:312 | term=conflict | - CONFLICTING
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:383 | term=conflict | ### F3-O-012 — Finality Conflict
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:385 | term=conflict | A conflict in which two or more admissible or purportedly admissible states, records, authorities, or evidence sets yield incompatible finality conclusions.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:389 | term=contradiction | ### F3-O-013 — Post-Finality Contradiction
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:422 | term=conflict | OBLIGATION_CONFLICTED,
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:437 | term=conflict | CUSTODY_CONFLICTED,
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:452 | term=conflict | FINALITY_CONFLICTED,
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:468 | term=conflict | CLOSURE_CONFLICTED,
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:558 | term=conflict | 2. no unresolved applicable Finality Conflict exists;
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:564 | term=contradiction | 8. no blocking contradiction exists.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:584 | term=conflict | ### FinalityConflictExists
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:586 | term=conflict | FinalityConflictExists(Ψ_t)
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:592 | term=contradiction | ### PostFinalityContradiction
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:594 | term=contradiction | PostFinalityContradiction(Ψ_t, e_new)
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:641 | term=contradiction | post-finality contradiction != historical non-occurrence
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:729 | term=conflict | CUSTODY_TRANSFER_COMPLETE -> CUSTODY_CONFLICTED
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:744 | term=conflict | FINALITY_PENDING -> FINALITY_CONFLICTED
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:747 | term=conflict | FINALITY_LOCAL -> FINALITY_CONFLICTED
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:774 | term=conflict | CLOSURE_COMPLETE -> CLOSURE_CONFLICTED
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:887 | term=conflict | FE-07 — Conflict Condition
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:889 | term=conflict | No unresolved applicable Finality Conflict exists.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:891 | term=conflict | If an unresolved conflict exists:
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:897 | term=contradiction | FE-08 — Contradiction Condition
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:899 | term=contradiction | No current blocking contradiction exists.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:901 | term=contradiction | Post-finality contradiction must be explicitly processed if discovered after classification.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:954 | term=conflict | FB-07 unresolved finality conflict
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:956 | term=contradiction | FB-08 post-finality contradiction requiring revalidation
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1020 | term=conflict | ## F3-PO-014 — Unresolved Finality Conflict Blocks Current Finality
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1026 | term=conflict | FE-07 requires no unresolved applicable Finality Conflict.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1030 | term=conflict | FinalityConflictExists = true
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1034 | term=conflict | Thus an unresolved applicable finality conflict blocks current finality.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1156 | term=contradiction | ## F3-PO-023 — Post-Finality Contradiction Does Not Erase Historical Occurrence
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1158 | term=contradiction | A contradiction discovered at t+1 changes the current evidentiary or finality state.
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1164 | term=contradiction | PostFinalityContradiction
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1288 | term=conflict | finality conflict = unresolved
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1348 | term=conflict | custody evidence remains conflicted
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1423 | term=contradiction | new admissible contradiction activates explicit reopen transition
+- F4-SD-006 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1445 | term=contradiction | post-finality contradiction != historical non-occurrence
+- F4-SD-006 | formal-proofs/FIN-DST_PROOF_OBLIGATIONS.md:25 | term=conflict | **Verification requirement:** Consensus-without-authority, multi-party authority conflict, remote-state drift cases.
+- F4-SD-006 | formal-proofs/FIN-DST_PROOF_OBLIGATIONS.md:49 | term=conflict | **Verification requirement:** Consensus-without-authority, multi-party authority conflict, remote-state drift cases.
+- F4-SD-006 | formal-proofs/FIN-DST_PROOF_OBLIGATIONS.md:73 | term=conflict | **Verification requirement:** Consensus-without-authority, multi-party authority conflict, remote-state drift cases.
+- F4-SD-006 | formal-proofs/FIN-DST_PROOF_OBLIGATIONS.md:97 | term=conflict | **Verification requirement:** Consensus-without-authority, multi-party authority conflict, remote-state drift cases.
+- F4-SD-006 | formal-proofs/FIN-DST_PROOF_OBLIGATIONS.md:121 | term=conflict | **Verification requirement:** Consensus-without-authority, multi-party authority conflict, remote-state drift cases.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:17 | term=conflict | **Required premises:** Jurisdiction state; execution time; actor/resource scope; governing constraints; conflict state if applicable.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:19 | term=conflict | **Counterexample condition:** Execution proceeds under stale, unknown, silently conflicting, or authority-expanding jurisdictional assumptions.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:21 | term=conflict | **Evidence requirement:** Current jurisdiction observation; applicable constraints; conflict evidence; cross-boundary transition evidence.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:25 | term=conflict | **Verification requirement:** Jurisdiction drift, conflict, unknown applicability, and cross-border cases.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:41 | term=conflict | **Required premises:** Jurisdiction state; execution time; actor/resource scope; governing constraints; conflict state if applicable.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:43 | term=conflict | **Counterexample condition:** Execution proceeds under stale, unknown, silently conflicting, or authority-expanding jurisdictional assumptions.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:45 | term=conflict | **Evidence requirement:** Current jurisdiction observation; applicable constraints; conflict evidence; cross-boundary transition evidence.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:49 | term=conflict | **Verification requirement:** Jurisdiction drift, conflict, unknown applicability, and cross-border cases.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:65 | term=conflict | **Required premises:** Jurisdiction state; execution time; actor/resource scope; governing constraints; conflict state if applicable.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:67 | term=conflict | **Counterexample condition:** Execution proceeds under stale, unknown, silently conflicting, or authority-expanding jurisdictional assumptions.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:69 | term=conflict | **Evidence requirement:** Current jurisdiction observation; applicable constraints; conflict evidence; cross-boundary transition evidence.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:73 | term=conflict | **Verification requirement:** Jurisdiction drift, conflict, unknown applicability, and cross-border cases.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:83 | term=conflict | ## PO-FIN-JUR-004 — Jurisdiction Conflict Must Be Explicit
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:89 | term=conflict | **Required premises:** Jurisdiction state; execution time; actor/resource scope; governing constraints; conflict state if applicable.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:91 | term=conflict | **Counterexample condition:** Execution proceeds under stale, unknown, silently conflicting, or authority-expanding jurisdictional assumptions.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:93 | term=conflict | **Evidence requirement:** Current jurisdiction observation; applicable constraints; conflict evidence; cross-boundary transition evidence.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:97 | term=conflict | **Verification requirement:** Jurisdiction drift, conflict, unknown applicability, and cross-border cases.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:113 | term=conflict | **Required premises:** Jurisdiction state; execution time; actor/resource scope; governing constraints; conflict state if applicable.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:115 | term=conflict | **Counterexample condition:** Execution proceeds under stale, unknown, silently conflicting, or authority-expanding jurisdictional assumptions.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:117 | term=conflict | **Evidence requirement:** Current jurisdiction observation; applicable constraints; conflict evidence; cross-boundary transition evidence.
+- F4-SD-006 | formal-proofs/FIN-JUR_PROOF_OBLIGATIONS.md:121 | term=conflict | **Verification requirement:** Jurisdiction drift, conflict, unknown applicability, and cross-border cases.
+- F4-SD-006 | formal-proofs/PROOF_OBLIGATION_DOCTRINE.md:43 | term=contradiction | A valid counterexample or contradiction defeats the proposed result.
+- F4-SD-006 | formal-proofs/PROOF_STATUS_MODEL.md:67 | term=contradiction | A counterexample or contradiction demonstrates the obligation does not currently hold.
+- F4-SD-006 | reference-runtime/f1/remediation_engine.py:87 | term=conflict | intervening_conflict: bool = False,
+- F4-SD-006 | reference-runtime/f1/remediation_engine.py:103 | term=conflict | if intervening_conflict:
+- F4-SD-006 | reference-runtime/f1/remediation_engine.py:104 | term=conflict | return ReversalOutcome.REV_INTERVENING_CONFLICT
+- F4-SD-006 | reference-runtime/f1/types.py:53 | term=conflict | REV_INTERVENING_CONFLICT = "REV_INTERVENING_CONFLICT"
+- F4-SD-006 | tests/f1/adversarial/test_f1_adversarial.py:138 | term=contradiction | class ContradictionAndOverEffectAttacks(unittest.TestCase):
+- F4-SD-006 | tests/f1/adversarial/test_f1_adversarial.py:311 | term=conflict | def test_intervening_conflict_does_not_become_exact(self):
+- F4-SD-006 | tests/f1/adversarial/test_f1_adversarial.py:315 | term=conflict | intervening_conflict=True,
+- F4-SD-006 | tests/f1/adversarial/test_f1_adversarial.py:320 | term=conflict | ReversalOutcome.REV_INTERVENING_CONFLICT,
+- F4-SD-006 | tests/f1/test_effect_classifier.py:53 | term=conflict | def test_conflicting_knowledge_is_indeterminate():
+- F4-SD-006 | tests/f1/test_engine_integration.py:59 | term=conflict | evidence_conflict=False,
+- F4-SD-006 | tests/f1/test_reconciliation.py:12 | term=conflict | evidence_conflict=False,
+- F4-SD-006 | tests/f1/test_reconciliation.py:56 | term=conflict | def test_conflicting_evidence_fails():
+- F4-SD-006 | tests/f1/test_reconciliation.py:58 | term=conflict | make_input(evidence_conflict=True)
+- F4-SD-006 | tests/f1_adversarial/test_attack_effect_classifier.py:52 | term=conflict | def test_conflicting_occurrence_cannot_be_determinate():
+- F4-SD-006 | tests/f1_adversarial/test_attack_full_lineage.py:41 | term=conflict | evidence_conflict=False,
+- F4-SD-006 | tests/f1_adversarial/test_attack_reconciliation.py:12 | term=conflict | evidence_conflict=False,
+- F4-SD-006 | tests/f1_adversarial/test_attack_reconciliation.py:52 | term=conflict | def test_conflicting_evidence_cannot_reconcile_cleanly():
+- F4-SD-006 | tests/f1_adversarial/test_attack_reconciliation.py:54 | term=conflict | base(evidence_conflict=True)
+- F4-SD-006 | tests/f2/test_f2_runtime.py:60 | term=conflict | def test_consensus_conflicted():
+- F4-SD-006 | tests/f2/test_f2_runtime.py:63 | term=conflict | conflicted=True
+- F4-SD-006 | tests/f2/test_f2_runtime.py:64 | term=conflict | ) == ConsensusState.CONFLICTED
+- F4-SD-006 | tests/f2/test_f2_runtime.py:147 | term=conflict | def test_finality_conflicted():
+- F4-SD-006 | tests/f2/test_f2_runtime.py:150 | term=conflict | RequirementState.CONFLICTED,
+- F4-SD-006 | tests/f2/test_f2_runtime.py:151 | term=conflict | ]) == FinalityState.CONFLICTED
+- F4-SD-006 | tests/f2/test_f2_runtime.py:170 | term=conflict | material_conflict=False
+- F4-SD-006 | tests/f2/test_f2_runtime.py:174 | term=conflict | def test_reconciliation_unresolved_conflict():
+- F4-SD-006 | tests/f2/test_f2_runtime.py:176 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2/test_f2_runtime.py:183 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2/test_f2_runtime.py:188 | term=conflict | def test_reconciliation_with_residual_conflict():
+- F4-SD-006 | tests/f2/test_f2_runtime.py:190 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2/test_f2_runtime.py:191 | term=conflict | residual_nonblocking_conflict=True,
+- F4-SD-006 | tests/f2/test_f2_runtime.py:192 | term=conflict | ) == ReconciliationState.RECONCILED_WITH_RESIDUAL_CONFLICT
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:61 | term=conflict | def test_conflicted_consensus_never_becomes_achieved():
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:64 | term=conflict | conflicted=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:65 | term=conflict | ) == ConsensusState.CONFLICTED
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:163 | term=conflict | def test_conflicted_finality_cannot_be_final():
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:166 | term=conflict | RequirementState.CONFLICTED,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:167 | term=conflict | ]) == FinalityState.CONFLICTED
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:202 | term=conflict | def test_material_conflict_without_rule_remains_unresolved():
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:204 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:211 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:218 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:225 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:230 | term=conflict | def test_residual_conflict_is_preserved_in_result():
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:232 | term=conflict | material_conflict=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:233 | term=conflict | residual_nonblocking_conflict=True,
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:235 | term=conflict | ) == ReconciliationState.RECONCILED_WITH_RESIDUAL_CONFLICT
+- F4-SD-006 | tests/f2_adversarial/test_f2_adversarial.py:391 | term=conflict | material_conflict=False,
+- F4-SD-006 | tests/f3/test_f3_runtime.py:12 | term=contradiction | apply_post_finality_contradiction,
+- F4-SD-006 | tests/f3/test_f3_runtime.py:32 | term=conflict | finality_conflict=False,
+- F4-SD-006 | tests/f3/test_f3_runtime.py:33 | term=contradiction | blocking_contradiction=False,
+- F4-SD-006 | tests/f3/test_f3_runtime.py:79 | term=conflict | def test_unresolved_finality_conflict_blocks_finality():
+- F4-SD-006 | tests/f3/test_f3_runtime.py:81 | term=conflict | fully_valid_request(finality_conflict=True)
+- F4-SD-006 | tests/f3/test_f3_runtime.py:84 | term=conflict | assert "FINALITY_CONFLICT" in result.blockers
+- F4-SD-006 | tests/f3/test_f3_runtime.py:95 | term=contradiction | def test_post_finality_contradiction_is_explicit():
+- F4-SD-006 | tests/f3/test_f3_runtime.py:97 | term=contradiction | invalidated = apply_post_finality_contradiction(final)
+- F4-SD-006 | tests/f3/test_f3_runtime.py:100 | term=contradiction | assert invalidated.post_finality_contradiction is True
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:12 | term=contradiction | apply_post_finality_contradiction,
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:32 | term=conflict | finality_conflict=False,
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:33 | term=contradiction | blocking_contradiction=False,
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:63 | term=conflict | def test_atomic_completion_cannot_bypass_conflict():
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:67 | term=conflict | finality_conflict=True,
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:71 | term=conflict | assert "FINALITY_CONFLICT" in result.blockers
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:148 | term=contradiction | def test_post_finality_contradiction_preserves_history_but_invalidates_current_finality():
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:152 | term=contradiction | invalidated = apply_post_finality_contradiction(final)
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:156 | term=contradiction | assert invalidated.post_finality_contradiction is True
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:180 | term=contradiction | def test_post_finality_contradiction_requires_previous_finality():
+- F4-SD-006 | tests/f3_adversarial/test_f3_adversarial.py:186 | term=contradiction | apply_post_finality_contradiction(nonfinal)
+- F4-SD-007 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:39 | term=reconstruction | FIN-REC-*  Reconciliation / reconstruction
+- F4-SD-007 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:83 | term=reconstruction | Reconstruction does not imply uninterrupted continuity.
+- F4-SD-007 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:34 | term=reconstruction | -> Reconciliation / Reconstruction
+- F4-SD-007 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:92 | term=reconstruction | Reconstruction does not restore continuity.
+- F4-SD-007 | 02-core/components/FIN-COMP-016_Financial_Reconstruction_Engine.md:1 | term=reconstruction | # FIN-COMP-016 — Financial Reconstruction Engine
+- F4-SD-007 | 02-core/components/FIN-COMP-016_Financial_Reconstruction_Engine.md:5 | term=reconstruction | reconstruction
+- F4-SD-007 | 02-core/components/FIN-COMP-016_Financial_Reconstruction_Engine.md:17 | term=reconstructed | ReconstructedFinancialHistory
+- F4-SD-007 | 02-core/components/FIN-COMP-016_Financial_Reconstruction_Engine.md:21 | term=reconstruction | Historical reconstruction state
+- F4-SD-007 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:13 | term=reconstructed | ExecutionHistory; ReconstructedFinancialHistory; EvidenceObject; FinalityClassification
+- F4-SD-007 | 02-core/interfaces/FIN-IF-014_ReconstructionInterface.md:1 | term=reconstruction | # FIN-IF-014 — ReconstructionInterface
+- F4-SD-007 | 02-core/interfaces/FIN-IF-014_ReconstructionInterface.md:17 | term=reconstructed | ReconstructedFinancialHistory
+- F4-SD-007 | 02-core/interfaces/FIN-IF-018_ContinuityClassificationInterface.md:13 | term=reconstruction | Execution history + reconstruction + evidence
+- F4-SD-007 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:67 | term=reconstruction | Reconstruction != Restoration
+- F4-SD-007 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:120 | term=reconstruction | Compensation, reversal, reconciliation, and reconstruction produce new state and new evidence.
+- F4-SD-007 | 02-core/invariants/FIN-CON_INVARIANTS.md:5 | term=reconstruction | Preserve distinction between continuous integrity, reconstruction, restored function, and reconciled history.
+- F4-SD-007 | 02-core/invariants/FIN-CON_INVARIANTS.md:31 | term=reconstruction | ## FIN-CON-002 — Reconstruction Does Not Restore Continuity
+- F4-SD-007 | 02-core/invariants/FIN-CON_INVARIANTS.md:33 | term=reconstructed | **Normative rule:** RECONSTRUCTED SHALL NOT imply PRESERVED continuity.
+- F4-SD-007 | 02-core/invariants/FIN-EVD_INVARIANTS.md:75 | term=reconstruction | **Normative rule:** Finality continuity and reconstruction classifications SHALL reference sufficient evidence.
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:1 | term=reconstruction | # FIN-REC — Reconciliation and Reconstruction Invariants
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:5 | term=reconstruction | Separate reconciliation, reconstruction, economic equivalence, and restoration.
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:31 | term=reconstruction | ## FIN-REC-002 — Reconstruction Is Not Restoration
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:33 | term=reconstructed | **Normative rule:** Reconstructed historical state SHALL NOT be classified as restored continuity merely because historical state can be reconstructed.
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:35 | term=reconstruction | **Applies to:** Reconstruction
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:75 | term=reconstruction | **Normative rule:** Where required historical evidence is insufficient the architecture SHALL classify reconstruction or continuity as indeterminate rather than restored.
+- F4-SD-007 | 02-core/invariants/FIN-REC_INVARIANTS.md:77 | term=reconstruction | **Applies to:** Reconstruction
+- F4-SD-007 | 02-core/invariants/FIN-REV_INVARIANTS.md:77 | term=reconstruction | **Applies to:** Reversal and reconstruction
+- F4-SD-007 | 02-core/OBJECT_NON_EQUIVALENCE_RULES.md:31 | term=reconstruction | Reconstruction != Restoration
+- F4-SD-007 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:177 | term=reconstructed | ### FIN-S-CONTINUITY-RECONSTRUCTED
+- F4-SD-007 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:178 | term=reconstructed | A later state has been reconstructed under explicit reconstruction semantics.
+- F4-SD-007 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:178 | term=reconstruction | A later state has been reconstructed under explicit reconstruction semantics.
+- F4-SD-007 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:180 | term=reconstructed | Reconstructed continuity is not identical to uninterrupted preserved continuity.
+- F4-SD-007 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:211 | term=reconstructed | RECONSTRUCTED != PRESERVED
+- F4-SD-007 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:14 | term=reconstructed | RECONSTRUCTED,
+- F4-SD-007 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:40 | term=reconstructed | ## RECONSTRUCTED
+- F4-SD-007 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:42 | term=reconstructed | Historical state has been reconstructed from surviving evidence.
+- F4-SD-007 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:44 | term=reconstructed | RECONSTRUCTED does not imply continuity was preserved.
+- F4-SD-007 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:72 | term=reconstructed | PRESERVED != RECONSTRUCTED
+- F4-SD-007 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:74 | term=reconstructed | RECONSTRUCTED != FUNCTIONALLY_RESTORED
+- F4-SD-007 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:128 | term=reconstructed | - CONTINUITY-RECONSTRUCTED
+- F4-SD-007 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:273 | term=reconstruction | Canonical evidence associated with execution, refusal, transition, or reconstruction.
+- F4-SD-007 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:284 | term=reconstruction | ### ReconstructionEvidence
+- F4-SD-007 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:356 | term=reconstruction | Historical reconstruction relation.
+- F4-SD-007 | 03-registries/COMPONENT_REGISTRY.csv:14 | term=reconstructed | "FI-REC-002","Financial Reconstruction Engine","RECONCILIATION","Reconstruct historical financial execution state from preserved evidence and provenance without representing reconstruction as uninterrupted continuity.","EvidenceObject;execution lineage;state history","Reconstructed financial history","POB;EIP","F3"
+- F4-SD-007 | 03-registries/COMPONENT_REGISTRY.csv:14 | term=reconstruction | "FI-REC-002","Financial Reconstruction Engine","RECONCILIATION","Reconstruct historical financial execution state from preserved evidence and provenance without representing reconstruction as uninterrupted continuity.","EvidenceObject;execution lineage;state history","Reconstructed financial history","POB;EIP","F3"
+- F4-SD-007 | 03-registries/COMPONENT_REGISTRY.csv:17 | term=reconstruction | "FI-EVD-001","Financial Evidence Recorder","EVIDENCE","Record append-only execution, refusal, effect, reconciliation, finality, and reconstruction evidence.","FinancialExecutionEvent;decisions;effects;state changes","EvidenceObject","POB;UES","FOUNDATION"
+- F4-SD-007 | 03-registries/F1_ADVERSARIAL_VERIFICATION_MATRIX.csv:18 | term=reconstructed | "F1-ADV-017","F1-TRACE-CNT-007","Classify reconstructed history as PRESERVED","RECONSTRUCTED","RECONSTRUCTED","PASS"
+- F4-SD-007 | 03-registries/F1_ADVERSARIAL_VERIFICATION_MATRIX.csv:19 | term=reconstruction | "F1-ADV-018","F1-TRACE-CNT-007","Claim reconstruction without represented prior break","INDETERMINATE","INDETERMINATE","PASS"
+- F4-SD-007 | 03-registries/F1_COMPENSATION_RELATION_REGISTRY.csv:7 | term=reconstruction | "F1-CMP-R006","Compensation != reconstruction","YES"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_CASES.csv:1 | term=reconstruction | "case_id","history","terminal_relation","break","reconstruction","expected","key_property"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_CASES.csv:5 | term=reconstructed | "F1-CNT-X004","Partial settlement breaks continuity; later compensation restores equivalent balances and accepted relation","ECONOMICALLY-EQUIVALENT","YES","YES","RECONSTRUCTED","Same economic endpoint does not mean preserved"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_CASES.csv:6 | term=reconstructed | "F1-CNT-X005","Original effect breaks continuity; later reversal returns balances to exact original values","IDENTICAL-BALANCES","YES","YES","RECONSTRUCTED","Reversal cannot retroactively create preservation"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_CASES.csv:7 | term=reconstruction | "F1-CNT-X006","Current state reconciled but evidence proves earlier continuity break with no reconstruction","RECONCILED","YES","NO","BROKEN","Reconciled does not mean preserved"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:4 | term=reconstructed | "F1-CNT-C003","BROKEN","YES","NOT-ACCEPTABLY-RECONSTRUCTED","At least one required continuity relationship suffered a qualifying unresolved break"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:5 | term=reconstructed | "F1-CNT-C004","RECONSTRUCTED","YES","RE-ESTABLISHED","Continuity was broken and later explicitly reconstructed under accepted criteria"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:3 | term=reconstructed | "F1-CP-002","HISTORY_RECONSTRUCTABLE","F1_CONTINUITY_RECONSTRUCTED;F1_HISTORICALLY_RECONCILED"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:4 | term=reconstructed | "F1-CNT-PC003","NON-EQUIVALENCE","Reconstructed continuity is distinct from uninterrupted preserved continuity.","FIN-CNT-003","OPEN"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:8 | term=reconstructed | "F1-CNT-PC007","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive classifications for the same complete continuity interval.","FIN-CNT-003","OPEN"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | term=reconstructed | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:4 | term=reconstructed | "F1-CNT-R003","Reconstructed Continuity != Preserved Continuity","YES"
+- F4-SD-007 | 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:3 | term=reconstructed | "F1-CNT-G002","Obligation relation","Required obligations remain satisfied, validly transitioned, or explicitly reconstructed","YES"
+- F4-SD-007 | 03-registries/F1_HIGH_PRIORITY_PROOF_MATRIX.csv:7 | term=reconstructed | "F1-HP-006","RECONSTRUCTED != PRESERVED","F1-THM-CNT-003","PROVED"
+- F4-SD-007 | 03-registries/F1_INVARIANT_OWNERSHIP.csv:38 | term=reconstruction | "FIN-REC-002","FIN-REC","Reconstruction Is Not Restoration","F1_SHARED_WITH_F3","OPEN"
+- F4-SD-007 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:10 | term=reconstructed | "F1-MC-009","PRESERVED and RECONSTRUCTED are mutually exclusive for the same complete interval","FORMALLY-PROVED","F1-THM-CNT-003","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-007 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:16 | term=reconstructed | "F1-MC-015","The tested reference runtime distinguishes reconstructed continuity from preserved continuity","REFERENCE-RUNTIME-CONFORMANT","F1-TRACE-CNT-007","F1_RUNTIME_PROOF_CLOSURE.csv"
+- F4-SD-007 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:25 | term=reconstructed | "F1-THM-CNT-003","CONTINUITY","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive for the same complete interval","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-007 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:29 | term=reconstructed | "F1-TRACE-CNT-007","CONTINUITY","TRACEABILITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","TRACEABILITY-ARGUMENT","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","YES"
+- F4-SD-007 | 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:6 | term=reconstruction | "F1-REC-R005","Reconciliation != Reconstruction","YES"
+- F4-SD-007 | 03-registries/F1_RUNTIME_CONFORMANCE_REGISTRY.csv:7 | term=reconstructed | "F1-RUN-C006","F1-TRACE-CNT-007","continuity.py + engine.py + evidence.py","Reconstructed continuity remains distinguishable from preserved continuity and retains the relevant history","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+- F4-SD-007 | 03-registries/F1_RUNTIME_PROOF_CARRY_FORWARD.csv:7 | term=reconstructed | "F1-TRACE-CNT-007","CONTINUITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","FIN-F1-08/FIN-F1-09"
+- F4-SD-007 | 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:7 | term=reconstructed | "F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"
+- F4-SD-007 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:10 | term=reconstruction | "ReconstructionEvent(r,q_d,t)","DistributedReconstructionEvent","F2","FIN-F2-08"
+- F4-SD-007 | 03-registries/F2_08_INVARIANT_REGISTER.csv:12 | term=reconstructed | "F2-CONT-011","CONTINUITY","Reconstructed continuity is distinct from preserved continuity.","LOCKED"
+- F4-SD-007 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:12 | term=reconstructed | "F2-CONT-NI-011","Reconstructed","PreservedHistoricalInterval","LOCKED"
+- F4-SD-007 | 03-registries/F2_ADMISSIBILITY_RESULT_REGISTRY.csv:6 | term=reconstructed | "RECONSTRUCT","NO","NO","NONE","Prior state/evidence must be reconstructed before admission can be decided."
+- F4-SD-007 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:9 | term=reconstruction | "F2-ADV-008","Reconstruction requirement bypassed","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-007 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:20 | term=reconstruction | "F2-ADV-019","Reconstruction reported as PRESERVED","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-007 | 03-registries/F2_CONFLICT_RECONCILIATION_CASE_MATRIX.csv:9 | term=reconstruction | "F2-CONF-CASE-008","Evidence chain incomplete","RECONSTRUCTION-REQUIRED","Cannot fabricate missing execution history."
+- F4-SD-007 | 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:2 | term=reconstruction | "F2-CONT-CASE-001","All required distributed transitions valid and lineage unbroken","PRESERVED","No reconstruction required."
+- F4-SD-007 | 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:5 | term=reconstructed | "F2-CONT-CASE-004","Broken lineage later rebuilt from evidence","RECONSTRUCTED","Reconstructed is not preserved."
+- F4-SD-007 | 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:8 | term=reconstructed | "F2-CONT-CASE-007","Conflict reconciled but historical fork required reconstruction","RECONSTRUCTED-OR-BROKEN-PER-EVIDENCE","Reconciled does not imply preserved."
+- F4-SD-007 | 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:8 | term=reconstruction | "F2-CONT-CASE-007","Conflict reconciled but historical fork required reconstruction","RECONSTRUCTED-OR-BROKEN-PER-EVIDENCE","Reconciled does not imply preserved."
+- F4-SD-007 | 03-registries/F2_CONTINUITY_TRANSITION_REGISTRY.csv:8 | term=reconstructed | "BROKEN","RECONSTRUCTED","YES","NO"
+- F4-SD-007 | 03-registries/F2_CONTINUITY_TRANSITION_REGISTRY.csv:10 | term=reconstructed | "RECONSTRUCTED","PRESERVED","NO-AS-HISTORICAL-ERASURE","FORBIDDEN"
+- F4-SD-007 | 03-registries/F2_CONTINUITY_TRANSITION_REGISTRY.csv:14 | term=reconstructed | "INDETERMINATE","RECONSTRUCTED","YES-WITH-EVIDENCE","NO"
+- F4-SD-007 | 03-registries/F2_DISTRIBUTED_CONTINUITY_RESULT_REGISTRY.csv:1 | term=reconstruction | "state","f1_owner","functional","finality_implied","reconstruction_occurred","historical_break"
+- F4-SD-007 | 03-registries/F2_DISTRIBUTED_CONTINUITY_RESULT_REGISTRY.csv:5 | term=reconstructed | "RECONSTRUCTED","RECONSTRUCTED","POSSIBLE","NO","YES","YES"
+- F4-SD-007 | 03-registries/F2_F1_CONTINUITY_BINDING_MATRIX.csv:5 | term=reconstructed | "RECONSTRUCTED","RECONSTRUCTED","DISTRIBUTED-SPECIALIZATION","NO"
+- F4-SD-007 | 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:8 | term=reconstructed | "FINALITY-RECONSTRUCTION-REQUIRED","NO","NO-AUTO","NO-INFERENCE","NO-INFERENCE","Prior execution/evidence/state must be reconstructed before finality evaluation."
+- F4-SD-007 | 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:8 | term=reconstruction | "FINALITY-RECONSTRUCTION-REQUIRED","NO","NO-AUTO","NO-INFERENCE","NO-INFERENCE","Prior execution/evidence/state must be reconstructed before finality evaluation."
+- F4-SD-007 | 03-registries/F2_FORK_RESULT_REGISTRY.csv:4 | term=reconstruction | "RECONSTRUCTION-REQUIRED","NO","PROFILE-DEPENDENT"
+- F4-SD-007 | 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:18 | term=reconstructed | "F2-THM-010","RECONSTRUCTED and PRESERVED are distinct for the same historical interval.","POSITIVE","PROVED","F2_POSITIVE_PROOF_DISCHARGE.md"
+- F4-SD-007 | 03-registries/F2_RECONCILIATION_RESULT_REGISTRY.csv:5 | term=reconstruction | "RECONSTRUCTION-REQUIRED","NO","NO","NO","NO"
+- F4-SD-007 | 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:8 | term=reconstructed | "Continuity preserved/degraded/broken/reconstructed/indeterminate separation","classify_continuity","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-007 | 03-registries/INTERFACE_REGISTRY.csv:14 | term=reconstructed | "FI-IF-013","ReconstructFinancialHistory","FI-REC-002","evidence + lineage","reconstructed history"
+- F4-SD-007 | 03-registries/INVARIANT_FAMILY_REGISTRY.csv:9 | term=reconstruction | "FIN-IF-08","FIN-REC","Reconciliation / Reconstruction","F1-F3"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:4 | term=reconstruction | "FIN-OBJ-003","OBJECT","Economic Equivalence Is Not Historical Equivalence","A later state that is economically equivalent to an earlier state SHALL NOT be classified as historically identical solely from value equivalence.","Settlement, compensation, reversal, reconstruction","FIN-ARCH-04","F1"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:17 | term=reconstruction | "FIN-EFF-004","EFFECTUATION","Effect History Is Append-Only","Once a consequential economic effect has occurred, later compensation, reversal, or reconstruction SHALL NOT erase its historical occurrence.","Post-effect processing","POB + FIN-ARCH-04","F1"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:32 | term=reconstruction | "FIN-REC-003","RECONCILIATION","Reconstruction Requires Evidence","Historical financial reconstruction SHALL require sufficient evidence and provenance.","Reconstruction","POB","F3"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:33 | term=reconstructed | "FIN-REC-004","RECONCILIATION","Reconstructed State Must Be Marked","A reconstructed state SHALL remain distinguishable from uninterrupted preserved state.","Reconstructed state","POB + FIN-ARCH-04","F3"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:40 | term=reconstructed | "FIN-CNT-003","CONTINUITY","Reconstructed Continuity Is Distinct","Reconstructed continuity SHALL remain distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:40 | term=reconstruction | "FIN-CNT-003","CONTINUITY","Reconstructed Continuity Is Distinct","Reconstructed continuity SHALL remain distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3"
+- F4-SD-007 | 03-registries/INVARIANT_REGISTRY.csv:45 | term=reconstruction | "FIN-EVD-004","EVIDENCE","Evidence Mutation Must Be Detectable","Unauthorized mutation of execution, settlement, refusal, or reconstruction evidence SHALL be detectable.","Evidence stores","POB","F3"
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:4 | term=reconstruction | "FIN-PO-003","FIN-OBJ-003","NON-EQUIVALENCE","Economic Equivalence Is Not Historical Equivalence","Prove that economic-state equivalence, including equality of relevant balances after compensation or reversal, does not imply historical-state identity.","Settlement, compensation, reversal, reconstruction","FIN-ARCH-04","F1","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:17 | term=reconstruction | "FIN-PO-016","FIN-EFF-004","TRACEABILITY","Effect History Is Append-Only","Prove that once a consequential financial effect occurs, subsequent compensation, reversal, reconciliation, or reconstruction preserves evidence of the original effect in the historical execution lineage.","Post-effect processing","POB + FIN-ARCH-04","F1","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:32 | term=reconstruction | "FIN-PO-031","FIN-REC-003","THEOREM","Reconstruction Requires Evidence","Establish invariant FIN-REC-003 'Reconstruction Requires Evidence' under its stated applicability conditions and inherited architectural assumptions; demonstrate that the forbidden violating state or semantic collapse cannot be accepted as conformant.","Reconstruction","POB","F3","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:33 | term=reconstructed | "FIN-PO-032","FIN-REC-004","NON-EQUIVALENCE","Reconstructed State Must Be Marked","Prove that reconstructed financial state remains distinguishable from uninterrupted preserved financial state.","Reconstructed state","POB + FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:40 | term=reconstructed | "FIN-PO-039","FIN-CNT-003","NON-EQUIVALENCE","Reconstructed Continuity Is Distinct","Prove that reconstructed continuity remains formally distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:40 | term=reconstruction | "FIN-PO-039","FIN-CNT-003","NON-EQUIVALENCE","Reconstructed Continuity Is Distinct","Prove that reconstructed continuity remains formally distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:61 | term=reconstruction | "FIN-PO-X004","FIN-OBJ-003","COUNTEREXAMPLE","Balance Equality Counterexample","Construct two financial histories with equal terminal balances but non-identical transition histories, authority histories, evidence lineages, or obligations.","Compensation / reversal / reconstruction","FIN-ARCH-04","F1","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:64 | term=reconstructed | "FIN-PO-X007","FIN-CNT-003","TRACEABILITY","Reconstructed Versus Preserved Continuity Trace","Establish an evidence trace that mechanically distinguishes uninterrupted continuity from continuity established only through later reconstruction.","Financial reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:64 | term=reconstruction | "FIN-PO-X007","FIN-CNT-003","TRACEABILITY","Reconstructed Versus Preserved Continuity Trace","Establish an evidence trace that mechanically distinguishes uninterrupted continuity from continuity established only through later reconstruction.","Financial reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 03-registries/RELATIONSHIP_REGISTRY.csv:12 | term=reconstruction | "FIN-REL-011","Reconstructs","Historical reconstruction relation","NO"
+- F4-SD-007 | 03-registries/STATE_OWNERSHIP_REGISTRY.csv:9 | term=reconstruction | "Historical reconstruction state","FIN-COMP-016","NO"
+- F4-SD-007 | 03-registries/STATE_REGISTRY.csv:37 | term=reconstructed | "FIN-S-036","CONTINUITY-RECONSTRUCTED","continuity","YES"
+- F4-SD-007 | 03-registries/TRANSITION_REGISTRY.csv:40 | term=reconstructed | "FIN-T-039","CONTINUITY-UNCLASSIFIED","CONTINUITY-RECONSTRUCTED","continuity"
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_06_RESULT.md:41 | term=reconstruction | Finality reconstruction requirement
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_06_RESULT.md:57 | term=reconstruction | FINALITY-RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:73 | term=reconstruction | RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:108 | term=reconstruction | partial execution, or reconstruction history.
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:35 | term=reconstruction | Reconstruction events
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:49 | term=reconstructed | RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:75 | term=reconstructed | RECONSTRUCTED != PRESERVED
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:81 | term=reconstructed | A prior broken, degraded, indeterminate, or reconstructed interval cannot
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:38 | term=reconstruction | - reconstruction bypass
+- F4-SD-007 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:48 | term=reconstruction | - reconstruction relabeled as preservation
+- F4-SD-007 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:242 | term=reconstruction | reconstruction
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ADMISSIBILITY.md:163 | term=reconstruction | RECONSTRUCT requires prior state/evidence reconstruction before a
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:17 | term=reconstructed | RECONSTRUCTED,
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:39 | term=reconstructed | BROKEN -> RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:49 | term=reconstructed | INDETERMINATE -> RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:66 | term=reconstructed | RECONSTRUCTED -> PRESERVED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:68 | term=reconstruction | must not erase reconstruction history.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:85 | term=reconstructed | clean transition while retaining a historical BROKEN or RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:96 | term=reconstructed | BROKEN -> RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:17 | term=reconstructed | RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:35 | term=reconstruction | Reconstruction != preserved continuity.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:59 | term=reconstructed | - reconstructed state
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:89 | term=reconstruction | - reconstruction events
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:127 | term=reconstruction | - reconstruction rules
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:148 | term=reconstructed | RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:165 | term=reconstruction | - no reconstruction was required to recover missing lineage
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:215 | term=reconstructed | ## 11. RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:217 | term=reconstructed | RECONSTRUCTED applies where continuity was not preserved, but sufficient
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:219 | term=reconstructed | or authoritative reconstructed lineage.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:221 | term=reconstructed | RECONSTRUCTED != PRESERVED.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:223 | term=reconstruction | Reconstruction acknowledges that continuity was interrupted.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:230 | term=reconstructed | classify continuity as preserved, degraded, broken, or reconstructed.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:278 | term=reconstruction | reconstruction
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:390 | term=reconstruction | ## 24. Reconstruction Event
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:394 | term=reconstruction | ReconstructionEvent(r,q_d,t)
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:399 | term=reconstruction | A reconstruction event itself proves that direct preserved continuity
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:400 | term=reconstructed | cannot be claimed for the reconstructed interval.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:412 | term=reconstructed | RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:427 | term=reconstruction | - reconstruction
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:67 | term=reconstruction | RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:106 | term=reconstruction | Revalidation != Reconstruction.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:110 | term=reconstruction | ## 8. RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:115 | term=reconstruction | Reconstruction may use:
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:125 | term=reconstruction | Reconstruction does not recreate continuity automatically.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:224 | term=reconstruction | prior reconstruction
+- F4-SD-007 | 05-distributed-settlement/formal/F2_FORK_DIVERGENCE_SEMANTICS.md:130 | term=reconstruction | RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:163 | term=reconstruction | FINALITY-RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:186 | term=reconstruction | conflict, reconstruction, or revalidation supersedes it.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:251 | term=reconstruction | ## 14. FINALITY-RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:257 | term=reconstruction | Reconstruction is not finality.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:259 | term=reconstruction | Reconstruction may enable later finality evaluation.
+- F4-SD-007 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:451 | term=reconstruction | - reconstruction
+- F4-SD-007 | 05-distributed-settlement/inheritance/F2_INHERITED_OBJECT_MAP.md:29 | term=reconstructed | | RECONSTRUCTED | inherited | F1 |
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:182 | term=reconstructed | Historical state reconstructed
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:189 | term=reconstructed | Continuity = RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:210 | term=reconstructed | Historical continuity = BROKEN or RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_FORMAL_PROOF_SUMMARY.md:53 | term=reconstructed | - reconstructed continuity is not preserved continuity
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:231 | term=reconstructed | ## F2-THM-010 — Reconstructed Continuity Is Not Preserved Continuity
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:235 | term=reconstructed | RECONSTRUCTED != PRESERVED.
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:239 | term=reconstructed | RECONSTRUCTED requires a prior interval whose lineage had to be rebuilt.
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:241 | term=reconstruction | PRESERVED requires no continuity-breaking gap and no reconstruction for
+- F4-SD-007 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:267 | term=reconstruction | A prior BROKEN interval may be followed by reconstruction and a new
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:65 | term=reconstruction | reconstruction_required: bool = False,
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:70 | term=reconstruction | if reconstruction_required:
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:114 | term=reconstruction | reconstruction_required: bool = False,
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:119 | term=reconstruction | if reconstruction_required:
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:120 | term=reconstruction | return FinalityState.RECONSTRUCTION_REQUIRED
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:153 | term=reconstruction | reconstruction_required: bool = False,
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:159 | term=reconstruction | if reconstruction_required:
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:160 | term=reconstruction | return ReconciliationState.RECONSTRUCTION_REQUIRED
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:180 | term=reconstruction | reconstruction_occurred: bool = False,
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:188 | term=reconstruction | if reconstruction_occurred:
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/engine.py:189 | term=reconstructed | return ContinuityState.RECONSTRUCTED
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/models.py:44 | term=reconstruction | RECONSTRUCTION_REQUIRED = "FINALITY-RECONSTRUCTION-REQUIRED"
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/models.py:51 | term=reconstruction | RECONSTRUCTION_REQUIRED = "RECONSTRUCTION-REQUIRED"
+- F4-SD-007 | 05-distributed-settlement/runtime/f2_runtime/models.py:60 | term=reconstructed | RECONSTRUCTED = "RECONSTRUCTED"
+- F4-SD-007 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:54 | term=reconstruction | 9. preserves evidence sufficient for later reconstruction,
+- F4-SD-007 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:86 | term=reconstructed | - reconstructed continuity;
+- F4-SD-007 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:95 | term=reconstructed | reconstructed == preserved
+- F4-SD-007 | 06-f3-discovery/formal/F3_STATE_ALGEBRA.md:32 | term=reconstructed | CUSTODY_RECONSTRUCTED
+- F4-SD-007 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:171 | term=reconstructed | historical chain reconstructed after discontinuity
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:115 | term=reconstructed | - 03-registries/COMPONENT_REGISTRY.csv:14 | pattern=continuity | "FI-REC-002","Financial Reconstruction Engine","RECONCILIATION","Reconstruct historical financial execution state from preserved evidence and provenance without representing reconstruction as uninterrupted continuity.","EvidenceObject;execution lineage;state history","Reconstructed financial history","POB;EIP","F3"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:115 | term=reconstruction | - 03-registries/COMPONENT_REGISTRY.csv:14 | pattern=continuity | "FI-REC-002","Financial Reconstruction Engine","RECONCILIATION","Reconstruct historical financial execution state from preserved evidence and provenance without representing reconstruction as uninterrupted continuity.","EvidenceObject;execution lineage;state history","Reconstructed financial history","POB;EIP","F3"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:119 | term=reconstruction | - 03-registries/COMPONENT_REGISTRY.csv:17 | pattern=finality | "FI-EVD-001","Financial Evidence Recorder","EVIDENCE","Record append-only execution, refusal, effect, reconciliation, finality, and reconstruction evidence.","FinancialExecutionEvent;decisions;effects;state changes","EvidenceObject","POB;UES","FOUNDATION"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:136 | term=reconstructed | - 03-registries/F1_CONTINUITY_CASES.csv:5 | pattern=continuity | "F1-CNT-X004","Partial settlement breaks continuity; later compensation restores equivalent balances and accepted relation","ECONOMICALLY-EQUIVALENT","YES","YES","RECONSTRUCTED","Same economic endpoint does not mean preserved"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:137 | term=reconstructed | - 03-registries/F1_CONTINUITY_CASES.csv:6 | pattern=continuity | "F1-CNT-X005","Original effect breaks continuity; later reversal returns balances to exact original values","IDENTICAL-BALANCES","YES","YES","RECONSTRUCTED","Reversal cannot retroactively create preservation"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:138 | term=reconstruction | - 03-registries/F1_CONTINUITY_CASES.csv:7 | pattern=continuity | "F1-CNT-X006","Current state reconciled but evidence proves earlier continuity break with no reconstruction","RECONCILED","YES","NO","BROKEN","Reconciled does not mean preserved"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:146 | term=reconstructed | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:4 | pattern=continuity | "F1-CNT-C003","BROKEN","YES","NOT-ACCEPTABLY-RECONSTRUCTED","At least one required continuity relationship suffered a qualifying unresolved break"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:147 | term=reconstructed | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:5 | pattern=continuity | "F1-CNT-C004","RECONSTRUCTED","YES","RE-ESTABLISHED","Continuity was broken and later explicitly reconstructed under accepted criteria"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:150 | term=reconstructed | - 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:3 | pattern=continuity | "F1-CP-002","HISTORY_RECONSTRUCTABLE","F1_CONTINUITY_RECONSTRUCTED;F1_HISTORICALLY_RECONCILED"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:155 | term=reconstructed | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:4 | pattern=continuity | "F1-CNT-PC003","NON-EQUIVALENCE","Reconstructed continuity is distinct from uninterrupted preserved continuity.","FIN-CNT-003","OPEN"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:159 | term=reconstructed | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:8 | pattern=continuity | "F1-CNT-PC007","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive classifications for the same complete continuity interval.","FIN-CNT-003","OPEN"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:160 | term=reconstructed | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | pattern=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:164 | term=reconstructed | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:4 | pattern=continuity | "F1-CNT-R003","Reconstructed Continuity != Preserved Continuity","YES"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:171 | term=reconstructed | - 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:3 | pattern=obligation | "F1-CNT-G002","Obligation relation","Required obligations remain satisfied, validly transitioned, or explicitly reconstructed","YES"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:198 | term=reconstructed | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:16 | pattern=closure | "F1-MC-015","The tested reference runtime distinguishes reconstructed continuity from preserved continuity","REFERENCE-RUNTIME-CONFORMANT","F1-TRACE-CNT-007","F1_RUNTIME_PROOF_CLOSURE.csv"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:199 | term=reconstructed | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:16 | pattern=continuity | "F1-MC-015","The tested reference runtime distinguishes reconstructed continuity from preserved continuity","REFERENCE-RUNTIME-CONFORMANT","F1-TRACE-CNT-007","F1_RUNTIME_PROOF_CLOSURE.csv"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:213 | term=reconstructed | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:25 | pattern=continuity | "F1-THM-CNT-003","CONTINUITY","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive for the same complete interval","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:217 | term=reconstructed | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:29 | pattern=continuity | "F1-TRACE-CNT-007","CONTINUITY","TRACEABILITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","TRACEABILITY-ARGUMENT","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","YES"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:250 | term=reconstructed | - 03-registries/F1_RUNTIME_CONFORMANCE_REGISTRY.csv:7 | pattern=continuity | "F1-RUN-C006","F1-TRACE-CNT-007","continuity.py + engine.py + evidence.py","Reconstructed continuity remains distinguishable from preserved continuity and retains the relevant history","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:255 | term=reconstructed | - 03-registries/F1_RUNTIME_PROOF_CARRY_FORWARD.csv:7 | pattern=continuity | "F1-TRACE-CNT-007","CONTINUITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","FIN-F1-08/FIN-F1-09"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:257 | term=reconstructed | - 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:7 | pattern=continuity | "F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:334 | term=reconstructed | - 03-registries/F2_08_INVARIANT_REGISTER.csv:12 | pattern=continuity | "F2-CONT-011","CONTINUITY","Reconstructed continuity is distinct from preserved continuity.","LOCKED"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:371 | term=reconstruction | - 03-registries/F2_DISTRIBUTED_CONTINUITY_RESULT_REGISTRY.csv:1 | pattern=finality | "state","f1_owner","functional","finality_implied","reconstruction_occurred","historical_break"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:393 | term=reconstructed | - 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:8 | pattern=finality | "FINALITY-RECONSTRUCTION-REQUIRED","NO","NO-AUTO","NO-INFERENCE","NO-INFERENCE","Prior execution/evidence/state must be reconstructed before finality evaluation."
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:393 | term=reconstruction | - 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:8 | pattern=finality | "FINALITY-RECONSTRUCTION-REQUIRED","NO","NO-AUTO","NO-INFERENCE","NO-INFERENCE","Prior execution/evidence/state must be reconstructed before finality evaluation."
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:407 | term=reconstructed | - 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:8 | pattern=continuity | "Continuity preserved/degraded/broken/reconstructed/indeterminate separation","classify_continuity","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:647 | term=reconstructed | - 03-registries/INVARIANT_REGISTRY.csv:40 | pattern=continuity | "FIN-CNT-003","CONTINUITY","Reconstructed Continuity Is Distinct","Reconstructed continuity SHALL remain distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:647 | term=reconstruction | - 03-registries/INVARIANT_REGISTRY.csv:40 | pattern=continuity | "FIN-CNT-003","CONTINUITY","Reconstructed Continuity Is Distinct","Reconstructed continuity SHALL remain distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:680 | term=reconstructed | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=continuity | "FIN-PO-039","FIN-CNT-003","NON-EQUIVALENCE","Reconstructed Continuity Is Distinct","Prove that reconstructed continuity remains formally distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:680 | term=reconstruction | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=continuity | "FIN-PO-039","FIN-CNT-003","NON-EQUIVALENCE","Reconstructed Continuity Is Distinct","Prove that reconstructed continuity remains formally distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:684 | term=reconstruction | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:61 | pattern=obligation | "FIN-PO-X004","FIN-OBJ-003","COUNTEREXAMPLE","Balance Equality Counterexample","Construct two financial histories with equal terminal balances but non-identical transition histories, authority histories, evidence lineages, or obligations.","Compensation / reversal / reconstruction","FIN-ARCH-04","F1","OPEN","","","",""
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:687 | term=reconstructed | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:64 | pattern=continuity | "FIN-PO-X007","FIN-CNT-003","TRACEABILITY","Reconstructed Versus Preserved Continuity Trace","Establish an evidence trace that mechanically distinguishes uninterrupted continuity from continuity established only through later reconstruction.","Financial reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:687 | term=reconstruction | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:64 | pattern=continuity | "FIN-PO-X007","FIN-CNT-003","TRACEABILITY","Reconstructed Versus Preserved Continuity Trace","Establish an evidence trace that mechanically distinguishes uninterrupted continuity from continuity established only through later reconstruction.","Financial reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:699 | term=reconstructed | - 03-registries/STATE_REGISTRY.csv:37 | pattern=continuity | "FIN-S-036","CONTINUITY-RECONSTRUCTED","continuity","YES"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:712 | term=reconstructed | - 03-registries/TRANSITION_REGISTRY.csv:40 | pattern=continuity | "FIN-T-039","CONTINUITY-UNCLASSIFIED","CONTINUITY-RECONSTRUCTED","continuity"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:732 | term=reconstructed | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:341 | pattern=continuity | **Statement:** RECONSTRUCTED preserves evidence of the prior continuity break
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:735 | term=reconstructed | - 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:65 | pattern=continuity | **Basis:** Reconstructed continuity requires represented violation and remains distinct from PRESERVED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:741 | term=reconstructed | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:87 | pattern=continuity | - reconstructed continuity is not preserved continuity.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:753 | term=reconstruction | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:553 | pattern=continuity | continuity relation without an accepted reconstruction describing the current
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:755 | term=reconstructed | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:566 | pattern=continuity | Therefore reconstructed continuity contains a historical discontinuity.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:764 | term=reconstructed | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:685 | pattern=continuity | ## 9.6 Preserved and Reconstructed Continuity
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:769 | term=reconstructed | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:768 | pattern=continuity | - classify reconstructed continuity as preserved;
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:772 | term=reconstruction | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | pattern=continuity | Reconstruction adds a continuity classification.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:804 | term=reconstructed | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:56 | pattern=continuity | state mutation. Reconstructed continuity remains distinct from preserved
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:812 | term=reconstructed | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:112 | pattern=continuity | - reconstructed continuity,
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:816 | term=reconstructed | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:133 | pattern=continuity | **reconstructed continuity != preserved continuity**
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:833 | term=reconstruction | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:524 | pattern=finality | FINALITY-RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:850 | term=reconstructed | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:762 | pattern=continuity | # 19. Preserved vs Reconstructed Continuity
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:864 | term=reconstructed | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:856 | pattern=continuity | 10. Reconstructed continuity is distinct from preserved continuity.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:879 | term=reconstruction | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1079 | pattern=continuity | repair, finality, and continuity reconstruction.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:880 | term=reconstruction | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1079 | pattern=finality | repair, finality, and continuity reconstruction.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:938 | term=reconstructed | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:96 | pattern=continuity | - reconstructed continuity;
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1072 | term=reconstructed | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:439 | pattern=custody | CUSTODY_RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1328 | term=reconstructed | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1378 | pattern=continuity | historical chain reconstructed after discontinuity
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1409 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1410 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1411 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:17 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1415 | term=reconstructed | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1416 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:35 | pattern=continuity | ## PO-FIN-CON-002 — Reconstruction Does Not Restore Continuity
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1417 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1418 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1419 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:41 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1423 | term=reconstructed | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1425 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1426 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1427 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:65 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1431 | term=reconstructed | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1433 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1434 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1435 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:89 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1439 | term=reconstructed | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1441 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1442 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1443 | term=reconstruction | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:113 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1447 | term=reconstructed | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1580 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1581 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:19 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1582 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1583 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1584 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1585 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:43 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1586 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1587 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1588 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1589 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:67 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1590 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1591 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1592 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1593 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:91 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1594 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1595 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1596 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1597 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:115 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1598 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1599 | term=reconstruction | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1655 | term=reconstructed | - reference-runtime/f1/reconciliation_engine.py:36 | pattern=continuity | return ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1666 | term=reconstructed | - reference-runtime/f1/types.py:71 | pattern=continuity | RECONSTRUCTED = "F1_CONTINUITY_RECONSTRUCTED"
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1677 | term=reconstructed | - tests/f1/adversarial/test_f1_adversarial.py:605 | pattern=continuity | ContinuityClass.RECONSTRUCTED,
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1709 | term=reconstructed | - tests/f1/test_continuity.py:49 | pattern=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1718 | term=reconstructed | - tests/f1/test_engine_integration.py:75 | pattern=continuity | def test_engine_records_reconstructed_continuity():
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1721 | term=reconstructed | - tests/f1/test_engine_integration.py:92 | pattern=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1770 | term=reconstructed | - tests/f1_adversarial/test_attack_continuity.py:23 | pattern=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1835 | term=reconstructed | - tests/f2/test_f2_runtime.py:211 | pattern=continuity | def test_continuity_reconstructed():
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1837 | term=reconstructed | - tests/f2/test_f2_runtime.py:215 | pattern=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1871 | term=reconstruction | - tests/f2_adversarial/test_f2_adversarial.py:191 | pattern=finality | def test_reconstruction_requirement_prevents_finality():
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1873 | term=reconstruction | - tests/f2_adversarial/test_f2_adversarial.py:195 | pattern=finality | ) == FinalityState.RECONSTRUCTION_REQUIRED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1878 | term=reconstructed | - tests/f2_adversarial/test_f2_adversarial.py:252 | pattern=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1885 | term=reconstructed | - tests/f2_adversarial/test_f2_adversarial.py:272 | pattern=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1906 | term=reconstructed | - tests/f2_adversarial/test_f2_adversarial.py:386 | pattern=continuity | assert continuity == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:861 | term=reconstruction | - record-state reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:861 | term=state reconstruction | - record-state reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:96 | term=reconstruction | ### F4-O-007 — Record-State Reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:96 | term=state reconstruction | ### F4-O-007 — Record-State Reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:98 | term=reconstruction | **Record-State Reconstruction**
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:98 | term=state reconstruction | **Record-State Reconstruction**
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:100 | term=reconstruction | A typed reconstruction object representing the restoration or derivation of record state from admissible evidence after loss, contradiction, corruption, reopening, or incomplete persistence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:102 | term=reconstruction | Reconstruction does not automatically restore historical identity or continuity.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:146 | term=reconstruction | - record reconstruction != continuity preservation
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:146 | term=record reconstruction | - record reconstruction != continuity preservation
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:169 | term=reconstruction | 8. reconstruction;
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:242 | term=reconstructed | - F4-O-004 | 02-core/invariants/FIN-REC_INVARIANTS.md:33 | term=historical state | **Normative rule:** Reconstructed historical state SHALL NOT be classified as restored continuity merely because historical state can be reconstructed.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:245 | term=reconstructed | - F4-O-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:42 | term=historical state | Historical state has been reconstructed from surviving evidence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:273 | term=reconstructed | - F4-O-004 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:182 | term=historical state | Historical state reconstructed
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:451 | term=reconstruction | - F4-O-007 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:861 | term=record-state reconstruction | - record-state reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:451 | term=state reconstruction | - F4-O-007 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:861 | term=record-state reconstruction | - record-state reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:452 | term=reconstruction | - F4-O-007 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:861 | term=state reconstruction | - record-state reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:452 | term=state reconstruction | - F4-O-007 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:861 | term=state reconstruction | - record-state reconstruction
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:512 | term=reconstructed | - F4-O-010 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | term=continuity classification | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:544 | term=reconstructed | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:160 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | pattern=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:561 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:772 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | pattern=continuity | Reconstruction adds a continuity classification.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:571 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1409 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:572 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1410 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:575 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1417 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:576 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1418 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:579 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1425 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:580 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1426 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:583 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1433 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:584 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1434 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:587 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1441 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:588 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1442 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:591 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1582 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:592 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1586 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:593 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1590 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:594 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1594 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:595 | term=reconstruction | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1598 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:606 | term=reconstruction | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | term=continuity classification | Reconstruction adds a continuity classification.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:616 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:619 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:622 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:625 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:628 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:631 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:632 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:633 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:634 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:635 | term=reconstruction | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:201 | term=reconstructed | **Attack:** Classify reconstructed history as PRESERVED
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:203 | term=reconstructed | **Expected:** RECONSTRUCTED
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:205 | term=reconstructed | **Observed:** RECONSTRUCTED
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:213 | term=reconstruction | **Attack:** Claim reconstruction without represented prior break
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:293 | term=reconstructed | **Statement:** PRESERVED and RECONSTRUCTED are mutually exclusive for the same complete interval
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:341 | term=reconstructed | **Statement:** RECONSTRUCTED preserves evidence of the prior continuity break
+- F4-SD-007 | 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:65 | term=reconstructed | **Basis:** Reconstructed continuity requires represented violation and remains distinct from PRESERVED
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:26 | term=reconstructed | broken, reconstructed, or indeterminate.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:29 | term=reconstructed | execution history. Compensation, reversal, reconciliation, and reconstructed
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:87 | term=reconstructed | - reconstructed continuity is not preserved continuity.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:136 | term=reconstruction | - generic reconstruction;
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:474 | term=reconstructed | Not every post-effect condition permits a unique acceptable reconstructed current
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:534 | term=reconstructed | RECONSTRUCTED,
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:553 | term=reconstruction | continuity relation without an accepted reconstruction describing the current
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:556 | term=reconstructed | ## 8.5 Reconstructed
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:558 | term=reconstructed | RECONSTRUCTED requires:
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:564 | term=reconstruction | accepted reconstruction.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:566 | term=reconstructed | Therefore reconstructed continuity contains a historical discontinuity.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:685 | term=reconstructed | ## 9.6 Preserved and Reconstructed Continuity
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:693 | term=reconstructed | RECONSTRUCTED
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:768 | term=reconstructed | - classify reconstructed continuity as preserved;
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:769 | term=reconstruction | - claim reconstruction without a represented prior break.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:796 | term=reconstruction | - reconstruction.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | term=reconstruction | Reconstruction adds a continuity classification.
+- F4-SD-007 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:916 | term=reconstructed | RECONSTRUCTED,
+- F4-SD-007 | 15-publications/F1/manuscript/F1_MANUSCRIPT_CLAIM_DOCTRINE.md:70 | term=reconstructed | RECONSTRUCTED -> PRESERVED
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:56 | term=reconstructed | state mutation. Reconstructed continuity remains distinct from preserved
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:112 | term=reconstructed | - reconstructed continuity,
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:133 | term=reconstructed | **reconstructed continuity != preserved continuity**
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:524 | term=reconstruction | FINALITY-RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:703 | term=reconstruction | RECONSTRUCTION-REQUIRED
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:754 | term=reconstructed | RECONSTRUCTED
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:762 | term=reconstructed | # 19. Preserved vs Reconstructed Continuity
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:766 | term=reconstructed | RECONSTRUCTED requires that a prior state lineage had to be rebuilt.
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:770 | term=reconstructed | RECONSTRUCTED != PRESERVED
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:773 | term=reconstructed | historical interval remains BROKEN or RECONSTRUCTED.
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:856 | term=reconstructed | 10. Reconstructed continuity is distinct from preserved continuity.
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:936 | term=reconstruction | - reconstruction relabeled as preservation,
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1079 | term=reconstruction | repair, finality, and continuity reconstruction.
+- F4-SD-007 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1131 | term=reconstructed | Reconstructed != Preserved
+- F4-SD-007 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:96 | term=reconstructed | - reconstructed continuity;
+- F4-SD-007 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:105 | term=reconstructed | reconstructed == preserved
+- F4-SD-007 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:439 | term=reconstructed | CUSTODY_RECONSTRUCTED
+- F4-SD-007 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1378 | term=reconstructed | historical chain reconstructed after discontinuity
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | term=reconstruction | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:17 | term=reconstruction | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:25 | term=reconstructed | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:35 | term=reconstruction | ## PO-FIN-CON-002 — Reconstruction Does Not Restore Continuity
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | term=reconstruction | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:41 | term=reconstruction | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:49 | term=reconstructed | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | term=reconstruction | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:65 | term=reconstruction | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:73 | term=reconstructed | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | term=reconstruction | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:89 | term=reconstruction | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:97 | term=reconstructed | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | term=reconstruction | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:113 | term=reconstruction | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-007 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:121 | term=reconstructed | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:19 | term=reconstructed | **Counterexample condition:** A governed execution/refusal/remediation cannot be reconstructed, or evidence is treated as authority.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:21 | term=reconstruction | **Evidence requirement:** Persistent provenance-linked evidence records sufficient for reconstruction and distinguishability.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:25 | term=reconstruction | **Verification requirement:** Evidence loss, tampering, ambiguity, and reconstruction cases.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:43 | term=reconstructed | **Counterexample condition:** A governed execution/refusal/remediation cannot be reconstructed, or evidence is treated as authority.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:45 | term=reconstruction | **Evidence requirement:** Persistent provenance-linked evidence records sufficient for reconstruction and distinguishability.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:49 | term=reconstruction | **Verification requirement:** Evidence loss, tampering, ambiguity, and reconstruction cases.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:67 | term=reconstructed | **Counterexample condition:** A governed execution/refusal/remediation cannot be reconstructed, or evidence is treated as authority.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:69 | term=reconstruction | **Evidence requirement:** Persistent provenance-linked evidence records sufficient for reconstruction and distinguishability.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:73 | term=reconstruction | **Verification requirement:** Evidence loss, tampering, ambiguity, and reconstruction cases.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:91 | term=reconstructed | **Counterexample condition:** A governed execution/refusal/remediation cannot be reconstructed, or evidence is treated as authority.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:93 | term=reconstruction | **Evidence requirement:** Persistent provenance-linked evidence records sufficient for reconstruction and distinguishability.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:97 | term=reconstruction | **Verification requirement:** Evidence loss, tampering, ambiguity, and reconstruction cases.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:115 | term=reconstructed | **Counterexample condition:** A governed execution/refusal/remediation cannot be reconstructed, or evidence is treated as authority.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:117 | term=reconstruction | **Evidence requirement:** Persistent provenance-linked evidence records sufficient for reconstruction and distinguishability.
+- F4-SD-007 | formal-proofs/FIN-EVD_PROOF_OBLIGATIONS.md:121 | term=reconstruction | **Verification requirement:** Evidence loss, tampering, ambiguity, and reconstruction cases.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:15 | term=reconstruction | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:17 | term=reconstruction | **Required premises:** Historical execution evidence; observed current state; remediation history; reconstruction/reconciliation evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:19 | term=reconstruction | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:21 | term=reconstruction | **Evidence requirement:** Reconciliation/reconstruction inputs; historical evidence; divergence record; resulting classification evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | term=reconstruction | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:25 | term=reconstruction | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:35 | term=reconstruction | ## PO-FIN-REC-002 — Reconstruction Is Not Restoration
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:39 | term=reconstruction | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:41 | term=reconstruction | **Required premises:** Historical execution evidence; observed current state; remediation history; reconstruction/reconciliation evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:43 | term=reconstruction | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:45 | term=reconstruction | **Evidence requirement:** Reconciliation/reconstruction inputs; historical evidence; divergence record; resulting classification evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | term=reconstruction | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:49 | term=reconstruction | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:63 | term=reconstruction | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:65 | term=reconstruction | **Required premises:** Historical execution evidence; observed current state; remediation history; reconstruction/reconciliation evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:67 | term=reconstruction | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:69 | term=reconstruction | **Evidence requirement:** Reconciliation/reconstruction inputs; historical evidence; divergence record; resulting classification evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | term=reconstruction | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:73 | term=reconstruction | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:87 | term=reconstruction | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:89 | term=reconstruction | **Required premises:** Historical execution evidence; observed current state; remediation history; reconstruction/reconciliation evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:91 | term=reconstruction | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:93 | term=reconstruction | **Evidence requirement:** Reconciliation/reconstruction inputs; historical evidence; divergence record; resulting classification evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | term=reconstruction | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:97 | term=reconstruction | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:111 | term=reconstruction | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:113 | term=reconstruction | **Required premises:** Historical execution evidence; observed current state; remediation history; reconstruction/reconciliation evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:115 | term=reconstruction | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:117 | term=reconstruction | **Evidence requirement:** Reconciliation/reconstruction inputs; historical evidence; divergence record; resulting classification evidence.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | term=reconstruction | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-007 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:121 | term=reconstruction | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-007 | formal-proofs/PROOF_CLASS_DEFINITIONS.md:61 | term=reconstruction | -> reconstruction
+- F4-SD-007 | reference-runtime/f1/reconciliation_engine.py:36 | term=reconstructed | return ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | reference-runtime/f1/types.py:71 | term=reconstructed | RECONSTRUCTED = "F1_CONTINUITY_RECONSTRUCTED"
+- F4-SD-007 | tests/f1/adversarial/test_f1_adversarial.py:595 | term=reconstructed | def test_reconstructed_not_preserved(self):
+- F4-SD-007 | tests/f1/adversarial/test_f1_adversarial.py:605 | term=reconstructed | ContinuityClass.RECONSTRUCTED,
+- F4-SD-007 | tests/f1/test_continuity.py:38 | term=reconstructed | def test_reconstructed_is_not_preserved():
+- F4-SD-007 | tests/f1/test_continuity.py:44 | term=reconstructed | reconstructed=True,
+- F4-SD-007 | tests/f1/test_continuity.py:49 | term=reconstructed | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | tests/f1/test_continuity.py:64 | term=reconstruction | def test_reconstruction_without_break_is_indeterminate():
+- F4-SD-007 | tests/f1/test_continuity.py:70 | term=reconstructed | reconstructed=True,
+- F4-SD-007 | tests/f1/test_engine_integration.py:75 | term=reconstructed | def test_engine_records_reconstructed_continuity():
+- F4-SD-007 | tests/f1/test_engine_integration.py:88 | term=reconstructed | reconstructed=True,
+- F4-SD-007 | tests/f1/test_engine_integration.py:92 | term=reconstructed | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | tests/f1/test_engine_integration.py:96 | term=reconstructed | assert record.payload["classification"] == "RECONSTRUCTED"
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:8 | term=reconstructed | def test_reconstructed_path_cannot_be_preserved():
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:18 | term=reconstructed | reconstructed=True,
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:23 | term=reconstructed | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:27 | term=reconstruction | def test_reconstruction_without_recorded_break_is_not_accepted():
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:36 | term=reconstructed | reconstructed=True,
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:56 | term=reconstruction | def test_break_without_reconstruction_remains_broken():
+- F4-SD-007 | tests/f1_adversarial/test_attack_continuity.py:65 | term=reconstructed | reconstructed=False,
+- F4-SD-007 | tests/f1_adversarial/test_attack_full_lineage.py:60 | term=reconstructed | reconstructed=True,
+- F4-SD-007 | tests/f1_adversarial/test_attack_full_lineage.py:77 | term=reconstructed | assert records[3].payload["classification"] == "RECONSTRUCTED"
+- F4-SD-007 | tests/f2/test_f2_runtime.py:102 | term=reconstruction | def test_reconstruction_precedes_admission():
+- F4-SD-007 | tests/f2/test_f2_runtime.py:105 | term=reconstruction | reconstruction_required=True
+- F4-SD-007 | tests/f2/test_f2_runtime.py:211 | term=reconstructed | def test_continuity_reconstructed():
+- F4-SD-007 | tests/f2/test_f2_runtime.py:214 | term=reconstruction | reconstruction_occurred=True,
+- F4-SD-007 | tests/f2/test_f2_runtime.py:215 | term=reconstructed | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:107 | term=reconstruction | def test_reconstruction_requirement_overrides_apparent_satisfaction():
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:113 | term=reconstruction | reconstruction_required=True,
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:191 | term=reconstruction | def test_reconstruction_requirement_prevents_finality():
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:194 | term=reconstruction | reconstruction_required=True,
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:195 | term=reconstruction | ) == FinalityState.RECONSTRUCTION_REQUIRED
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:216 | term=reconstruction | def test_reconstruction_requirement_not_promoted_to_reconciled():
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:219 | term=reconstruction | reconstruction_required=True,
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:220 | term=reconstruction | ) == ReconciliationState.RECONSTRUCTION_REQUIRED
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:248 | term=reconstruction | def test_reconstruction_cannot_be_reported_preserved():
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:251 | term=reconstruction | reconstruction_occurred=True,
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:252 | term=reconstructed | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:267 | term=reconstruction | def test_reconstruction_precedence_over_break_classification():
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:270 | term=reconstruction | reconstruction_occurred=True,
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:272 | term=reconstructed | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:382 | term=reconstruction | reconstruction_occurred=True,
+- F4-SD-007 | tests/f2_adversarial/test_f2_adversarial.py:386 | term=reconstructed | assert continuity == ContinuityState.RECONSTRUCTED
+- F4-SD-008 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:229 | term=custody record | - conflicting custody records;
+- F4-SD-008 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1002 | term=custody record | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | pattern=custody | - conflicting custody records;
+- F4-SD-008 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:52 | term=recorded custody | - recorded custody != custody authority
+- F4-SD-008 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:863 | term=custody representation | - ledger / custody representation
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:116 | term=custody representation | ### F4-O-009 — Ledger/Custody Representation
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:118 | term=custody representation | **Ledger/Custody Representation**
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:122 | term=recorded custody | Recorded custody is evidence of custody state but is not itself custody authority.
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:144 | term=recorded custody | - recorded custody != custody authority
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:170 | term=custody representation | 9. custody representation;
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:493 | term=custody record | - F4-O-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:229 | term=custody record | - conflicting custody records;
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:494 | term=custody record | - F4-O-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1002 | term=custody record | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | pattern=custody | - conflicting custody records;
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:495 | term=recorded custody | - F4-O-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:52 | term=recorded custody | - recorded custody != custody authority
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:496 | term=custody representation | - F4-O-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:863 | term=custody representation | - ledger / custody representation
+- F4-SD-008 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:497 | term=custody record | - F4-O-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | term=custody record | - conflicting custody records;
+- F4-SD-008 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:239 | term=custody record | - conflicting custody records;
+- F4-SD-009 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:43 | term=continuity | FIN-CNT-*  Continuity
+- F4-SD-009 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:65 | term=continuity | Settlement finality does not imply continuity preservation.
+- F4-SD-009 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:65 | term=continuity preservation | Settlement finality does not imply continuity preservation.
+- F4-SD-009 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:83 | term=continuity | Reconstruction does not imply uninterrupted continuity.
+- F4-SD-009 | 02-core/CANONICAL_FINANCIAL_INVARIANT_DOCTRINE.md:96 | term=continuity | - continuity failure classification,
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:29 | term=continuity | -> Execution Identity Continuity
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:37 | term=continuity | -> Continuity
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:60 | term=continuity | - continuity,
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:90 | term=continuity | Continuity classification does not repair continuity.
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:90 | term=continuity classification | Continuity classification does not repair continuity.
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:92 | term=continuity | Reconstruction does not restore continuity.
+- F4-SD-009 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:124 | term=continuity | -> Intent Continuity
+- F4-SD-009 | 02-core/components/FIN-COMP-004_Execution_Identity_Continuity_Adapter.md:1 | term=continuity | # FIN-COMP-004 — Execution Identity Continuity Adapter
+- F4-SD-009 | 02-core/components/FIN-COMP-004_Execution_Identity_Continuity_Adapter.md:9 | term=continuity | Verify continuity of actor action rule scope version and execution identity.
+- F4-SD-009 | 02-core/components/FIN-COMP-004_Execution_Identity_Continuity_Adapter.md:17 | term=continuity | ExecutionContinuityAssessment
+- F4-SD-009 | 02-core/components/FIN-COMP-019_Finality_Classifier.md:9 | term=continuity | Classify financial finality independently from execution completion and continuity.
+- F4-SD-009 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:1 | term=continuity | # FIN-COMP-020 — Continuity Classifier
+- F4-SD-009 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:5 | term=continuity | continuity
+- F4-SD-009 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:9 | term=continuity | Classify financial continuity independently from finality restoration and economic equivalence.
+- F4-SD-009 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:17 | term=continuity | ContinuityClassification
+- F4-SD-009 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:21 | term=continuity | Continuity classification
+- F4-SD-009 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:21 | term=continuity classification | Continuity classification
+- F4-SD-009 | 02-core/components/FIN-COMP-033_Machine_Intent_Continuity_Monitor.md:1 | term=continuity | # FIN-COMP-033 — Machine Intent Continuity Monitor
+- F4-SD-009 | 02-core/components/FIN-COMP-033_Machine_Intent_Continuity_Monitor.md:17 | term=continuity | IntentContinuityAssessment
+- F4-SD-009 | 02-core/interfaces/CANONICAL_FINANCIAL_INTERFACE_ARCHITECTURE.md:21 | term=continuity | - continuity,
+- F4-SD-009 | 02-core/interfaces/CANONICAL_FINANCIAL_INTERFACE_ARCHITECTURE.md:23 | term=continuity | - intent continuity.
+- F4-SD-009 | 02-core/interfaces/CANONICAL_FINANCIAL_INTERFACE_ARCHITECTURE.md:58 | term=continuity | - ContinuityClassification
+- F4-SD-009 | 02-core/interfaces/CANONICAL_FINANCIAL_INTERFACE_ARCHITECTURE.md:63 | term=continuity | - IntentContinuityAssessment
+- F4-SD-009 | 02-core/interfaces/FIN-IF-001_AuthorityResolutionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-002_AdmissionDecisionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-003_ExecutionControlInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-004_EffectObservationInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-005_SettlementTransitionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-006_ContainmentInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-007_CompensationRequirementInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-008_CompensationAdmissionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-009_CompensationExecutionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-010_ReversalRequirementInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-011_ReversalAdmissionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-012_ReversalExecutionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-013_ReconciliationInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-014_ReconstructionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-015_EvidenceLineageInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-016_ProofOfBlockInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-017_FinalityClassificationInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-018_ContinuityClassificationInterface.md:1 | term=continuity | # FIN-IF-018 — ContinuityClassificationInterface
+- F4-SD-009 | 02-core/interfaces/FIN-IF-018_ContinuityClassificationInterface.md:17 | term=continuity | ContinuityClassification
+- F4-SD-009 | 02-core/interfaces/FIN-IF-018_ContinuityClassificationInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-019_CompositeAuthorityInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-020_RemoteStateInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-021_DistributedSettlementInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-022_LedgerAdmissionContextInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-023_ConsensusAuthoritySeparationInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-024_CustodyAuthorityInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-025_ProgrammableAdmissionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-026_OracleIntegrityInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-027_JurisdictionStateInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-028_JurisdictionConflictInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-029_PrincipalResolutionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-030_DelegatedAuthorityInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-031_IntentContinuityInterface.md:1 | term=continuity | # FIN-IF-031 — IntentContinuityInterface
+- F4-SD-009 | 02-core/interfaces/FIN-IF-031_IntentContinuityInterface.md:17 | term=continuity | IntentContinuityAssessment
+- F4-SD-009 | 02-core/interfaces/FIN-IF-031_IntentContinuityInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/interfaces/FIN-IF-032_MachineExecutionInterface.md:27 | term=continuity | It does not implicitly create authority, broaden scope, bypass admission, or establish finality or continuity beyond the semantics of the output object.
+- F4-SD-009 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:20 | term=continuity | - continuity,
+- F4-SD-009 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:65 | term=continuity | Reconciliation != Continuity
+- F4-SD-009 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:75 | term=continuity | Finality != Continuity
+- F4-SD-009 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:110 | term=continuity | -> finality and continuity classification
+- F4-SD-009 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:110 | term=continuity classification | -> finality and continuity classification
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:1 | term=continuity | # FIN-CON — Continuity Invariants
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:17 | term=continuity | ## FIN-CON-001 — Continuity Is Independently Classified
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:19 | term=continuity | **Normative rule:** Financial continuity SHALL be classified independently from execution completion settlement finality and current balance.
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:21 | term=continuity | **Applies to:** Continuity
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:31 | term=continuity | ## FIN-CON-002 — Reconstruction Does Not Restore Continuity
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:33 | term=continuity | **Normative rule:** RECONSTRUCTED SHALL NOT imply PRESERVED continuity.
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:35 | term=continuity | **Applies to:** Continuity
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:45 | term=continuity | ## FIN-CON-003 — Restored Function Does Not Restore Continuity
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:47 | term=continuity | **Normative rule:** FUNCTIONALLY_RESTORED SHALL NOT imply PRESERVED continuity.
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:59 | term=continuity | ## FIN-CON-004 — Continuity Break Survives Later Equivalence
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:61 | term=continuity | **Normative rule:** A demonstrated continuity break SHALL remain historically true even if later state becomes economically equivalent.
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:63 | term=continuity | **Applies to:** Continuity history
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:73 | term=continuity | ## FIN-CON-005 — Indeterminate Continuity Is Not Preserved Continuity
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:75 | term=continuity | **Normative rule:** Insufficient continuity evidence SHALL result in INDETERMINATE rather than PRESERVED classification.
+- F4-SD-009 | 02-core/invariants/FIN-CON_INVARIANTS.md:77 | term=continuity | **Applies to:** Continuity
+- F4-SD-009 | 02-core/invariants/FIN-DST_INVARIANTS.md:75 | term=continuity | **Normative rule:** Consensus finality or replicated finality SHALL NOT erase evidence of prior authority admission or continuity failure.
+- F4-SD-009 | 02-core/invariants/FIN-EVD_INVARIANTS.md:75 | term=continuity | **Normative rule:** Finality continuity and reconstruction classifications SHALL reference sufficient evidence.
+- F4-SD-009 | 02-core/invariants/FIN-EXE_INVARIANTS.md:61 | term=continuity | **Normative rule:** COMPLETED SHALL NOT imply FINAL settlement state or preserved continuity.
+- F4-SD-009 | 02-core/invariants/FIN-FIN_INVARIANTS.md:5 | term=continuity | Separate settlement finality from authorization, legitimacy, continuity, and historical integrity.
+- F4-SD-009 | 02-core/invariants/FIN-FIN_INVARIANTS.md:59 | term=continuity | ## FIN-FIN-004 — Finality Does Not Establish Continuity
+- F4-SD-009 | 02-core/invariants/FIN-FIN_INVARIANTS.md:61 | term=continuity | **Normative rule:** FINAL classification SHALL NOT imply PRESERVED continuity.
+- F4-SD-009 | 02-core/invariants/FIN-REC_INVARIANTS.md:17 | term=continuity | ## FIN-REC-001 — Reconciliation Is Not Continuity
+- F4-SD-009 | 02-core/invariants/FIN-REC_INVARIANTS.md:19 | term=continuity | **Normative rule:** RECONCILED SHALL NOT imply continuity was preserved.
+- F4-SD-009 | 02-core/invariants/FIN-REC_INVARIANTS.md:33 | term=continuity | **Normative rule:** Reconstructed historical state SHALL NOT be classified as restored continuity merely because historical state can be reconstructed.
+- F4-SD-009 | 02-core/invariants/FIN-REC_INVARIANTS.md:75 | term=continuity | **Normative rule:** Where required historical evidence is insufficient the architecture SHALL classify reconstruction or continuity as indeterminate rather than restored.
+- F4-SD-009 | 02-core/OBJECT_NON_EQUIVALENCE_RULES.md:33 | term=continuity | Function Restoration != Continuity Restoration
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:9 | term=continuity | and whether finality or continuity can be established.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:134 | term=continuity | Reconciled does not itself establish finality or continuity.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:163 | term=continuity | ## Continuity States
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:165 | term=continuity | ### FIN-S-CONTINUITY-UNCLASSIFIED
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:166 | term=continuity | Continuity has not been determined.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:168 | term=continuity | ### FIN-S-CONTINUITY-PRESERVED
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:169 | term=continuity | Required financial execution continuity remained intact.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:171 | term=continuity | ### FIN-S-CONTINUITY-DEGRADED
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:172 | term=continuity | Continuity was impaired but not wholly lost.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:174 | term=continuity | ### FIN-S-CONTINUITY-BROKEN
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:175 | term=continuity | Required continuity was not preserved.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:177 | term=continuity | ### FIN-S-CONTINUITY-RECONSTRUCTED
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:180 | term=continuity | Reconstructed continuity is not identical to uninterrupted preserved continuity.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:182 | term=continuity | ### FIN-S-CONTINUITY-INDETERMINATE
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:183 | term=continuity | Evidence is insufficient to classify continuity.
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:213 | term=continuity | FUNCTIONAL RECOVERY != CONTINUITY PRESERVATION
+- F4-SD-009 | 02-core/states/CANONICAL_FINANCIAL_STATE_MODEL.md:213 | term=continuity preservation | FUNCTIONAL RECOVERY != CONTINUITY PRESERVATION
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:1 | term=continuity | # Financial Continuity Classification Model
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:1 | term=continuity classification | # Financial Continuity Classification Model
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:5 | term=continuity | Continuity classification determines whether execution-relevant integrity remained continuous across the financial transition history.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:5 | term=continuity classification | Continuity classification determines whether execution-relevant integrity remained continuous across the financial transition history.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:24 | term=continuity | Required continuity properties remained valid through the assessed execution history.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:30 | term=continuity | Continuity was weakened or partially unsupported but not conclusively classified as broken.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:36 | term=continuity | Required continuity failed.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:44 | term=continuity | RECONSTRUCTED does not imply continuity was preserved.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:52 | term=continuity | FUNCTIONALLY_RESTORED does not imply historical or constitutional continuity.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:60 | term=continuity | This still does not necessarily imply PRESERVED continuity.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:66 | term=continuity | Evidence is insufficient to classify continuity.
+- F4-SD-009 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:80 | term=continuity | FINALITY != CONTINUITY
+- F4-SD-009 | 02-core/states/FINALITY_CLASSIFICATION_MODEL.md:63 | term=continuity | - continuity,
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:7 | term=continuity | State identity, transition existence, transition admissibility, transition execution, finality, and continuity classification are separate concepts.
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:7 | term=continuity classification | State identity, transition existence, transition admissibility, transition execution, finality, and continuity classification are separate concepts.
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:86 | term=continuity | COMPLETED does not imply settlement finality, legal finality, continuity, or absence of later invalidity.
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:166 | term=continuity | RECONCILED does not imply restoration of continuity.
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:178 | term=continuity | The resulting execution has received explicit finality and continuity classifications.
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:178 | term=continuity classification | The resulting execution has received explicit finality and continuity classifications.
+- F4-SD-009 | 02-core/states/FINANCIAL_STATE_MODEL.md:208 | term=continuity | FINALITY != CONTINUITY
+- F4-SD-009 | 02-core/states/SETTLEMENT_STATE_MODEL.md:41 | term=continuity | Settlement may be RECONCILED without continuity being restored.
+- F4-SD-009 | 02-core/states/SETTLEMENT_STATE_MODEL.md:60 | term=continuity | - continuity status if already classified.
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:121 | term=continuity | ## Continuity Classification
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:121 | term=continuity classification | ## Continuity Classification
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:123 | term=continuity | After sufficient state and evidence are available, continuity may be classified as:
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:125 | term=continuity | - CONTINUITY-PRESERVED
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:126 | term=continuity | - CONTINUITY-DEGRADED
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:127 | term=continuity | - CONTINUITY-BROKEN
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:128 | term=continuity | - CONTINUITY-RECONSTRUCTED
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:129 | term=continuity | - CONTINUITY-INDETERMINATE
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:131 | term=continuity | Continuity classification is separate from financial balance equivalence.
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:131 | term=continuity classification | Continuity classification is separate from financial balance equivalence.
+- F4-SD-009 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:151 | term=continuity | RECONCILED -> CONTINUITY PRESERVED
+- F4-SD-009 | 02-core/transitions/FINANCIAL_TRANSITION_ALGEBRA.md:37 | term=continuity | Continuity
+- F4-SD-009 | 02-core/transitions/FINANCIAL_TRANSITION_ALGEBRA.md:146 | term=continuity | Classification requires separate finality and continuity outputs.
+- F4-SD-009 | 02-core/transitions/TRANSITION_ADMISSIBILITY_BOUNDARY.md:37 | term=continuity | 14. What continuity classification applies?
+- F4-SD-009 | 02-core/transitions/TRANSITION_ADMISSIBILITY_BOUNDARY.md:37 | term=continuity classification | 14. What continuity classification applies?
+- F4-SD-009 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:240 | term=continuity | ### ContinuityState
+- F4-SD-009 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:241 | term=continuity | Reference to continuity classification inherited from upstream architectures.
+- F4-SD-009 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:241 | term=continuity classification | Reference to continuity classification inherited from upstream architectures.
+- F4-SD-009 | 03-registries/COMPONENT_REGISTRY.csv:14 | term=continuity | "FI-REC-002","Financial Reconstruction Engine","RECONCILIATION","Reconstruct historical financial execution state from preserved evidence and provenance without representing reconstruction as uninterrupted continuity.","EvidenceObject;execution lineage;state history","Reconstructed financial history","POB;EIP","F3"
+- F4-SD-009 | 03-registries/COMPONENT_REGISTRY.csv:16 | term=continuity | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 03-registries/COMPONENT_REGISTRY.csv:16 | term=continuity classification | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 03-registries/DEPENDENCY_REGISTRY.csv:3 | term=continuity | "FIN-DEP-002","EIP","Execution-time rule identity continuity","All execution-bearing F1-F8 mechanisms","eip-protocol","NO"
+- F4-SD-009 | 03-registries/F1_ADVERSARIAL_VERIFICATION_MATRIX.csv:20 | term=continuity | "F1-ADV-019","F1-TRACE-REC-006","Collapse full e0 -> ec -> reconciliation -> continuity path to terminal state","FULL-LINEAGE-PRESERVED","FULL-LINEAGE-PRESERVED","PASS"
+- F4-SD-009 | 03-registries/F1_ASSUMPTION_REGISTRY.csv:8 | term=continuity | "F1-AS-007","Reconciled state does not automatically imply preserved continuity.","TO-BE-PROVED","FIN-REC-002;FIN-CNT-001"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:2 | term=continuity | "F1-CNT-X001","Authorized execution completes without continuity-relevant violation","EXPECTED","NO","NO","PRESERVED","Canonical preserved path"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:3 | term=continuity | "F1-CNT-X002","Temporary profile-bounded impairment occurs but no qualifying continuity break","EXPECTED","NO-QUALIFYING","NO","DEGRADED","Degradation separated from breakage"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:4 | term=continuity | "F1-CNT-X003","Partial settlement breaks required obligation relation and remains unresolved","INVALID","YES","NO","BROKEN","Unresolved continuity break"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:5 | term=continuity | "F1-CNT-X004","Partial settlement breaks continuity; later compensation restores equivalent balances and accepted relation","ECONOMICALLY-EQUIVALENT","YES","YES","RECONSTRUCTED","Same economic endpoint does not mean preserved"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:6 | term=continuity | "F1-CNT-X005","Original effect breaks continuity; later reversal returns balances to exact original values","IDENTICAL-BALANCES","YES","YES","RECONSTRUCTED","Reversal cannot retroactively create preservation"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:7 | term=continuity | "F1-CNT-X006","Current state reconciled but evidence proves earlier continuity break with no reconstruction","RECONCILED","YES","NO","BROKEN","Reconciled does not mean preserved"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:8 | term=continuity | "F1-CNT-X007","Terminal state appears correct but one continuity-relevant interval lacks evidence","EXPECTED","UNKNOWN","UNKNOWN","INDETERMINATE","Endpoint correctness insufficient"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:9 | term=continuity | "F1-CNT-X008","Financial functionality resumes after interruption but required obligation lineage was broken","FUNCTIONAL","YES","NO","BROKEN","Functional recovery is not continuity preservation"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:9 | term=continuity preservation | "F1-CNT-X008","Financial functionality resumes after interruption but required obligation lineage was broken","FUNCTIONAL","YES","NO","BROKEN","Functional recovery is not continuity preservation"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:10 | term=continuity | "F1-CNT-X009","Two histories have equal final balances; one was uninterrupted and one required compensation","SAME-ECONOMIC-STATE","MIXED","MIXED","DIFFERENT-CONTINUITY-CLASSIFICATIONS","Endpoint non-sufficiency counterexample"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CASES.csv:11 | term=continuity | "F1-CNT-X010","Evidence cannot determine whether external commitment caused a continuity break before recovery","EXPECTED","UNKNOWN","POSSIBLE","INDETERMINATE","Unknown break cannot be classified preserved"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:2 | term=continuity | "F1-CNT-C001","PRESERVED","NO","SATISFIED","Required financial continuity relations remained satisfied throughout the relevant interval"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:3 | term=continuity | "F1-CNT-C002","DEGRADED","NO-QUALIFYING-BREAK","DEGRADED","Continuity was impaired within profile tolerance without a qualifying continuity break"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:4 | term=continuity | "F1-CNT-C003","BROKEN","YES","NOT-ACCEPTABLY-RECONSTRUCTED","At least one required continuity relationship suffered a qualifying unresolved break"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:5 | term=continuity | "F1-CNT-C004","RECONSTRUCTED","YES","RE-ESTABLISHED","Continuity was broken and later explicitly reconstructed under accepted criteria"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | term=continuity | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | term=continuity classification | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:2 | term=continuity | "F1-CP-001","NO_REQUIRED_CONTINUITY_BREAK","F1_CONTINUITY_PRESERVED"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:3 | term=continuity | "F1-CP-002","HISTORY_RECONSTRUCTABLE","F1_CONTINUITY_RECONSTRUCTED;F1_HISTORICALLY_RECONCILED"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:5 | term=continuity | "F1-CP-004","DEMONSTRATED_CONTINUITY_BREAK","F1_CONTINUITY_BROKEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:6 | term=continuity | "F1-CP-005","INSUFFICIENT_CONTINUITY_EVIDENCE","F1_CONTINUITY_INDETERMINATE"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:2 | term=continuity | "F1-CNT-PC001","NON-EQUIVALENCE","Economic-state equivalence between final and initial states does not imply preserved continuity.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:3 | term=continuity | "F1-CNT-PC002","NON-EQUIVALENCE","A reconciled financial state does not imply preserved continuity.","FIN-CNT-001;FIN-REC-002","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:4 | term=continuity | "F1-CNT-PC003","NON-EQUIVALENCE","Reconstructed continuity is distinct from uninterrupted preserved continuity.","FIN-CNT-003","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:5 | term=continuity | "F1-CNT-PC004","NON-EQUIVALENCE","Functional recovery is insufficient to establish continuity preservation.","FIN-CNT-002","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:5 | term=continuity preservation | "F1-CNT-PC004","NON-EQUIVALENCE","Functional recovery is insufficient to establish continuity preservation.","FIN-CNT-002","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | term=continuity | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | term=continuity classification | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:7 | term=continuity | "F1-CNT-PC006","SAFETY","A history containing a qualifying continuity break cannot be classified PRESERVED for the complete interval.","FIN-CNT-001","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:8 | term=continuity | "F1-CNT-PC007","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive classifications for the same complete continuity interval.","FIN-CNT-003","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | term=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | term=continuity classification | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:10 | term=continuity | "F1-CNT-PC009","SAFETY","Insufficient continuity evidence cannot be promoted to PRESERVED.","FIN-CNT-001;FIN-EVD-001","OPEN"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:2 | term=continuity | "F1-CNT-R001","Economic State Equivalence != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:2 | term=continuity preservation | "F1-CNT-R001","Economic State Equivalence != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:3 | term=continuity | "F1-CNT-R002","Reconciled State != Continuity Preserved","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:4 | term=continuity | "F1-CNT-R003","Reconstructed Continuity != Preserved Continuity","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:5 | term=continuity | "F1-CNT-R004","Functional Recovery != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:5 | term=continuity preservation | "F1-CNT-R004","Functional Recovery != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:6 | term=continuity | "F1-CNT-R005","Successful Compensation != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:6 | term=continuity preservation | "F1-CNT-R005","Successful Compensation != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:7 | term=continuity | "F1-CNT-R006","Successful Reversal != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:7 | term=continuity preservation | "F1-CNT-R006","Successful Reversal != Continuity Preservation","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | term=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | term=continuity preservation | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:10 | term=continuity | "F1-CNT-R009","Current Correctness != Historical Continuity","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:4 | term=continuity | "F1-CNT-G003","Resource relation","Required resource relationships remain within profile-defined continuity constraints","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:6 | term=continuity | "F1-CNT-G005","Evidence continuity","Required evidence lineage remains sufficient to reconstruct continuity-relevant history","YES"
+- F4-SD-009 | 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:7 | term=continuity | "F1-CNT-G006","Dependency continuity","Required external/internal dependencies remain satisfied or explicitly classified","YES"
+- F4-SD-009 | 03-registries/F1_COUNTEREXAMPLE_OBLIGATION_REGISTRY.csv:6 | term=continuity | "F1-CE-005","F1-THM-005","Fully reconciled history containing demonstrated continuity break","Reconciled true; continuity preserved false","OPEN"
+- F4-SD-009 | 03-registries/F1_COUNTEREXAMPLE_OBLIGATION_REGISTRY.csv:7 | term=continuity | "F1-CE-006","F1-THM-006","Function restored after broken continuity","Functional restoration true; continuity preserved false","OPEN"
+- F4-SD-009 | 03-registries/F1_COUNTEREXAMPLE_OBLIGATION_REGISTRY.csv:10 | term=continuity | "F1-CE-009","F1-THM-009","Residual fully resolved after continuity break","Residual resolved true; continuity preserved false","OPEN"
+- F4-SD-009 | 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:8 | term=continuity | "F1-THM-005","THEOREM_NON_IMPLICATION","Reconciliation Does Not Establish Preserved Continuity","Reconciled(H) does not imply ContinuityPreserved(H)","CONSTRUCTIVE_COUNTEREXAMPLE","Reconciled history containing a demonstrated continuity break","FIN-REC-001; FIN-CON-002","OPEN"
+- F4-SD-009 | 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:9 | term=continuity | "F1-THM-006","THEOREM_NON_IMPLICATION","Functional Restoration Does Not Establish Preserved Continuity","FunctionalRestoration(X_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Function restored after evidenced continuity break","FIN-REC-003; FIN-CON-003; FIN-CON-004","OPEN"
+- F4-SD-009 | 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:13 | term=continuity | "F1-THM-009","THEOREM_NON_IMPLICATION","Residual Resolution Does Not Establish Preserved Continuity","ResidualResolved(Rho_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Resolved present residual after prior continuity break","FIN-CON-004; FIN-REC-001","OPEN"
+- F4-SD-009 | 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:17 | term=continuity | "F1-SAF-003","SAFETY_PROPERTY","Known Continuity Break Survives Later Equivalence","ContinuityBroken(H_k) AND LaterEquivalentState(X_t,X_p) -> HistoricalBreakRemains(H_t)","HISTORY_APPEND_ARGUMENT","Prior break evidence plus later equivalent state","FIN-CON-004","OPEN"
+- F4-SD-009 | 03-registries/F1_HIGH_PRIORITY_PROOF_MATRIX.csv:5 | term=continuity | "F1-HP-004","Reconciled(S_R) does not imply ContinuityPreserved","F1-NEQ-REC-002","COUNTEREXAMPLE-DISCHARGED"
+- F4-SD-009 | 03-registries/F1_HIGH_PRIORITY_PROOF_MATRIX.csv:6 | term=continuity | "F1-HP-005","S_final equivalent_E S_initial does not imply ContinuityPreserved","F1-NEQ-CNT-001","COUNTEREXAMPLE-DISCHARGED"
+- F4-SD-009 | 03-registries/F1_INVARIANT_OWNERSHIP.csv:37 | term=continuity | "FIN-REC-001","FIN-REC","Reconciliation Is Not Continuity","F1_SHARED_WITH_F3","OPEN"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:9 | term=continuity | "F1-MC-008","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-REC-002","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:9 | term=continuity preservation | "F1-MC-008","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-REC-002","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:11 | term=continuity | "F1-MC-010","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CNT-001","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:11 | term=continuity preservation | "F1-MC-010","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CNT-001","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:16 | term=continuity | "F1-MC-015","The tested reference runtime distinguishes reconstructed continuity from preserved continuity","REFERENCE-RUNTIME-CONFORMANT","F1-TRACE-CNT-007","F1_RUNTIME_PROOF_CLOSURE.csv"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | term=continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | term=state continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | term=continuity | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | term=continuity classification | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 03-registries/F1_OPERATION_REGISTRY.csv:13 | term=continuity | "F1-OP-012","REQUEST_CONTINUITY_CLASSIFICATION","NO","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:18 | term=continuity | "F1-NEQ-REC-002","RECONCILIATION","NON-EQUIVALENCE","Reconciled does not imply continuity preserved","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_RECONCILIATION_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:23 | term=continuity | "F1-NEQ-CNT-001","CONTINUITY","NON-EQUIVALENCE","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:23 | term=continuity preservation | "F1-NEQ-CNT-001","CONTINUITY","NON-EQUIVALENCE","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:24 | term=continuity | "F1-NEQ-CNT-002","CONTINUITY","NON-EQUIVALENCE","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:24 | term=continuity preservation | "F1-NEQ-CNT-002","CONTINUITY","NON-EQUIVALENCE","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:25 | term=continuity | "F1-THM-CNT-003","CONTINUITY","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive for the same complete interval","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:26 | term=continuity | "F1-SAFE-CNT-004","CONTINUITY","SAFETY","A qualifying break excludes PRESERVED for the complete interval","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:27 | term=continuity | "F1-NEQ-CNT-005","CONTINUITY","NON-EQUIVALENCE","Functional recovery does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:27 | term=continuity preservation | "F1-NEQ-CNT-005","CONTINUITY","NON-EQUIVALENCE","Functional recovery does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:28 | term=continuity | "F1-SAFE-CNT-006","CONTINUITY","SAFETY","Unknown material continuity state cannot establish PRESERVED","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:29 | term=continuity | "F1-TRACE-CNT-007","CONTINUITY","TRACEABILITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","TRACEABILITY-ARGUMENT","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","YES"
+- F4-SD-009 | 03-registries/F1_RECONCILIATION_PROOF_CANDIDATES.csv:3 | term=continuity | "F1-REC-PC002","NON-EQUIVALENCE","Successful reconciliation does not imply preserved execution continuity.","FIN-CNT-001","OPEN"
+- F4-SD-009 | 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:3 | term=continuity | "F1-REC-R002","Reconciled != Continuity Preserved","YES"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:14 | term=continuity | "03-registries\F1_CONTINUITY_CASES.csv","2008","0648A71F10CB8C80836147CD47E32F1460D46077E7933184136F90F6C9022FA2"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:15 | term=continuity | "03-registries\F1_CONTINUITY_CLASS_REGISTRY.csv","772","A816C39AF75721F7D25DA876547A21624FACBE4AA196623765D44EBE593BCD4B"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:16 | term=continuity | "03-registries\F1_CONTINUITY_PREDICATE_REGISTRY.csv","500","1B35BDAE7CDC4C89DD5FBF19D5299480D17DF141982DB8B2635EA2575B4BAB5E"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:17 | term=continuity | "03-registries\F1_CONTINUITY_PROOF_CANDIDATES.csv","1399","07D30CC46557F95FC6E48115FA193C709D93907408437ED2013A4BB7CBDED55D"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:18 | term=continuity | "03-registries\F1_CONTINUITY_RELATION_REGISTRY.csv","731","AB2D8B652551CB00837C94B8B2A2F134CBD1FAA04A6B50CEC717F6D971151C90"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:19 | term=continuity | "03-registries\F1_CONTINUITY_REQUIREMENT_REGISTRY.csv","855","318246D7B1FE9EDFBF65DCE82252C79C194C7EE2FDFE389D44D5CB50DC55D23E"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:84 | term=continuity | "04-settlement-integrity\continuity\.gitkeep","0","E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:85 | term=continuity | "04-settlement-integrity\continuity\ECONOMIC_STATE_CONTINUITY_SEMANTICS.md","8116","0858E691BA73131FBB509259DE8FB2B11E633F097BFB66C5EFD49F99615A430B"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:87 | term=continuity | "04-settlement-integrity\evidence\F1_CONTINUITY_EVIDENCE_REQUIREMENTS.md","1386","43A924A14FF4801D7B46AA85067636C737A409AAA71D73E5A8BE2DDDA8D9855D"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:96 | term=continuity | "04-settlement-integrity\formal\F1_ECONOMIC_CONTINUITY_ALGEBRA.md","4090","403E7F924489C5D5F7116C852C3FDD1C17F3298DC35B349A80B2304E12093B1D"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:104 | term=continuity | "04-settlement-integrity\proofs\F1_CONTINUITY_PROOFS.md","3147","EAD5B815C020959767EEFB3BB4A77857A3F87B4AF417D9DDE310EFA22DB60997"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:118 | term=continuity | "04-settlement-integrity\runtime\continuity.py","839","AB174401C3248E31D0BD9A8BFBAC5894C295F92BF2D2693AA94FB6BB4D5CA526"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:126 | term=continuity | "04-settlement-integrity\runtime\f1_runtime\continuity.py","995","EB9AD0C630B65F9DA7246D37B04F943C78C174D97BE65752ADC9318CF91F2590"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:148 | term=continuity | "tests\f1\test_continuity.py","1757","A8229E83E4A02ECC51B4FA87AD2828E94DC83045EA0774FB88BF22DCD646EDA3"
+- F4-SD-009 | 03-registries/F1_RELEASE_MANIFEST.csv:157 | term=continuity | "tests\f1_adversarial\test_attack_continuity.py","1597","671E7537252283E7F0A61AFE945E4E0F32C95B9CFF83F199527DB3DDDA5F3513"
+- F4-SD-009 | 03-registries/F1_RUNTIME_CONFORMANCE_REGISTRY.csv:7 | term=continuity | "F1-RUN-C006","F1-TRACE-CNT-007","continuity.py + engine.py + evidence.py","Reconstructed continuity remains distinguishable from preserved continuity and retains the relevant history","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+- F4-SD-009 | 03-registries/F1_RUNTIME_CORRESPONDENCE.csv:6 | term=continuity | "reconciliation_engine.py","Reconciliation / equivalence / continuity","F1-THM-005; F1-THM-006; F1-THM-008; F1-THM-009; F1-SAF-003"
+- F4-SD-009 | 03-registries/F1_RUNTIME_IMPLEMENTATION_MANIFEST.csv:6 | term=continuity | "04-settlement-integrity\runtime\continuity.py","AB174401C3248E31D0BD9A8BFBAC5894C295F92BF2D2693AA94FB6BB4D5CA526","839"
+- F4-SD-009 | 03-registries/F1_RUNTIME_IMPLEMENTATION_MANIFEST.csv:14 | term=continuity | "04-settlement-integrity\runtime\f1_runtime\continuity.py","EB9AD0C630B65F9DA7246D37B04F943C78C174D97BE65752ADC9318CF91F2590","995"
+- F4-SD-009 | 03-registries/F1_RUNTIME_PROOF_CARRY_FORWARD.csv:7 | term=continuity | "F1-TRACE-CNT-007","CONTINUITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","FIN-F1-08/FIN-F1-09"
+- F4-SD-009 | 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:7 | term=continuity | "F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"
+- F4-SD-009 | 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | term=continuity | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | term=continuity classification | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 03-registries/F1_SCOPE_REGISTRY.csv:11 | term=continuity | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 03-registries/F1_SCOPE_REGISTRY.csv:11 | term=continuity classification | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 03-registries/F1_SCOPE_REGISTRY.csv:15 | term=continuity | "F1-SCP-014","Generic execution continuity","INHERITED","EIP"
+- F4-SD-009 | 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | term=continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | term=state continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:8 | term=continuity | "PO-F1-THM-005","F1-THM-005","THEOREM_NON_IMPLICATION","Reconciliation Does Not Establish Preserved Continuity","Reconciled(H) does not imply ContinuityPreserved(H)","CONSTRUCTIVE_COUNTEREXAMPLE","Reconciled history containing a demonstrated continuity break","FIN-REC-001; FIN-CON-002","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:9 | term=continuity | "PO-F1-THM-006","F1-THM-006","THEOREM_NON_IMPLICATION","Functional Restoration Does Not Establish Preserved Continuity","FunctionalRestoration(X_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Function restored after evidenced continuity break","FIN-REC-003; FIN-CON-003; FIN-CON-004","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:13 | term=continuity | "PO-F1-THM-009","F1-THM-009","THEOREM_NON_IMPLICATION","Residual Resolution Does Not Establish Preserved Continuity","ResidualResolved(Rho_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Resolved present residual after prior continuity break","FIN-CON-004; FIN-REC-001","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:17 | term=continuity | "PO-F1-SAF-003","F1-SAF-003","SAFETY_PROPERTY","Known Continuity Break Survives Later Equivalence","ContinuityBroken(H_k) AND LaterEquivalentState(X_t,X_p) -> HistoricalBreakRemains(H_t)","HISTORY_APPEND_ARGUMENT","Prior break evidence plus later equivalent state","FIN-CON-004","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 03-registries/F2_05_INVARIANT_REGISTER.csv:7 | term=continuity | "F2-ATM-006","ATOMICITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_05_INVARIANT_REGISTER.csv:7 | term=continuity preservation | "F2-ATM-006","ATOMICITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_05_INVARIANT_REGISTER.csv:16 | term=continuity | "F2-SEP-004","SEPARATION","AtomicIntent != AtomicComplete != SettlementFinal != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 03-registries/F2_05_NON_IMPLICATION_REGISTRY.csv:6 | term=continuity | "F2-ATM-NI-005","AtomicComplete","ContinuityPreserved","LOCKED"
+- F4-SD-009 | 03-registries/F2_06_INVARIANT_REGISTER.csv:9 | term=continuity | "F2-FIN-008","FINALITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_06_INVARIANT_REGISTER.csv:9 | term=continuity preservation | "F2-FIN-008","FINALITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_06_INVARIANT_REGISTER.csv:17 | term=continuity | "F2-SEP-005","SEPARATION","AtomicComplete != SettlementFinal != Irreversible != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 03-registries/F2_06_NON_IMPLICATION_REGISTRY.csv:8 | term=continuity | "F2-FIN-NI-007","SettlementFinal","ContinuityPreserved","LOCKED"
+- F4-SD-009 | 03-registries/F2_07_INVARIANT_REGISTER.csv:20 | term=continuity | "F2-REC-007","RECONCILIATION","Reconciled does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_07_INVARIANT_REGISTER.csv:20 | term=continuity preservation | "F2-REC-007","RECONCILIATION","Reconciled does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_07_INVARIANT_REGISTER.csv:22 | term=continuity | "F2-SEP-006","SEPARATION","Conflict != Fork != Reconciliation != Restoration != Finality != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:13 | term=continuity | "F2-CONF-NI-012","Reconciled","ContinuityPreserved","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:4 | term=continuity | "CP_cont(q_d)","DistributedContinuityProfile","F2","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:5 | term=continuity | "ContinuityPreserved_d(q_d,t)","DistributedContinuityPreservationPredicate","F2-SPECIALIZATION-OF-F1","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:6 | term=continuity | "DistributedContinuityResult(q_d,t|CP_cont)","DistributedContinuityClassification","F2-SPECIALIZATION-OF-F1","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:7 | term=continuity | "LocalContinuity(q_d,t,D_i)","DomainLocalContinuity","F2","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:8 | term=continuity | "D_cont*","RequiredContinuityDomainSet","F2","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:9 | term=continuity | "BreakEvent(b,q_d,t)","ContinuityBreakEvent","F2","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:11 | term=continuity | "CurrentContinuity(q_d,t)","CurrentContinuityClassification","F2","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_DEFINITION_REGISTRY.csv:12 | term=continuity | "HistoricalContinuity(q_d,[t0,t1])","HistoricalContinuityClassification","F2","FIN-F2-08"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:2 | term=continuity | "F2-CONT-001","CONTINUITY","Distributed continuity inherits F1 continuity semantics and does not redefine them.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:3 | term=continuity | "F2-CONT-002","CONTINUITY","Continuity is a property of the execution path, not merely the endpoint.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:4 | term=continuity | "F2-CONT-003","CONTINUITY","Economic endpoint equivalence does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:4 | term=continuity preservation | "F2-CONT-003","CONTINUITY","Economic endpoint equivalence does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:5 | term=continuity | "F2-CONT-004","CONTINUITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:5 | term=continuity preservation | "F2-CONT-004","CONTINUITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:6 | term=continuity | "F2-CONT-005","CONTINUITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:6 | term=continuity preservation | "F2-CONT-005","CONTINUITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:7 | term=continuity | "F2-CONT-006","CONTINUITY","Reconciliation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:7 | term=continuity preservation | "F2-CONT-006","CONTINUITY","Reconciliation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:8 | term=continuity | "F2-CONT-007","CONTINUITY","Compensation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:8 | term=continuity preservation | "F2-CONT-007","CONTINUITY","Compensation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:9 | term=continuity | "F2-CONT-008","CONTINUITY","Reversal does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:9 | term=continuity preservation | "F2-CONT-008","CONTINUITY","Reversal does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:10 | term=continuity | "F2-CONT-009","CONTINUITY","Canonical branch selection does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:10 | term=continuity preservation | "F2-CONT-009","CONTINUITY","Canonical branch selection does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:11 | term=continuity | "F2-CONT-010","CONTINUITY","Functional recovery does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:11 | term=continuity preservation | "F2-CONT-010","CONTINUITY","Functional recovery does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:12 | term=continuity | "F2-CONT-011","CONTINUITY","Reconstructed continuity is distinct from preserved continuity.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:13 | term=continuity | "F2-CONT-012","CONTINUITY","Local continuity does not imply cross-domain continuity.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:14 | term=continuity | "F2-CONT-013","CONTINUITY","A historical break remains historically classified even after later recovery.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:15 | term=continuity | "F2-CONT-014","CONTINUITY","Current preserved state does not imply historically uninterrupted continuity.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:16 | term=continuity | "F2-CONT-015","CONTINUITY","Indeterminate continuity cannot be promoted to preserved.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_INVARIANT_REGISTER.csv:17 | term=continuity | "F2-SEP-007","SEPARATION","Finality != Reconciliation != FunctionalRecovery != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:2 | term=continuity | "F2-CONT-NI-001","EconomicEndpointEquivalent","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:3 | term=continuity | "F2-CONT-NI-002","AtomicComplete","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:4 | term=continuity | "F2-CONT-NI-003","SettlementFinal","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:5 | term=continuity | "F2-CONT-NI-004","Reconciled","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:6 | term=continuity | "F2-CONT-NI-005","CompensationSuccess","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:7 | term=continuity | "F2-CONT-NI-006","ReversalSuccess","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:8 | term=continuity | "F2-CONT-NI-007","CanonicalBranchSelected","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:9 | term=continuity | "F2-CONT-NI-008","FunctionalRecovery","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:10 | term=continuity | "F2-CONT-NI-009","LocalContinuity_D1","LocalContinuity_D2","LOCKED"
+- F4-SD-009 | 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:11 | term=continuity | "F2-CONT-NI-010","LocalContinuity","CrossDomainContinuity","LOCKED"
+- F4-SD-009 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:21 | term=continuity | "F2-ADV-020","Missing continuity evidence promoted to PRESERVED","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:27 | term=continuity | "F2-ADV-026","Finality manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:27 | term=continuity preservation | "F2-ADV-026","Finality manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:28 | term=continuity | "F2-ADV-027","Reconciliation manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:28 | term=continuity preservation | "F2-ADV-027","Reconciliation manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:9 | term=continuity | "F2-CONT-CASE-008","Current clean execution interval after prior broken interval","CURRENT-PRESERVED-WITH-HISTORICAL-BREAK","Current and historical continuity are separate."
+- F4-SD-009 | 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:1 | term=continuity | "state","determinate","may_execute_more","irreversible","continuity_preserved","meaning"
+- F4-SD-009 | 03-registries/F2_MANUSCRIPT_CLAIM_REGISTRY.csv:9 | term=continuity | "Distributed continuity","FIN-F2-08","FORMAL-DEFINITION","YES"
+- F4-SD-009 | 03-registries/F2_OBJECT_OWNERSHIP_REGISTRY.csv:6 | term=continuity | "economic-state-continuity","F1","INHERIT"
+- F4-SD-009 | 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:13 | term=continuity | "F2-NI-009","Reconciled does not imply ContinuityPreserved.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-009"
+- F4-SD-009 | 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:14 | term=continuity | "F2-NI-010","FunctionalRecovery does not imply ContinuityPreserved.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-010"
+- F4-SD-009 | 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:19 | term=continuity | "F2-NI-013","Current preserved continuity does not imply historically uninterrupted preservation.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","F2_POSITIVE_PROOF_DISCHARGE.md"
+- F4-SD-009 | 03-registries/F2_RECONCILIATION_RESULT_REGISTRY.csv:1 | term=continuity | "state","determinate","state_mutation","finality_implied","continuity_implied"
+- F4-SD-009 | 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:8 | term=continuity | "Continuity preserved/degraded/broken/reconstructed/indeterminate separation","classify_continuity","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 03-registries/F2_RUNTIME_PROOF_CLOSURE.csv:8 | term=continuity | "continuity","SEE-F2-PROOF-DISCHARGE","REFERENCE-RUNTIME-CONFORMANT","PASS"
+- F4-SD-009 | 03-registries/F2_RUNTIME_SURFACE_REGISTRY.csv:8 | term=continuity | "classify_continuity","FIN-F2-08","IMPLEMENTED"
+- F4-SD-009 | 03-registries/F2_SEMANTIC_NON_EQUIVALENCE_REGISTRY.csv:16 | term=continuity | "multi-leg-completion","historical-continuity","NOT-EQUIVALENT","LOCKED-F2-01"
+- F4-SD-009 | 03-registries/F3_INVARIANT_REGISTER.csv:13 | term=continuity | F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+- F4-SD-009 | 03-registries/F3_INVARIANT_REGISTER.csv:13 | term=continuity preservation | F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+- F4-SD-009 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:13 | term=continuity | F3-NE-012,finality,continuity preservation,REQUIRED
+- F4-SD-009 | 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:13 | term=continuity preservation | F3-NE-012,finality,continuity preservation,REQUIRED
+- F4-SD-009 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:12 | term=continuity | F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+- F4-SD-009 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:12 | term=continuity preservation | F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+- F4-SD-009 | 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:33 | term=continuity | F3-PO-032,COUNTEREXAMPLE,Construct final but continuity-not-preserved state,OPEN
+- F4-SD-009 | 03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv:29 | term=continuity | "SEMANTIC:finality != continuity preservation","PASS",""
+- F4-SD-009 | 03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv:29 | term=continuity preservation | "SEMANTIC:finality != continuity preservation","PASS",""
+- F4-SD-009 | 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | term=continuity | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | term=continuity classification | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 03-registries/INTERFACE_REGISTRY.csv:16 | term=continuity | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 03-registries/INTERFACE_REGISTRY.csv:16 | term=continuity classification | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 03-registries/INVARIANT_FAMILY_REGISTRY.csv:11 | term=continuity | "FIN-IF-10","FIN-CNT","Continuity","F3"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:13 | term=continuity | "FIN-ADM-004","ADMISSIBILITY","State Mutation Requires Revalidation","A material execution-relevant state change SHALL invalidate prior admission unless explicit continuity rules preserve it.","Policy, authority, resource, counterparty, environment, jurisdiction state","AOMS + DEI","F2"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:21 | term=continuity | "FIN-SET-004","SETTLEMENT","Settlement Finality Is Not Continuity","Settlement finality SHALL NOT automatically establish preserved financial execution continuity.","Finalized settlement","FIN-ARCH-04","F3"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:30 | term=continuity | "FIN-REC-001","RECONCILIATION","Post-Effect Ambiguity Requires Reconciliation","If post-effect financial state is partial, conflicting, or indeterminate, reconciliation SHALL be required before finality or continuity is asserted.","Post-effect state","FIN-ARCH-04","F1"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:31 | term=continuity | "FIN-REC-002","RECONCILIATION","Reconciliation Is Not Restoration","A reconciled economic state SHALL NOT automatically be classified as restored integrity or preserved continuity.","Reconciled state","POB + FIN-ARCH-04","F3"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:38 | term=continuity | "FIN-CNT-001","CONTINUITY","Continuity Must Be Classified Independently","Financial execution continuity SHALL be classified independently from execution success and settlement finality.","All consequential execution","EIP + FIN-ARCH-04","F3"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:39 | term=continuity | "FIN-CNT-002","CONTINUITY","Recovered Function Is Not Preserved Continuity","Restored financial functionality SHALL NOT automatically imply preserved execution continuity.","Recovery","EIP + POB","F3"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:40 | term=continuity | "FIN-CNT-003","CONTINUITY","Reconstructed Continuity Is Distinct","Reconstructed continuity SHALL remain distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3"
+- F4-SD-009 | 03-registries/INVARIANT_REGISTRY.csv:41 | term=continuity | "FIN-CNT-004","CONTINUITY","Continuity Cannot Be Inferred From Balance Equality","Equivalent resulting balances SHALL NOT be sufficient evidence of preserved continuity.","Settlement recovery","FIN-ARCH-04","F3"
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:21 | term=continuity | "FIN-PO-020","FIN-SET-004","NON-EQUIVALENCE","Settlement Finality Is Not Continuity","Establish invariant FIN-SET-004 'Settlement Finality Is Not Continuity' under its stated applicability conditions and inherited architectural assumptions; demonstrate that the forbidden violating state or semantic collapse cannot be accepted as conformant.","Finalized settlement","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:38 | term=continuity | "FIN-PO-037","FIN-CNT-001","THEOREM","Continuity Must Be Classified Independently","Establish invariant FIN-CNT-001 'Continuity Must Be Classified Independently' under its stated applicability conditions and inherited architectural assumptions; demonstrate that the forbidden violating state or semantic collapse cannot be accepted as conformant.","All consequential execution","EIP + FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:39 | term=continuity | "FIN-PO-038","FIN-CNT-002","NON-EQUIVALENCE","Recovered Function Is Not Preserved Continuity","Prove that restoration of financial functionality is insufficient to establish preserved execution continuity.","Recovery","EIP + POB","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:40 | term=continuity | "FIN-PO-039","FIN-CNT-003","NON-EQUIVALENCE","Reconstructed Continuity Is Distinct","Prove that reconstructed continuity remains formally distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | term=continuity | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | term=continuity classification | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:64 | term=continuity | "FIN-PO-X007","FIN-CNT-003","TRACEABILITY","Reconstructed Versus Preserved Continuity Trace","Establish an evidence trace that mechanically distinguishes uninterrupted continuity from continuity established only through later reconstruction.","Financial reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-009 | 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | term=continuity | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | term=continuity classification | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 03-registries/STATE_REGISTRY.csv:33 | term=continuity | "FIN-S-032","CONTINUITY-UNCLASSIFIED","continuity","NO"
+- F4-SD-009 | 03-registries/STATE_REGISTRY.csv:34 | term=continuity | "FIN-S-033","CONTINUITY-PRESERVED","continuity","YES"
+- F4-SD-009 | 03-registries/STATE_REGISTRY.csv:35 | term=continuity | "FIN-S-034","CONTINUITY-DEGRADED","continuity","YES"
+- F4-SD-009 | 03-registries/STATE_REGISTRY.csv:36 | term=continuity | "FIN-S-035","CONTINUITY-BROKEN","continuity","YES"
+- F4-SD-009 | 03-registries/STATE_REGISTRY.csv:37 | term=continuity | "FIN-S-036","CONTINUITY-RECONSTRUCTED","continuity","YES"
+- F4-SD-009 | 03-registries/STATE_REGISTRY.csv:38 | term=continuity | "FIN-S-037","CONTINUITY-INDETERMINATE","continuity","YES"
+- F4-SD-009 | 03-registries/TRANSITION_CLASS_REGISTRY.csv:11 | term=continuity | "FIN-TC-010","continuity","CLASSIFICATION"
+- F4-SD-009 | 03-registries/TRANSITION_REGISTRY.csv:36 | term=continuity | "FIN-T-035","RECONCILED","CONTINUITY-UNCLASSIFIED","continuity"
+- F4-SD-009 | 03-registries/TRANSITION_REGISTRY.csv:37 | term=continuity | "FIN-T-036","CONTINUITY-UNCLASSIFIED","CONTINUITY-PRESERVED","continuity"
+- F4-SD-009 | 03-registries/TRANSITION_REGISTRY.csv:38 | term=continuity | "FIN-T-037","CONTINUITY-UNCLASSIFIED","CONTINUITY-DEGRADED","continuity"
+- F4-SD-009 | 03-registries/TRANSITION_REGISTRY.csv:39 | term=continuity | "FIN-T-038","CONTINUITY-UNCLASSIFIED","CONTINUITY-BROKEN","continuity"
+- F4-SD-009 | 03-registries/TRANSITION_REGISTRY.csv:40 | term=continuity | "FIN-T-039","CONTINUITY-UNCLASSIFIED","CONTINUITY-RECONSTRUCTED","continuity"
+- F4-SD-009 | 03-registries/TRANSITION_REGISTRY.csv:41 | term=continuity | "FIN-T-040","CONTINUITY-UNCLASSIFIED","CONTINUITY-INDETERMINATE","continuity"
+- F4-SD-009 | 05-distributed-settlement/boundaries/F2_FORMALIZATION_SEQUENCE.md:25 | term=continuity | Distributed continuity consequences
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_03_RESULT.md:89 | term=continuity | Distributed continuity: FIN-F2-08
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_04_RESULT.md:86 | term=continuity | Distributed continuity:
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_05_RESULT.md:73 | term=continuity | AtomicComplete != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_05_RESULT.md:92 | term=continuity | Distributed continuity:
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_06_RESULT.md:73 | term=continuity | SettlementFinal != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_06_RESULT.md:93 | term=continuity | Distributed continuity:
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:101 | term=continuity | Reconciled != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_07_RESULT.md:112 | term=continuity | Distributed continuity:
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:7 | term=continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:7 | term=state continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:23 | term=continuity | Distributed continuity profile
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:25 | term=continuity | Distributed continuity preservation predicate
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:25 | term=continuity preservation | Distributed continuity preservation predicate
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:27 | term=continuity | Distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:27 | term=continuity classification | Distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:29 | term=continuity | Local continuity
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:31 | term=continuity | Cross-domain continuity
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:33 | term=continuity | Continuity break events
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:37 | term=continuity | Current versus historical continuity
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:39 | term=continuity | Continuity transition constraints
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:41 | term=continuity | ## Continuity Classes
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:59 | term=continuity | Economic endpoint equivalence != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:61 | term=continuity | AtomicComplete != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:63 | term=continuity | SettlementFinal != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:65 | term=continuity | Reconciled != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:67 | term=continuity | CompensationSuccess != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:69 | term=continuity | ReversalSuccess != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:71 | term=continuity | CanonicalBranchSelected != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:73 | term=continuity | FunctionalRecovery != ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:96 | term=continuity | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:96 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_10_RESULT.md:33 | term=continuity | - distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_10_RESULT.md:33 | term=continuity classification | - distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:47 | term=continuity | - continuity break erasure
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_11_RESULT.md:49 | term=continuity | - missing continuity evidence promoted to preservation
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_12_RESULT.md:38 | term=continuity | - distributed economic-state continuity
+- F4-SD-009 | 05-distributed-settlement/evidence/FIN_F2_12_RESULT.md:38 | term=state continuity | - distributed economic-state continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:16 | term=continuity | historical continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:232 | term=continuity | ## 14. Atomicity and Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:234 | term=continuity | AtomicComplete(q_d,t|AP) !=> ContinuityPreserved(q_d)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:298 | term=continuity | distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:298 | term=continuity classification | distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:181 | term=continuity | - lose continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_CONSENSUS_SEMANTICS.md:199 | term=continuity | historical continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:1 | term=continuity | # FIN-F2-08 — Distributed Continuity Transition Model
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:6 | term=continuity | continuity states without converting recovery into retroactive preserved
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:7 | term=continuity | continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:72 | term=continuity | ## 5. Current vs Historical Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:76 | term=continuity | CurrentContinuity(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:80 | term=continuity | HistoricalContinuity(q_d,[t0,t1])
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:84 | term=continuity | A system may currently operate with preserved continuity after a later
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:112 | term=continuity | without a continuity-breaking event having occurred.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:120 | term=continuity | INDETERMINATE may resolve to any evidence-supported continuity class.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:131 | term=continuity | continuity classification.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:131 | term=continuity classification | continuity classification.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:133 | term=continuity | Likewise, continuity repair does not automatically establish finality.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:1 | term=continuity | # FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:1 | term=state continuity | # FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:5 | term=continuity | Distributed economic-state continuity classifies whether the economic
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:5 | term=state continuity | Distributed economic-state continuity classifies whether the economic
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:10 | term=continuity | F2 inherits F1 continuity doctrine.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:33 | term=continuity | Finality != continuity preservation.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:33 | term=continuity preservation | Finality != continuity preservation.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:35 | term=continuity | Reconstruction != preserved continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:38 | term=continuity | without having preserved continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:65 | term=continuity | ## 4. Distributed Continuity Path
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:91 | term=continuity | Continuity is a property of the path, not merely the endpoint.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:95 | term=continuity | ## 5. Distributed Continuity Predicate
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:99 | term=continuity | ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:102 | term=continuity | unbroken across every continuity-critical transition required by the
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:103 | term=continuity | active continuity profile.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:109 | term=continuity | ## 6. Continuity Profile
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:115 | term=continuity | as the active distributed continuity profile.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:119 | term=continuity | - continuity-critical state objects
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:130 | term=continuity | Continuity is profile-relative.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:134 | term=continuity | ## 7. Continuity Classification
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:134 | term=continuity classification | ## 7. Continuity Classification
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:138 | term=continuity | DistributedContinuityResult(q_d,t | CP_cont)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:162 | term=continuity | - every required continuity-critical transition remains valid
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:164 | term=continuity | - no continuity-breaking gap exists
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:166 | term=continuity | - no material historical identity discontinuity occurred
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:179 | term=continuity | DEGRADED applies where continuity remains substantially traceable but one
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:196 | term=continuity | BROKEN applies where the required continuity lineage cannot be preserved
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:217 | term=continuity | RECONSTRUCTED applies where continuity was not preserved, but sufficient
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:223 | term=continuity | Reconstruction acknowledges that continuity was interrupted.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:230 | term=continuity | classify continuity as preserved, degraded, broken, or reconstructed.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:232 | term=continuity | Insufficient evidence != preserved continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:251 | term=continuity | ContinuityPreserved_d(q_d,t_final)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:253 | term=continuity | Endpoint equivalence cannot prove path continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:259 | term=continuity | AtomicComplete(q_d,t|AP) !=> ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:263 | term=continuity | Continuity concerns historical state lineage.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:269 | term=continuity | SettlementFinal(q_d,t|FP,D_f) !=> ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:290 | term=continuity | ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:301 | term=continuity | continuity preservation.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:301 | term=continuity preservation | continuity preservation.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:313 | term=continuity | ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:322 | term=continuity | continuity unless the active continuity profile establishes that the fork
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:325 | term=continuity | Canonicality != continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:329 | term=continuity | ## 20. Local Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:333 | term=continuity | LocalContinuity(q_d,t,D_i)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:335 | term=continuity | as continuity classification within domain D_i.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:335 | term=continuity classification | as continuity classification within domain D_i.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:337 | term=continuity | LocalContinuity(D_1) !=> LocalContinuity(D_2)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:341 | term=continuity | LocalContinuity(D_1) !=> DistributedContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:347 | term=continuity | ## 21. Cross-Domain Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:349 | term=continuity | For required continuity domains:
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:353 | term=continuity | distributed continuity requires the continuity-critical lineage across
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:356 | term=continuity | One preserved local lineage cannot manufacture cross-domain continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:362 | term=continuity | Temporary divergence does not automatically break continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:364 | term=continuity | The active continuity profile may permit bounded divergence if:
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:376 | term=continuity | ## 23. Continuity-Break Event
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:382 | term=continuity | as an event that violates a continuity-critical invariant under the
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:383 | term=continuity | active continuity profile.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:399 | term=continuity | A reconstruction event itself proves that direct preserved continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:406 | term=continuity | FunctionalRecovery(q_d,t) !=> ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:408 | term=continuity | A system may return to operational service while continuity remains:
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:419 | term=continuity | Distributed continuity classification SHALL preserve:
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:419 | term=continuity classification | Distributed continuity classification SHALL preserve:
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:447 | term=continuity | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:447 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:82 | term=continuity | RECONCILED != CONTINUITY-PRESERVED
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:125 | term=continuity | Reconstruction does not recreate continuity automatically.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:241 | term=continuity | ## 18. Continuity After Reconciliation
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:247 | term=continuity | ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:249 | term=continuity | Distributed continuity classification remains FIN-F2-08.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:249 | term=continuity classification | Distributed continuity classification remains FIN-F2-08.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_EXECUTION_LEG_COMPOSITION.md:177 | term=continuity | continuity preservation
+- F4-SD-009 | 05-distributed-settlement/formal/F2_EXECUTION_LEG_COMPOSITION.md:177 | term=continuity preservation | continuity preservation
+- F4-SD-009 | 05-distributed-settlement/formal/F2_EXECUTION_LEG_COMPOSITION.md:256 | term=continuity | continuity classification
+- F4-SD-009 | 05-distributed-settlement/formal/F2_EXECUTION_LEG_COMPOSITION.md:256 | term=continuity classification | continuity classification
+- F4-SD-009 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:161 | term=continuity | ## 12. Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:163 | term=continuity | Partial distributed settlement may affect continuity, but the continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_PARTIAL_DISTRIBUTED_SETTLEMENT.md:166 | term=continuity | No continuity conclusion is automatically created by partiality alone.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:20 | term=continuity | historical continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:176 | term=continuity | FINAL does not imply continuity preserved.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:440 | term=continuity | ## 28. Finality and Continuity
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:442 | term=continuity | SettlementFinal(q_d,t|FP,D_f) !=> ContinuityPreserved(q_d)
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:454 | term=continuity | continuity.
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:471 | term=continuity | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/formal/F2_SETTLEMENT_FINALITY_SEMANTICS.md:471 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/inheritance/F2_INHERITED_OBJECT_MAP.md:25 | term=continuity | | continuity classifier | inherited | F1 |
+- F4-SD-009 | 05-distributed-settlement/inheritance/F2_INHERITED_OBJECT_MAP.md:30 | term=continuity | | continuity INDETERMINATE | inherited | F1 |
+- F4-SD-009 | 05-distributed-settlement/objects/F2_CANONICAL_OBJECTS.md:88 | term=continuity | economic-effect semantics, or continuity semantics inherited from prior
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:176 | term=continuity | ## CE-009 — Reconciled != Continuity Preserved
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:189 | term=continuity | Continuity = RECONSTRUCTED
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:193 | term=continuity | Reconciled -> ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:199 | term=continuity | ## CE-010 — Functional Recovery != Continuity Preserved
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:203 | term=continuity | System experiences continuity-breaking partial execution
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:210 | term=continuity | Historical continuity = BROKEN or RECONSTRUCTED
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_COUNTEREXAMPLE_DISCHARGE.md:214 | term=continuity | FunctionalRecovery -> ContinuityPreserved
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_FORMAL_PROOF_SUMMARY.md:48 | term=continuity | - reconciliation does not establish preserved continuity
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_FORMAL_PROOF_SUMMARY.md:49 | term=continuity | - functional recovery does not establish preserved continuity
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_FORMAL_PROOF_SUMMARY.md:53 | term=continuity | - reconstructed continuity is not preserved continuity
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:231 | term=continuity | ## F2-THM-010 — Reconstructed Continuity Is Not Preserved Continuity
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:241 | term=continuity | PRESERVED requires no continuity-breaking gap and no reconstruction for
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:257 | term=continuity | CurrentContinuity(q_d,t_now)=PRESERVED does not imply every prior
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:262 | term=continuity | CurrentContinuity and HistoricalContinuity are explicitly separate
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:289 | term=continuity | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/proofs/F2_POSITIVE_PROOF_DISCHARGE.md:289 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/__init__.py:15 | term=continuity | ContinuityState,
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/__init__.py:25 | term=continuity | classify_continuity,
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:10 | term=continuity | ContinuityState,
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:177 | term=continuity | def classify_continuity(
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:183 | term=continuity | ) -> ContinuityState:
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:186 | term=continuity | return ContinuityState.INDETERMINATE
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:189 | term=continuity | return ContinuityState.RECONSTRUCTED
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:192 | term=continuity | return ContinuityState.BROKEN
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:195 | term=continuity | return ContinuityState.DEGRADED
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/engine.py:197 | term=continuity | return ContinuityState.PRESERVED
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/models.py:56 | term=continuity | class ContinuityState(str, Enum):
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/README.md:15 | term=continuity | - distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/runtime/f2_runtime/README.md:15 | term=continuity classification | - distributed continuity classification
+- F4-SD-009 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:19 | term=continuity | - economic-state continuity
+- F4-SD-009 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:19 | term=state continuity | - economic-state continuity
+- F4-SD-009 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:99 | term=continuity | Multi-Leg Completion != Historical Continuity
+- F4-SD-009 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:124 | term=continuity | - continuity consequences arising from distributed execution
+- F4-SD-009 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:176 | term=continuity | continuity
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01_DISCOVERY.md:13 | term=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01_DISCOVERY.md:13 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:13 | term=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:13 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:30 | term=continuity | - continuity preservation.
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:30 | term=continuity preservation | - continuity preservation.
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:42 | term=continuity | != continuity preservation
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:42 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:46 | term=continuity | F2 establishes that agreement, consensus, authority, admissibility, execution, effect occurrence, atomic completion, finality, reconciliation, and continuity are distinct.
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:67 | term=continuity | 8. custody continuity;
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:85 | term=continuity | - economic-state continuity;
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:85 | term=state continuity | - economic-state continuity;
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:86 | term=continuity | - reconstructed continuity;
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:117 | term=continuity | - distributed continuity.
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:184 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:184 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:213 | term=continuity | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:213 | term=continuity preservation | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:256 | term=continuity | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:256 | term=continuity preservation | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:29 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 06-f3-discovery/formal/F3_NON_EQUIVALENCE_ALGEBRA.md:29 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:166 | term=continuity | ## CE-11 — Final But Continuity Not Preserved
+- F4-SD-009 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:171 | term=continuity | historical chain reconstructed after discontinuity
+- F4-SD-009 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:175 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md:175 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:38 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:39 | term=continuity | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:40 | term=continuity | - 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:41 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:42 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:43 | term=continuity | - 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:47 | term=continuity | - 03-registries/F2_CONTINUITY_CASE_MATRIX.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:48 | term=continuity | - 03-registries/F2_CONTINUITY_TRANSITION_REGISTRY.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:50 | term=continuity | - 03-registries/F2_DISTRIBUTED_CONTINUITY_RESULT_REGISTRY.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:51 | term=continuity | - 03-registries/F2_F1_CONTINUITY_BINDING_MATRIX.csv
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:115 | term=continuity | - 03-registries/COMPONENT_REGISTRY.csv:14 | pattern=continuity | "FI-REC-002","Financial Reconstruction Engine","RECONCILIATION","Reconstruct historical financial execution state from preserved evidence and provenance without representing reconstruction as uninterrupted continuity.","EvidenceObject;execution lineage;state history","Reconstructed financial history","POB;EIP","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:117 | term=continuity | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=continuity | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:117 | term=continuity classification | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=continuity | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:118 | term=continuity | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=finality | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:118 | term=continuity classification | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=finality | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:125 | term=continuity | - 03-registries/DEPENDENCY_REGISTRY.csv:3 | pattern=continuity | "FIN-DEP-002","EIP","Execution-time rule identity continuity","All execution-bearing F1-F8 mechanisms","eip-protocol","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:126 | term=continuity | - 03-registries/F1_ADVERSARIAL_VERIFICATION_MATRIX.csv:20 | pattern=continuity | "F1-ADV-019","F1-TRACE-REC-006","Collapse full e0 -> ec -> reconciliation -> continuity path to terminal state","FULL-LINEAGE-PRESERVED","FULL-LINEAGE-PRESERVED","PASS"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:127 | term=continuity | - 03-registries/F1_ASSUMPTION_REGISTRY.csv:8 | pattern=continuity | "F1-AS-007","Reconciled state does not automatically imply preserved continuity.","TO-BE-PROVED","FIN-REC-002;FIN-CNT-001"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:132 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:2 | pattern=continuity | "F1-CNT-X001","Authorized execution completes without continuity-relevant violation","EXPECTED","NO","NO","PRESERVED","Canonical preserved path"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:133 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:3 | pattern=continuity | "F1-CNT-X002","Temporary profile-bounded impairment occurs but no qualifying continuity break","EXPECTED","NO-QUALIFYING","NO","DEGRADED","Degradation separated from breakage"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:134 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:4 | pattern=continuity | "F1-CNT-X003","Partial settlement breaks required obligation relation and remains unresolved","INVALID","YES","NO","BROKEN","Unresolved continuity break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:135 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:4 | pattern=obligation | "F1-CNT-X003","Partial settlement breaks required obligation relation and remains unresolved","INVALID","YES","NO","BROKEN","Unresolved continuity break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:136 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:5 | pattern=continuity | "F1-CNT-X004","Partial settlement breaks continuity; later compensation restores equivalent balances and accepted relation","ECONOMICALLY-EQUIVALENT","YES","YES","RECONSTRUCTED","Same economic endpoint does not mean preserved"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:137 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:6 | pattern=continuity | "F1-CNT-X005","Original effect breaks continuity; later reversal returns balances to exact original values","IDENTICAL-BALANCES","YES","YES","RECONSTRUCTED","Reversal cannot retroactively create preservation"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:138 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:7 | pattern=continuity | "F1-CNT-X006","Current state reconciled but evidence proves earlier continuity break with no reconstruction","RECONCILED","YES","NO","BROKEN","Reconciled does not mean preserved"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:139 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:8 | pattern=continuity | "F1-CNT-X007","Terminal state appears correct but one continuity-relevant interval lacks evidence","EXPECTED","UNKNOWN","UNKNOWN","INDETERMINATE","Endpoint correctness insufficient"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:140 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:9 | pattern=continuity | "F1-CNT-X008","Financial functionality resumes after interruption but required obligation lineage was broken","FUNCTIONAL","YES","NO","BROKEN","Functional recovery is not continuity preservation"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:140 | term=continuity preservation | - 03-registries/F1_CONTINUITY_CASES.csv:9 | pattern=continuity | "F1-CNT-X008","Financial functionality resumes after interruption but required obligation lineage was broken","FUNCTIONAL","YES","NO","BROKEN","Functional recovery is not continuity preservation"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:141 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:9 | pattern=obligation | "F1-CNT-X008","Financial functionality resumes after interruption but required obligation lineage was broken","FUNCTIONAL","YES","NO","BROKEN","Functional recovery is not continuity preservation"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:141 | term=continuity preservation | - 03-registries/F1_CONTINUITY_CASES.csv:9 | pattern=obligation | "F1-CNT-X008","Financial functionality resumes after interruption but required obligation lineage was broken","FUNCTIONAL","YES","NO","BROKEN","Functional recovery is not continuity preservation"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:142 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:10 | pattern=continuity | "F1-CNT-X009","Two histories have equal final balances; one was uninterrupted and one required compensation","SAME-ECONOMIC-STATE","MIXED","MIXED","DIFFERENT-CONTINUITY-CLASSIFICATIONS","Endpoint non-sufficiency counterexample"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:143 | term=continuity | - 03-registries/F1_CONTINUITY_CASES.csv:11 | pattern=continuity | "F1-CNT-X010","Evidence cannot determine whether external commitment caused a continuity break before recovery","EXPECTED","UNKNOWN","POSSIBLE","INDETERMINATE","Unknown break cannot be classified preserved"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:144 | term=continuity | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:2 | pattern=continuity | "F1-CNT-C001","PRESERVED","NO","SATISFIED","Required financial continuity relations remained satisfied throughout the relevant interval"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:145 | term=continuity | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:3 | pattern=continuity | "F1-CNT-C002","DEGRADED","NO-QUALIFYING-BREAK","DEGRADED","Continuity was impaired within profile tolerance without a qualifying continuity break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:146 | term=continuity | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:4 | pattern=continuity | "F1-CNT-C003","BROKEN","YES","NOT-ACCEPTABLY-RECONSTRUCTED","At least one required continuity relationship suffered a qualifying unresolved break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:147 | term=continuity | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:5 | pattern=continuity | "F1-CNT-C004","RECONSTRUCTED","YES","RE-ESTABLISHED","Continuity was broken and later explicitly reconstructed under accepted criteria"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:148 | term=continuity | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:148 | term=continuity classification | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:149 | term=continuity | - 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:2 | pattern=continuity | "F1-CP-001","NO_REQUIRED_CONTINUITY_BREAK","F1_CONTINUITY_PRESERVED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:150 | term=continuity | - 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:3 | pattern=continuity | "F1-CP-002","HISTORY_RECONSTRUCTABLE","F1_CONTINUITY_RECONSTRUCTED;F1_HISTORICALLY_RECONCILED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:151 | term=continuity | - 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:5 | pattern=continuity | "F1-CP-004","DEMONSTRATED_CONTINUITY_BREAK","F1_CONTINUITY_BROKEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:152 | term=continuity | - 03-registries/F1_CONTINUITY_PREDICATE_REGISTRY.csv:6 | pattern=continuity | "F1-CP-005","INSUFFICIENT_CONTINUITY_EVIDENCE","F1_CONTINUITY_INDETERMINATE"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:153 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:2 | pattern=continuity | "F1-CNT-PC001","NON-EQUIVALENCE","Economic-state equivalence between final and initial states does not imply preserved continuity.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:154 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:3 | pattern=continuity | "F1-CNT-PC002","NON-EQUIVALENCE","A reconciled financial state does not imply preserved continuity.","FIN-CNT-001;FIN-REC-002","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:155 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:4 | pattern=continuity | "F1-CNT-PC003","NON-EQUIVALENCE","Reconstructed continuity is distinct from uninterrupted preserved continuity.","FIN-CNT-003","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:156 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:5 | pattern=continuity | "F1-CNT-PC004","NON-EQUIVALENCE","Functional recovery is insufficient to establish continuity preservation.","FIN-CNT-002","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:156 | term=continuity preservation | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:5 | pattern=continuity | "F1-CNT-PC004","NON-EQUIVALENCE","Functional recovery is insufficient to establish continuity preservation.","FIN-CNT-002","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:157 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | pattern=continuity | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:157 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | pattern=continuity | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:158 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:7 | pattern=continuity | "F1-CNT-PC006","SAFETY","A history containing a qualifying continuity break cannot be classified PRESERVED for the complete interval.","FIN-CNT-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:159 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:8 | pattern=continuity | "F1-CNT-PC007","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive classifications for the same complete continuity interval.","FIN-CNT-003","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:160 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | pattern=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:160 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | pattern=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:161 | term=continuity | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:10 | pattern=continuity | "F1-CNT-PC009","SAFETY","Insufficient continuity evidence cannot be promoted to PRESERVED.","FIN-CNT-001;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:162 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:2 | pattern=continuity | "F1-CNT-R001","Economic State Equivalence != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:162 | term=continuity preservation | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:2 | pattern=continuity | "F1-CNT-R001","Economic State Equivalence != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:163 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:3 | pattern=continuity | "F1-CNT-R002","Reconciled State != Continuity Preserved","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:164 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:4 | pattern=continuity | "F1-CNT-R003","Reconstructed Continuity != Preserved Continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:165 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:5 | pattern=continuity | "F1-CNT-R004","Functional Recovery != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:165 | term=continuity preservation | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:5 | pattern=continuity | "F1-CNT-R004","Functional Recovery != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:166 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-R005","Successful Compensation != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:166 | term=continuity preservation | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-R005","Successful Compensation != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:167 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:7 | pattern=continuity | "F1-CNT-R006","Successful Reversal != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:167 | term=continuity preservation | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:7 | pattern=continuity | "F1-CNT-R006","Successful Reversal != Continuity Preservation","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:168 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:168 | term=continuity preservation | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:169 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:169 | term=continuity preservation | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:170 | term=continuity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:10 | pattern=continuity | "F1-CNT-R009","Current Correctness != Historical Continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:171 | term=continuity | - 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:3 | pattern=obligation | "F1-CNT-G002","Obligation relation","Required obligations remain satisfied, validly transitioned, or explicitly reconstructed","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:172 | term=continuity | - 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:4 | pattern=continuity | "F1-CNT-G003","Resource relation","Required resource relationships remain within profile-defined continuity constraints","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:173 | term=continuity | - 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-G005","Evidence continuity","Required evidence lineage remains sufficient to reconstruct continuity-relevant history","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:174 | term=continuity | - 03-registries/F1_CONTINUITY_REQUIREMENT_REGISTRY.csv:7 | pattern=continuity | "F1-CNT-G006","Dependency continuity","Required external/internal dependencies remain satisfied or explicitly classified","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:175 | term=continuity | - 03-registries/F1_COUNTEREXAMPLE_OBLIGATION_REGISTRY.csv:6 | pattern=continuity | "F1-CE-005","F1-THM-005","Fully reconciled history containing demonstrated continuity break","Reconciled true; continuity preserved false","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:176 | term=continuity | - 03-registries/F1_COUNTEREXAMPLE_OBLIGATION_REGISTRY.csv:7 | pattern=continuity | "F1-CE-006","F1-THM-006","Function restored after broken continuity","Functional restoration true; continuity preserved false","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:177 | term=continuity | - 03-registries/F1_COUNTEREXAMPLE_OBLIGATION_REGISTRY.csv:10 | pattern=continuity | "F1-CE-009","F1-THM-009","Residual fully resolved after continuity break","Residual resolved true; continuity preserved false","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:183 | term=continuity | - 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:8 | pattern=continuity | "F1-THM-005","THEOREM_NON_IMPLICATION","Reconciliation Does Not Establish Preserved Continuity","Reconciled(H) does not imply ContinuityPreserved(H)","CONSTRUCTIVE_COUNTEREXAMPLE","Reconciled history containing a demonstrated continuity break","FIN-REC-001; FIN-CON-002","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:184 | term=continuity | - 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:9 | pattern=continuity | "F1-THM-006","THEOREM_NON_IMPLICATION","Functional Restoration Does Not Establish Preserved Continuity","FunctionalRestoration(X_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Function restored after evidenced continuity break","FIN-REC-003; FIN-CON-003; FIN-CON-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:185 | term=continuity | - 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:13 | pattern=continuity | "F1-THM-009","THEOREM_NON_IMPLICATION","Residual Resolution Does Not Establish Preserved Continuity","ResidualResolved(Rho_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Resolved present residual after prior continuity break","FIN-CON-004; FIN-REC-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:186 | term=continuity | - 03-registries/F1_FORMAL_CLAIM_REGISTRY.csv:17 | pattern=continuity | "F1-SAF-003","SAFETY_PROPERTY","Known Continuity Break Survives Later Equivalence","ContinuityBroken(H_k) AND LaterEquivalentState(X_t,X_p) -> HistoricalBreakRemains(H_t)","HISTORY_APPEND_ARGUMENT","Prior break evidence plus later equivalent state","FIN-CON-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:187 | term=continuity | - 03-registries/F1_HIGH_PRIORITY_PROOF_MATRIX.csv:5 | pattern=continuity | "F1-HP-004","Reconciled(S_R) does not imply ContinuityPreserved","F1-NEQ-REC-002","COUNTEREXAMPLE-DISCHARGED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:188 | term=continuity | - 03-registries/F1_HIGH_PRIORITY_PROOF_MATRIX.csv:6 | pattern=continuity | "F1-HP-005","S_final equivalent_E S_initial does not imply ContinuityPreserved","F1-NEQ-CNT-001","COUNTEREXAMPLE-DISCHARGED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:190 | term=continuity | - 03-registries/F1_INVARIANT_OWNERSHIP.csv:37 | pattern=continuity | "FIN-REC-001","FIN-REC","Reconciliation Is Not Continuity","F1_SHARED_WITH_F3","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:192 | term=continuity | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:9 | pattern=continuity | "F1-MC-008","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-REC-002","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:192 | term=continuity preservation | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:9 | pattern=continuity | "F1-MC-008","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-REC-002","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:193 | term=continuity | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:11 | pattern=continuity | "F1-MC-010","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CNT-001","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:193 | term=continuity preservation | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:11 | pattern=continuity | "F1-MC-010","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","F1-NEQ-CNT-001","F1_PROOF_DISCHARGE_REGISTRY.csv"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:198 | term=continuity | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:16 | pattern=closure | "F1-MC-015","The tested reference runtime distinguishes reconstructed continuity from preserved continuity","REFERENCE-RUNTIME-CONFORMANT","F1-TRACE-CNT-007","F1_RUNTIME_PROOF_CLOSURE.csv"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:199 | term=continuity | - 03-registries/F1_MANUSCRIPT_CLAIM_REGISTRY.csv:16 | pattern=continuity | "F1-MC-015","The tested reference runtime distinguishes reconstructed continuity from preserved continuity","REFERENCE-RUNTIME-CONFORMANT","F1-TRACE-CNT-007","F1_RUNTIME_PROOF_CLOSURE.csv"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:200 | term=continuity | - 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | pattern=continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:200 | term=state continuity | - 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | pattern=continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:202 | term=continuity | - 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | pattern=continuity | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:202 | term=continuity classification | - 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | pattern=continuity | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:204 | term=continuity | - 03-registries/F1_OPERATION_REGISTRY.csv:13 | pattern=continuity | "F1-OP-012","REQUEST_CONTINUITY_CLASSIFICATION","NO","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:210 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:18 | pattern=continuity | "F1-NEQ-REC-002","RECONCILIATION","NON-EQUIVALENCE","Reconciled does not imply continuity preserved","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_RECONCILIATION_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:211 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:23 | pattern=continuity | "F1-NEQ-CNT-001","CONTINUITY","NON-EQUIVALENCE","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:211 | term=continuity preservation | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:23 | pattern=continuity | "F1-NEQ-CNT-001","CONTINUITY","NON-EQUIVALENCE","Economic endpoint equivalence does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:212 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:24 | pattern=continuity | "F1-NEQ-CNT-002","CONTINUITY","NON-EQUIVALENCE","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:212 | term=continuity preservation | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:24 | pattern=continuity | "F1-NEQ-CNT-002","CONTINUITY","NON-EQUIVALENCE","Reconciled state does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:213 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:25 | pattern=continuity | "F1-THM-CNT-003","CONTINUITY","THEOREM","PRESERVED and RECONSTRUCTED are mutually exclusive for the same complete interval","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:214 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:26 | pattern=continuity | "F1-SAFE-CNT-004","CONTINUITY","SAFETY","A qualifying break excludes PRESERVED for the complete interval","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:215 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:27 | pattern=continuity | "F1-NEQ-CNT-005","CONTINUITY","NON-EQUIVALENCE","Functional recovery does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:215 | term=continuity preservation | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:27 | pattern=continuity | "F1-NEQ-CNT-005","CONTINUITY","NON-EQUIVALENCE","Functional recovery does not imply continuity preservation","COUNTEREXAMPLE-DISCHARGED","CONSTRUCTIVE-COUNTEREXAMPLE","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:216 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:28 | pattern=continuity | "F1-SAFE-CNT-006","CONTINUITY","SAFETY","Unknown material continuity state cannot establish PRESERVED","PROVED","FORMAL-DERIVATION","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:217 | term=continuity | - 03-registries/F1_PROOF_DISCHARGE_REGISTRY.csv:29 | pattern=continuity | "F1-TRACE-CNT-007","CONTINUITY","TRACEABILITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","TRACEABILITY-ARGUMENT","04-settlement-integrity/proofs/F1_CONTINUITY_PROOFS.md","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:226 | term=continuity | - 03-registries/F1_RECONCILIATION_PROOF_CANDIDATES.csv:3 | pattern=continuity | "F1-REC-PC002","NON-EQUIVALENCE","Successful reconciliation does not imply preserved execution continuity.","FIN-CNT-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:227 | term=continuity | - 03-registries/F1_RECONCILIATION_RELATION_REGISTRY.csv:3 | pattern=continuity | "F1-REC-R002","Reconciled != Continuity Preserved","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:229 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:14 | pattern=continuity | "03-registries\F1_CONTINUITY_CASES.csv","2008","0648A71F10CB8C80836147CD47E32F1460D46077E7933184136F90F6C9022FA2"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:230 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:15 | pattern=continuity | "03-registries\F1_CONTINUITY_CLASS_REGISTRY.csv","772","A816C39AF75721F7D25DA876547A21624FACBE4AA196623765D44EBE593BCD4B"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:231 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:16 | pattern=continuity | "03-registries\F1_CONTINUITY_PREDICATE_REGISTRY.csv","500","1B35BDAE7CDC4C89DD5FBF19D5299480D17DF141982DB8B2635EA2575B4BAB5E"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:232 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:17 | pattern=continuity | "03-registries\F1_CONTINUITY_PROOF_CANDIDATES.csv","1399","07D30CC46557F95FC6E48115FA193C709D93907408437ED2013A4BB7CBDED55D"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:233 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:18 | pattern=continuity | "03-registries\F1_CONTINUITY_RELATION_REGISTRY.csv","731","AB2D8B652551CB00837C94B8B2A2F134CBD1FAA04A6B50CEC717F6D971151C90"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:234 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:19 | pattern=continuity | "03-registries\F1_CONTINUITY_REQUIREMENT_REGISTRY.csv","855","318246D7B1FE9EDFBF65DCE82252C79C194C7EE2FDFE389D44D5CB50DC55D23E"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:238 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:84 | pattern=continuity | "04-settlement-integrity\continuity\.gitkeep","0","E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:239 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:85 | pattern=continuity | "04-settlement-integrity\continuity\ECONOMIC_STATE_CONTINUITY_SEMANTICS.md","8116","0858E691BA73131FBB509259DE8FB2B11E633F097BFB66C5EFD49F99615A430B"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:240 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:87 | pattern=continuity | "04-settlement-integrity\evidence\F1_CONTINUITY_EVIDENCE_REQUIREMENTS.md","1386","43A924A14FF4801D7B46AA85067636C737A409AAA71D73E5A8BE2DDDA8D9855D"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:241 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:96 | pattern=continuity | "04-settlement-integrity\formal\F1_ECONOMIC_CONTINUITY_ALGEBRA.md","4090","403E7F924489C5D5F7116C852C3FDD1C17F3298DC35B349A80B2304E12093B1D"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:242 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:104 | pattern=continuity | "04-settlement-integrity\proofs\F1_CONTINUITY_PROOFS.md","3147","EAD5B815C020959767EEFB3BB4A77857A3F87B4AF417D9DDE310EFA22DB60997"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:243 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:118 | pattern=continuity | "04-settlement-integrity\runtime\continuity.py","839","AB174401C3248E31D0BD9A8BFBAC5894C295F92BF2D2693AA94FB6BB4D5CA526"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:244 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:126 | pattern=continuity | "04-settlement-integrity\runtime\f1_runtime\continuity.py","995","EB9AD0C630B65F9DA7246D37B04F943C78C174D97BE65752ADC9318CF91F2590"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:245 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:148 | pattern=continuity | "tests\f1\test_continuity.py","1757","A8229E83E4A02ECC51B4FA87AD2828E94DC83045EA0774FB88BF22DCD646EDA3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:246 | term=continuity | - 03-registries/F1_RELEASE_MANIFEST.csv:157 | pattern=continuity | "tests\f1_adversarial\test_attack_continuity.py","1597","671E7537252283E7F0A61AFE945E4E0F32C95B9CFF83F199527DB3DDDA5F3513"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:250 | term=continuity | - 03-registries/F1_RUNTIME_CONFORMANCE_REGISTRY.csv:7 | pattern=continuity | "F1-RUN-C006","F1-TRACE-CNT-007","continuity.py + engine.py + evidence.py","Reconstructed continuity remains distinguishable from preserved continuity and retains the relevant history","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:251 | term=continuity | - 03-registries/F1_RUNTIME_CORRESPONDENCE.csv:6 | pattern=continuity | "reconciliation_engine.py","Reconciliation / equivalence / continuity","F1-THM-005; F1-THM-006; F1-THM-008; F1-THM-009; F1-SAF-003"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:253 | term=continuity | - 03-registries/F1_RUNTIME_IMPLEMENTATION_MANIFEST.csv:6 | pattern=continuity | "04-settlement-integrity\runtime\continuity.py","AB174401C3248E31D0BD9A8BFBAC5894C295F92BF2D2693AA94FB6BB4D5CA526","839"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:254 | term=continuity | - 03-registries/F1_RUNTIME_IMPLEMENTATION_MANIFEST.csv:14 | pattern=continuity | "04-settlement-integrity\runtime\f1_runtime\continuity.py","EB9AD0C630B65F9DA7246D37B04F943C78C174D97BE65752ADC9318CF91F2590","995"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:255 | term=continuity | - 03-registries/F1_RUNTIME_PROOF_CARRY_FORWARD.csv:7 | pattern=continuity | "F1-TRACE-CNT-007","CONTINUITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","FIN-F1-08/FIN-F1-09"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:257 | term=continuity | - 03-registries/F1_RUNTIME_PROOF_CLOSURE.csv:7 | pattern=continuity | "F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:258 | term=continuity | - 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | pattern=continuity | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:258 | term=continuity classification | - 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | pattern=continuity | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:259 | term=continuity | - 03-registries/F1_SCOPE_REGISTRY.csv:11 | pattern=continuity | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:259 | term=continuity classification | - 03-registries/F1_SCOPE_REGISTRY.csv:11 | pattern=continuity | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:260 | term=continuity | - 03-registries/F1_SCOPE_REGISTRY.csv:15 | pattern=continuity | "F1-SCP-014","Generic execution continuity","INHERITED","EIP"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:261 | term=continuity | - 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | pattern=continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:261 | term=state continuity | - 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | pattern=continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:262 | term=continuity | - 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:8 | pattern=continuity | "PO-F1-THM-005","F1-THM-005","THEOREM_NON_IMPLICATION","Reconciliation Does Not Establish Preserved Continuity","Reconciled(H) does not imply ContinuityPreserved(H)","CONSTRUCTIVE_COUNTEREXAMPLE","Reconciled history containing a demonstrated continuity break","FIN-REC-001; FIN-CON-002","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:263 | term=continuity | - 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:9 | pattern=continuity | "PO-F1-THM-006","F1-THM-006","THEOREM_NON_IMPLICATION","Functional Restoration Does Not Establish Preserved Continuity","FunctionalRestoration(X_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Function restored after evidenced continuity break","FIN-REC-003; FIN-CON-003; FIN-CON-004","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:264 | term=continuity | - 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:13 | pattern=continuity | "PO-F1-THM-009","F1-THM-009","THEOREM_NON_IMPLICATION","Residual Resolution Does Not Establish Preserved Continuity","ResidualResolved(Rho_t) does not imply ContinuityPreserved(H_t)","CONSTRUCTIVE_COUNTEREXAMPLE","Resolved present residual after prior continuity break","FIN-CON-004; FIN-REC-001","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:265 | term=continuity | - 03-registries/F1_SPECIALIZED_PROOF_OBLIGATIONS.csv:17 | pattern=continuity | "PO-F1-SAF-003","F1-SAF-003","SAFETY_PROPERTY","Known Continuity Break Survives Later Equivalence","ContinuityBroken(H_k) AND LaterEquivalentState(X_t,X_p) -> HistoricalBreakRemains(H_t)","HISTORY_APPEND_ARGUMENT","Prior break evidence plus later equivalent state","FIN-CON-004","YES","NO","NO","NO","NO","NO","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:273 | term=continuity | - 03-registries/F2_05_INVARIANT_REGISTER.csv:7 | pattern=continuity | "F2-ATM-006","ATOMICITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:273 | term=continuity preservation | - 03-registries/F2_05_INVARIANT_REGISTER.csv:7 | pattern=continuity | "F2-ATM-006","ATOMICITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:275 | term=continuity | - 03-registries/F2_05_INVARIANT_REGISTER.csv:16 | pattern=continuity | "F2-SEP-004","SEPARATION","AtomicIntent != AtomicComplete != SettlementFinal != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:276 | term=continuity | - 03-registries/F2_05_NON_IMPLICATION_REGISTRY.csv:6 | pattern=continuity | "F2-ATM-NI-005","AtomicComplete","ContinuityPreserved","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:295 | term=continuity | - 03-registries/F2_06_INVARIANT_REGISTER.csv:9 | pattern=continuity | "F2-FIN-008","FINALITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:295 | term=continuity preservation | - 03-registries/F2_06_INVARIANT_REGISTER.csv:9 | pattern=continuity | "F2-FIN-008","FINALITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:296 | term=continuity | - 03-registries/F2_06_INVARIANT_REGISTER.csv:9 | pattern=finality | "F2-FIN-008","FINALITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:296 | term=continuity preservation | - 03-registries/F2_06_INVARIANT_REGISTER.csv:9 | pattern=finality | "F2-FIN-008","FINALITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:305 | term=continuity | - 03-registries/F2_06_INVARIANT_REGISTER.csv:17 | pattern=continuity | "F2-SEP-005","SEPARATION","AtomicComplete != SettlementFinal != Irreversible != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:306 | term=continuity | - 03-registries/F2_06_NON_IMPLICATION_REGISTRY.csv:8 | pattern=continuity | "F2-FIN-NI-007","SettlementFinal","ContinuityPreserved","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:310 | term=continuity | - 03-registries/F2_07_INVARIANT_REGISTER.csv:20 | pattern=continuity | "F2-REC-007","RECONCILIATION","Reconciled does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:310 | term=continuity preservation | - 03-registries/F2_07_INVARIANT_REGISTER.csv:20 | pattern=continuity | "F2-REC-007","RECONCILIATION","Reconciled does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:312 | term=continuity | - 03-registries/F2_07_INVARIANT_REGISTER.csv:22 | pattern=continuity | "F2-SEP-006","SEPARATION","Conflict != Fork != Reconciliation != Restoration != Finality != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:313 | term=continuity | - 03-registries/F2_07_INVARIANT_REGISTER.csv:22 | pattern=finality | "F2-SEP-006","SEPARATION","Conflict != Fork != Reconciliation != Restoration != Finality != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:314 | term=continuity | - 03-registries/F2_07_NON_IMPLICATION_REGISTRY.csv:13 | pattern=continuity | "F2-CONF-NI-012","Reconciled","ContinuityPreserved","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:315 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:4 | pattern=continuity | "CP_cont(q_d)","DistributedContinuityProfile","F2","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:316 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:5 | pattern=continuity | "ContinuityPreserved_d(q_d,t)","DistributedContinuityPreservationPredicate","F2-SPECIALIZATION-OF-F1","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:317 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:6 | pattern=continuity | "DistributedContinuityResult(q_d,t|CP_cont)","DistributedContinuityClassification","F2-SPECIALIZATION-OF-F1","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:318 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:7 | pattern=continuity | "LocalContinuity(q_d,t,D_i)","DomainLocalContinuity","F2","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:319 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:8 | pattern=continuity | "D_cont*","RequiredContinuityDomainSet","F2","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:320 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:9 | pattern=continuity | "BreakEvent(b,q_d,t)","ContinuityBreakEvent","F2","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:321 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:11 | pattern=continuity | "CurrentContinuity(q_d,t)","CurrentContinuityClassification","F2","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:322 | term=continuity | - 03-registries/F2_08_DEFINITION_REGISTRY.csv:12 | pattern=continuity | "HistoricalContinuity(q_d,[t0,t1])","HistoricalContinuityClassification","F2","FIN-F2-08"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:323 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:2 | pattern=continuity | "F2-CONT-001","CONTINUITY","Distributed continuity inherits F1 continuity semantics and does not redefine them.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:324 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:3 | pattern=continuity | "F2-CONT-002","CONTINUITY","Continuity is a property of the execution path, not merely the endpoint.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:325 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:4 | pattern=continuity | "F2-CONT-003","CONTINUITY","Economic endpoint equivalence does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:325 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:4 | pattern=continuity | "F2-CONT-003","CONTINUITY","Economic endpoint equivalence does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:326 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:5 | pattern=continuity | "F2-CONT-004","CONTINUITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:326 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:5 | pattern=continuity | "F2-CONT-004","CONTINUITY","Atomic completion does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:327 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:6 | pattern=continuity | "F2-CONT-005","CONTINUITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:327 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:6 | pattern=continuity | "F2-CONT-005","CONTINUITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:328 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:6 | pattern=finality | "F2-CONT-005","CONTINUITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:328 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:6 | pattern=finality | "F2-CONT-005","CONTINUITY","Settlement finality does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:329 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:7 | pattern=continuity | "F2-CONT-006","CONTINUITY","Reconciliation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:329 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:7 | pattern=continuity | "F2-CONT-006","CONTINUITY","Reconciliation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:330 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:8 | pattern=continuity | "F2-CONT-007","CONTINUITY","Compensation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:330 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:8 | pattern=continuity | "F2-CONT-007","CONTINUITY","Compensation does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:331 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:9 | pattern=continuity | "F2-CONT-008","CONTINUITY","Reversal does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:331 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:9 | pattern=continuity | "F2-CONT-008","CONTINUITY","Reversal does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:332 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:10 | pattern=continuity | "F2-CONT-009","CONTINUITY","Canonical branch selection does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:332 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:10 | pattern=continuity | "F2-CONT-009","CONTINUITY","Canonical branch selection does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:333 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:11 | pattern=continuity | "F2-CONT-010","CONTINUITY","Functional recovery does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:333 | term=continuity preservation | - 03-registries/F2_08_INVARIANT_REGISTER.csv:11 | pattern=continuity | "F2-CONT-010","CONTINUITY","Functional recovery does not imply continuity preservation.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:334 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:12 | pattern=continuity | "F2-CONT-011","CONTINUITY","Reconstructed continuity is distinct from preserved continuity.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:335 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:13 | pattern=continuity | "F2-CONT-012","CONTINUITY","Local continuity does not imply cross-domain continuity.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:336 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:14 | pattern=continuity | "F2-CONT-013","CONTINUITY","A historical break remains historically classified even after later recovery.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:337 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:15 | pattern=continuity | "F2-CONT-014","CONTINUITY","Current preserved state does not imply historically uninterrupted continuity.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:338 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:16 | pattern=continuity | "F2-CONT-015","CONTINUITY","Indeterminate continuity cannot be promoted to preserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:339 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:17 | pattern=continuity | "F2-SEP-007","SEPARATION","Finality != Reconciliation != FunctionalRecovery != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:340 | term=continuity | - 03-registries/F2_08_INVARIANT_REGISTER.csv:17 | pattern=finality | "F2-SEP-007","SEPARATION","Finality != Reconciliation != FunctionalRecovery != ContinuityPreserved.","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:341 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:2 | pattern=continuity | "F2-CONT-NI-001","EconomicEndpointEquivalent","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:342 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:3 | pattern=continuity | "F2-CONT-NI-002","AtomicComplete","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:343 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:4 | pattern=continuity | "F2-CONT-NI-003","SettlementFinal","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:344 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:5 | pattern=continuity | "F2-CONT-NI-004","Reconciled","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:345 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:6 | pattern=continuity | "F2-CONT-NI-005","CompensationSuccess","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:346 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:7 | pattern=continuity | "F2-CONT-NI-006","ReversalSuccess","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:347 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:8 | pattern=continuity | "F2-CONT-NI-007","CanonicalBranchSelected","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:348 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:9 | pattern=continuity | "F2-CONT-NI-008","FunctionalRecovery","ContinuityPreserved_d","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:349 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:10 | pattern=continuity | "F2-CONT-NI-009","LocalContinuity_D1","LocalContinuity_D2","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:350 | term=continuity | - 03-registries/F2_08_NON_IMPLICATION_REGISTRY.csv:11 | pattern=continuity | "F2-CONT-NI-010","LocalContinuity","CrossDomainContinuity","LOCKED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:356 | term=continuity | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:21 | pattern=continuity | "F2-ADV-020","Missing continuity evidence promoted to PRESERVED","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:358 | term=continuity | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:27 | pattern=continuity | "F2-ADV-026","Finality manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:358 | term=continuity preservation | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:27 | pattern=continuity | "F2-ADV-026","Finality manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:359 | term=continuity | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:27 | pattern=finality | "F2-ADV-026","Finality manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:359 | term=continuity preservation | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:27 | pattern=finality | "F2-ADV-026","Finality manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:360 | term=continuity | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:28 | pattern=continuity | "F2-ADV-027","Reconciliation manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:360 | term=continuity preservation | - 03-registries/F2_ADVERSARIAL_VERIFICATION_MATRIX.csv:28 | pattern=continuity | "F2-ADV-027","Reconciliation manufactures continuity preservation","BLOCKED","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:366 | term=continuity | - 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:7 | pattern=finality | "F2-CONT-CASE-006","Atomic completion and settlement finality achieved after earlier partial execution","NOT-AUTO-PRESERVED","Endpoint/finality cannot erase interrupted history."
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:367 | term=continuity | - 03-registries/F2_CONTINUITY_CASE_MATRIX.csv:9 | pattern=continuity | "F2-CONT-CASE-008","Current clean execution interval after prior broken interval","CURRENT-PRESERVED-WITH-HISTORICAL-BREAK","Current and historical continuity are separate."
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:371 | term=continuity | - 03-registries/F2_DISTRIBUTED_CONTINUITY_RESULT_REGISTRY.csv:1 | pattern=finality | "state","f1_owner","functional","finality_implied","reconstruction_occurred","historical_break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:386 | term=continuity | - 03-registries/F2_FINALITY_RESULT_REGISTRY.csv:1 | pattern=continuity | "state","determinate","may_execute_more","irreversible","continuity_preserved","meaning"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:395 | term=continuity | - 03-registries/F2_MANUSCRIPT_CLAIM_REGISTRY.csv:9 | pattern=continuity | "Distributed continuity","FIN-F2-08","FORMAL-DEFINITION","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:396 | term=continuity | - 03-registries/F2_OBJECT_OWNERSHIP_REGISTRY.csv:6 | pattern=continuity | "economic-state-continuity","F1","INHERIT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:400 | term=continuity | - 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:13 | pattern=continuity | "F2-NI-009","Reconciled does not imply ContinuityPreserved.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-009"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:401 | term=continuity | - 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:14 | pattern=continuity | "F2-NI-010","FunctionalRecovery does not imply ContinuityPreserved.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","CE-010"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:403 | term=continuity | - 03-registries/F2_PROOF_DISCHARGE_REGISTRY.csv:19 | pattern=continuity | "F2-NI-013","Current preserved continuity does not imply historically uninterrupted preservation.","NON-IMPLICATION","COUNTEREXAMPLE-DISCHARGED","F2_POSITIVE_PROOF_DISCHARGE.md"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:404 | term=continuity | - 03-registries/F2_RECONCILIATION_RESULT_REGISTRY.csv:1 | pattern=continuity | "state","determinate","state_mutation","finality_implied","continuity_implied"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:405 | term=continuity | - 03-registries/F2_RECONCILIATION_RESULT_REGISTRY.csv:1 | pattern=finality | "state","determinate","state_mutation","finality_implied","continuity_implied"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:407 | term=continuity | - 03-registries/F2_RUNTIME_CONFORMANCE_MATRIX.csv:8 | pattern=continuity | "Continuity preserved/degraded/broken/reconstructed/indeterminate separation","classify_continuity","PASS","REFERENCE-RUNTIME-CONFORMANT"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:410 | term=continuity | - 03-registries/F2_RUNTIME_PROOF_CLOSURE.csv:8 | pattern=continuity | "continuity","SEE-F2-PROOF-DISCHARGE","REFERENCE-RUNTIME-CONFORMANT","PASS"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:412 | term=continuity | - 03-registries/F2_RUNTIME_SURFACE_REGISTRY.csv:8 | pattern=continuity | "classify_continuity","FIN-F2-08","IMPLEMENTED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:421 | term=continuity | - 03-registries/F2_SEMANTIC_NON_EQUIVALENCE_REGISTRY.csv:16 | pattern=continuity | "multi-leg-completion","historical-continuity","NOT-EQUIVALENT","LOCKED-F2-01"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:451 | term=continuity | - 03-registries/F3_INVARIANT_REGISTER.csv:13 | pattern=continuity | F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:451 | term=continuity preservation | - 03-registries/F3_INVARIANT_REGISTER.csv:13 | pattern=continuity | F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:452 | term=continuity | - 03-registries/F3_INVARIANT_REGISTER.csv:13 | pattern=finality | F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:452 | term=continuity preservation | - 03-registries/F3_INVARIANT_REGISTER.csv:13 | pattern=finality | F3-INV-012,FIN-FIN,Finality does not imply continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:491 | term=continuity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:13 | pattern=continuity | F3-NE-012,finality,continuity preservation,REQUIRED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:491 | term=continuity preservation | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:13 | pattern=continuity | F3-NE-012,finality,continuity preservation,REQUIRED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:492 | term=continuity | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:13 | pattern=finality | F3-NE-012,finality,continuity preservation,REQUIRED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:492 | term=continuity preservation | - 03-registries/F3_NON_EQUIVALENCE_REGISTRY.csv:13 | pattern=finality | F3-NE-012,finality,continuity preservation,REQUIRED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:531 | term=continuity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:12 | pattern=continuity | F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:531 | term=continuity preservation | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:12 | pattern=continuity | F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:532 | term=continuity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:12 | pattern=finality | F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:532 | term=continuity preservation | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:12 | pattern=finality | F3-PO-011,NON-EQUIV,Prove finality is insufficient for continuity preservation,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:553 | term=continuity | - 03-registries/F3_PROOF_OBLIGATION_REGISTRY.csv:33 | pattern=continuity | F3-PO-032,COUNTEREXAMPLE,Construct final but continuity-not-preserved state,OPEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:609 | term=continuity | - 03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv:29 | pattern=continuity | "SEMANTIC:finality != continuity preservation","PASS",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:609 | term=continuity preservation | - 03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv:29 | pattern=continuity | "SEMANTIC:finality != continuity preservation","PASS",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:610 | term=continuity | - 03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv:29 | pattern=finality | "SEMANTIC:finality != continuity preservation","PASS",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:610 | term=continuity preservation | - 03-registries/F3_WHOLE_CROSS_AUDIT_REGISTER.csv:29 | pattern=finality | "SEMANTIC:finality != continuity preservation","PASS",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:616 | term=continuity | - 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | pattern=continuity | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:616 | term=continuity classification | - 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | pattern=continuity | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:619 | term=continuity | - 03-registries/INTERFACE_REGISTRY.csv:16 | pattern=continuity | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:619 | term=continuity classification | - 03-registries/INTERFACE_REGISTRY.csv:16 | pattern=continuity | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:626 | term=continuity | - 03-registries/INVARIANT_FAMILY_REGISTRY.csv:11 | pattern=continuity | "FIN-IF-10","FIN-CNT","Continuity","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:629 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:13 | pattern=continuity | "FIN-ADM-004","ADMISSIBILITY","State Mutation Requires Revalidation","A material execution-relevant state change SHALL invalidate prior admission unless explicit continuity rules preserve it.","Policy, authority, resource, counterparty, environment, jurisdiction state","AOMS + DEI","F2"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:631 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:21 | pattern=continuity | "FIN-SET-004","SETTLEMENT","Settlement Finality Is Not Continuity","Settlement finality SHALL NOT automatically establish preserved financial execution continuity.","Finalized settlement","FIN-ARCH-04","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:632 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:21 | pattern=finality | "FIN-SET-004","SETTLEMENT","Settlement Finality Is Not Continuity","Settlement finality SHALL NOT automatically establish preserved financial execution continuity.","Finalized settlement","FIN-ARCH-04","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:633 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:30 | pattern=continuity | "FIN-REC-001","RECONCILIATION","Post-Effect Ambiguity Requires Reconciliation","If post-effect financial state is partial, conflicting, or indeterminate, reconciliation SHALL be required before finality or continuity is asserted.","Post-effect state","FIN-ARCH-04","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:634 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:30 | pattern=finality | "FIN-REC-001","RECONCILIATION","Post-Effect Ambiguity Requires Reconciliation","If post-effect financial state is partial, conflicting, or indeterminate, reconciliation SHALL be required before finality or continuity is asserted.","Post-effect state","FIN-ARCH-04","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:635 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:31 | pattern=continuity | "FIN-REC-002","RECONCILIATION","Reconciliation Is Not Restoration","A reconciled economic state SHALL NOT automatically be classified as restored integrity or preserved continuity.","Reconciled state","POB + FIN-ARCH-04","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:644 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:38 | pattern=continuity | "FIN-CNT-001","CONTINUITY","Continuity Must Be Classified Independently","Financial execution continuity SHALL be classified independently from execution success and settlement finality.","All consequential execution","EIP + FIN-ARCH-04","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:645 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:38 | pattern=finality | "FIN-CNT-001","CONTINUITY","Continuity Must Be Classified Independently","Financial execution continuity SHALL be classified independently from execution success and settlement finality.","All consequential execution","EIP + FIN-ARCH-04","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:646 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:39 | pattern=continuity | "FIN-CNT-002","CONTINUITY","Recovered Function Is Not Preserved Continuity","Restored financial functionality SHALL NOT automatically imply preserved execution continuity.","Recovery","EIP + POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:647 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:40 | pattern=continuity | "FIN-CNT-003","CONTINUITY","Reconstructed Continuity Is Distinct","Reconstructed continuity SHALL remain distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:648 | term=continuity | - 03-registries/INVARIANT_REGISTRY.csv:41 | pattern=continuity | "FIN-CNT-004","CONTINUITY","Continuity Cannot Be Inferred From Balance Equality","Equivalent resulting balances SHALL NOT be sufficient evidence of preserved continuity.","Settlement recovery","FIN-ARCH-04","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:668 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:21 | pattern=continuity | "FIN-PO-020","FIN-SET-004","NON-EQUIVALENCE","Settlement Finality Is Not Continuity","Establish invariant FIN-SET-004 'Settlement Finality Is Not Continuity' under its stated applicability conditions and inherited architectural assumptions; demonstrate that the forbidden violating state or semantic collapse cannot be accepted as conformant.","Finalized settlement","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:669 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:21 | pattern=finality | "FIN-PO-020","FIN-SET-004","NON-EQUIVALENCE","Settlement Finality Is Not Continuity","Establish invariant FIN-SET-004 'Settlement Finality Is Not Continuity' under its stated applicability conditions and inherited architectural assumptions; demonstrate that the forbidden violating state or semantic collapse cannot be accepted as conformant.","Finalized settlement","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:678 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:38 | pattern=continuity | "FIN-PO-037","FIN-CNT-001","THEOREM","Continuity Must Be Classified Independently","Establish invariant FIN-CNT-001 'Continuity Must Be Classified Independently' under its stated applicability conditions and inherited architectural assumptions; demonstrate that the forbidden violating state or semantic collapse cannot be accepted as conformant.","All consequential execution","EIP + FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:679 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:39 | pattern=continuity | "FIN-PO-038","FIN-CNT-002","NON-EQUIVALENCE","Recovered Function Is Not Preserved Continuity","Prove that restoration of financial functionality is insufficient to establish preserved execution continuity.","Recovery","EIP + POB","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:680 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:40 | pattern=continuity | "FIN-PO-039","FIN-CNT-003","NON-EQUIVALENCE","Reconstructed Continuity Is Distinct","Prove that reconstructed continuity remains formally distinguishable from uninterrupted preserved continuity.","Reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:681 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | pattern=continuity | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:681 | term=continuity classification | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | pattern=continuity | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:687 | term=continuity | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:64 | pattern=continuity | "FIN-PO-X007","FIN-CNT-003","TRACEABILITY","Reconstructed Versus Preserved Continuity Trace","Establish an evidence trace that mechanically distinguishes uninterrupted continuity from continuity established only through later reconstruction.","Financial reconstruction","EIP + POB","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:689 | term=continuity | - 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | pattern=continuity | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:689 | term=continuity classification | - 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | pattern=continuity | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:695 | term=continuity | - 03-registries/STATE_REGISTRY.csv:33 | pattern=continuity | "FIN-S-032","CONTINUITY-UNCLASSIFIED","continuity","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:696 | term=continuity | - 03-registries/STATE_REGISTRY.csv:34 | pattern=continuity | "FIN-S-033","CONTINUITY-PRESERVED","continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:697 | term=continuity | - 03-registries/STATE_REGISTRY.csv:35 | pattern=continuity | "FIN-S-034","CONTINUITY-DEGRADED","continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:698 | term=continuity | - 03-registries/STATE_REGISTRY.csv:36 | pattern=continuity | "FIN-S-035","CONTINUITY-BROKEN","continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:699 | term=continuity | - 03-registries/STATE_REGISTRY.csv:37 | pattern=continuity | "FIN-S-036","CONTINUITY-RECONSTRUCTED","continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:700 | term=continuity | - 03-registries/STATE_REGISTRY.csv:38 | pattern=continuity | "FIN-S-037","CONTINUITY-INDETERMINATE","continuity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:702 | term=continuity | - 03-registries/TRANSITION_CLASS_REGISTRY.csv:11 | pattern=continuity | "FIN-TC-010","continuity","CLASSIFICATION"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:708 | term=continuity | - 03-registries/TRANSITION_REGISTRY.csv:36 | pattern=continuity | "FIN-T-035","RECONCILED","CONTINUITY-UNCLASSIFIED","continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:709 | term=continuity | - 03-registries/TRANSITION_REGISTRY.csv:37 | pattern=continuity | "FIN-T-036","CONTINUITY-UNCLASSIFIED","CONTINUITY-PRESERVED","continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:710 | term=continuity | - 03-registries/TRANSITION_REGISTRY.csv:38 | pattern=continuity | "FIN-T-037","CONTINUITY-UNCLASSIFIED","CONTINUITY-DEGRADED","continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:711 | term=continuity | - 03-registries/TRANSITION_REGISTRY.csv:39 | pattern=continuity | "FIN-T-038","CONTINUITY-UNCLASSIFIED","CONTINUITY-BROKEN","continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:712 | term=continuity | - 03-registries/TRANSITION_REGISTRY.csv:40 | pattern=continuity | "FIN-T-039","CONTINUITY-UNCLASSIFIED","CONTINUITY-RECONSTRUCTED","continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:713 | term=continuity | - 03-registries/TRANSITION_REGISTRY.csv:41 | pattern=continuity | "FIN-T-040","CONTINUITY-UNCLASSIFIED","CONTINUITY-INDETERMINATE","continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:714 | term=continuity | - 15-publications/F1/F1_OUTLINE.md:5 | pattern=continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:714 | term=state continuity | - 15-publications/F1/F1_OUTLINE.md:5 | pattern=continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:715 | term=continuity | - 15-publications/F1/F1_OUTLINE.md:56 | pattern=continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:715 | term=state continuity | - 15-publications/F1/F1_OUTLINE.md:56 | pattern=continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:717 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:225 | pattern=continuity | **Attack:** Collapse full e0 -> ec -> reconciliation -> continuity path to terminal state
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:720 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:209 | pattern=continuity | **Statement:** Reconciled does not imply continuity preserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:721 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:261 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:722 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:269 | pattern=continuity | **Statement:** Economic endpoint equivalence does not imply continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:722 | term=continuity preservation | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:269 | pattern=continuity | **Statement:** Economic endpoint equivalence does not imply continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:723 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:273 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:724 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:281 | pattern=continuity | **Statement:** Reconciled state does not imply continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:724 | term=continuity preservation | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:281 | pattern=continuity | **Statement:** Reconciled state does not imply continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:725 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:285 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:726 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:297 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:727 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:309 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:728 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:317 | pattern=continuity | **Statement:** Functional recovery does not imply continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:728 | term=continuity preservation | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:317 | pattern=continuity | **Statement:** Functional recovery does not imply continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:729 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:321 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:730 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:329 | pattern=continuity | **Statement:** Unknown material continuity state cannot establish PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:731 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:333 | pattern=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:732 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:341 | pattern=continuity | **Statement:** RECONSTRUCTED preserves evidence of the prior continuity break
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:735 | term=continuity | - 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:65 | pattern=continuity | **Basis:** Reconstructed continuity requires represented violation and remains distinct from PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:736 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:736 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:737 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | pattern=continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:737 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | pattern=continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:738 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:30 | pattern=continuity | continuity therefore remain distinct from restoration of an uninterrupted prior
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:739 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:62 | pattern=continuity | > continuity survived the execution history?
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:741 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:87 | pattern=continuity | - reconstructed continuity is not preserved continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:743 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:148 | pattern=continuity | > govern containment, compensation, reversal, reconciliation, and continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:747 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:503 | pattern=continuity | Reconciled != ContinuityPreserved.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:748 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | pattern=continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:748 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | pattern=continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:749 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:509 | pattern=continuity | ## 8.1 Continuity as a Path Property
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:750 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:511 | pattern=continuity | Continuity is evaluated over history, not merely over the terminal financial
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:751 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:522 | pattern=continuity | denote the declared continuity requirements of a financial profile.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:752 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:540 | pattern=continuity | PRESERVED requires relevant continuity relations to remain satisfied throughout
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:753 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:553 | pattern=continuity | continuity relation without an accepted reconstruction describing the current
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:754 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:554 | pattern=continuity | continuity state.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:755 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:566 | pattern=continuity | Therefore reconstructed continuity contains a historical discontinuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:756 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:568 | pattern=continuity | It is not equivalent to preserved continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:757 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:572 | pattern=continuity | If material continuity evidence remains unresolved:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:758 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | pattern=continuity | different continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:758 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | pattern=continuity | different continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:759 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:589 | pattern=continuity | ContinuityPreserved.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:761 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:670 | pattern=continuity | ## 9.5 Reconciliation and Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:762 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:678 | pattern=continuity | ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:763 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:683 | pattern=continuity | continuity was previously broken.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:764 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:685 | pattern=continuity | ## 9.6 Preserved and Reconstructed Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:765 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:687 | pattern=continuity | For the same complete continuity interval:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:766 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | pattern=continuity | -> Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:766 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | pattern=continuity | -> Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:768 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:737 | pattern=continuity | reconciliation, and continuity records through its public interface.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:769 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:768 | pattern=continuity | - classify reconstructed continuity as preserved;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:771 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:795 | pattern=continuity | - continuity break,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:772 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | pattern=continuity | Reconstruction adds a continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:772 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | pattern=continuity | Reconstruction adds a continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:777 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:829 | pattern=continuity | - that reconciliation establishes continuity preservation;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:777 | term=continuity preservation | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:829 | pattern=continuity | - that reconciliation establishes continuity preservation;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:782 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:855 | pattern=continuity | operator; and classifies continuity over historical execution paths rather than
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:783 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:864 | pattern=continuity | effect, compensate an obligation, or reconstruct continuity while still preserving
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:784 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:864 | pattern=obligation | effect, compensate an obligation, or reconstruct continuity while still preserving
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:785 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:910 | pattern=continuity | ## A.7 Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:789 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:960 | pattern=continuity | continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:789 | term=continuity preservation | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:960 | pattern=continuity | continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:790 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:964 | pattern=continuity | continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:790 | term=continuity preservation | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:964 | pattern=continuity | continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:792 | term=continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | pattern=continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:792 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | pattern=continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:794 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:794 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:795 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:3 | pattern=continuity | ## A Formal Architecture for Agreement, Authority, Execution, Finality, Reconciliation, and Continuity Across Distributed Financial Systems
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:796 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:3 | pattern=finality | ## A Formal Architecture for Agreement, Authority, Execution, Finality, Reconciliation, and Continuity Across Distributed Financial Systems
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:797 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:15 | pattern=continuity | as financial finality, or recovery as proof that continuity was never
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:798 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:15 | pattern=finality | as financial finality, or recovery as proof that continuity was never
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:800 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | pattern=continuity | economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:800 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | pattern=continuity | economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:802 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:50 | pattern=continuity | **settlement finality != reconciliation != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:802 | term=continuity preservation | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:50 | pattern=continuity | **settlement finality != reconciliation != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:803 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:50 | pattern=finality | **settlement finality != reconciliation != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:803 | term=continuity preservation | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:50 | pattern=finality | **settlement finality != reconciliation != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:804 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:56 | pattern=continuity | state mutation. Reconstructed continuity remains distinct from preserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:805 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:57 | pattern=continuity | continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:807 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | pattern=continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:807 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | pattern=continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:809 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:109 | pattern=continuity | - preserved continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:810 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:110 | pattern=continuity | - degraded continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:811 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:111 | pattern=continuity | - broken continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:812 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:112 | pattern=continuity | - reconstructed continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:813 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:113 | pattern=continuity | - indeterminate continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:815 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:131 | pattern=continuity | **reconciled != continuity preserved**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:816 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:133 | pattern=continuity | **reconstructed continuity != preserved continuity**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:817 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:135 | pattern=continuity | **functional recovery != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:817 | term=continuity preservation | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:135 | pattern=continuity | **functional recovery != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:844 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:715 | pattern=continuity | Reconciled != ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:845 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | pattern=continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:845 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | pattern=continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:846 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:736 | pattern=continuity | Continuity is a property of the path, not merely the endpoint.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:847 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:740 | pattern=continuity | ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:848 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:742 | pattern=continuity | relative to continuity profile:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:849 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | pattern=continuity | The inherited continuity classifications are:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:849 | term=continuity classification | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | pattern=continuity | The inherited continuity classifications are:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:850 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:762 | pattern=continuity | # 19. Preserved vs Reconstructed Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:851 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:779 | pattern=continuity | # 20. Finality, Recovery, and Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:852 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:779 | pattern=finality | # 20. Finality, Recovery, and Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:853 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:783 | pattern=continuity | AtomicComplete -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:854 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:785 | pattern=continuity | SettlementFinal -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:855 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:787 | pattern=continuity | Reconciled -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:856 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:789 | pattern=continuity | FunctionalRecovery -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:857 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:791 | pattern=continuity | CompensationSuccess -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:858 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:793 | pattern=continuity | ReversalSuccess -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:859 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:795 | pattern=continuity | CanonicalBranchSelected -> ContinuityPreserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:864 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:856 | pattern=continuity | 10. Reconstructed continuity is distinct from preserved continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:865 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:859 | pattern=continuity | continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:867 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:876 | pattern=continuity | - distributed continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:869 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:937 | pattern=continuity | - finality manufacturing continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:870 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:937 | pattern=finality | - finality manufacturing continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:871 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:938 | pattern=continuity | - reconciliation manufacturing continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:873 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:997 | pattern=continuity | != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:873 | term=continuity preservation | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:997 | pattern=continuity | != continuity preservation**
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:878 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1069 | pattern=continuity | Functional recovery cannot prove continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:879 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1079 | pattern=continuity | repair, finality, and continuity reconstruction.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:880 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1079 | pattern=finality | repair, finality, and continuity reconstruction.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:886 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1127 | pattern=continuity | Reconciled != Continuity Preserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:887 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1129 | pattern=continuity | Functional Recovery != Continuity Preserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:891 | term=continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | pattern=continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:891 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | pattern=continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:893 | term=continuity | - 15-publications/F2/manuscript/F2_MANUSCRIPT_CONSTRUCTION_SUMMARY.md:58 | pattern=continuity | != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:893 | term=continuity preservation | - 15-publications/F2/manuscript/F2_MANUSCRIPT_CONSTRUCTION_SUMMARY.md:58 | pattern=continuity | != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:902 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | pattern=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:902 | term=state continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | pattern=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:909 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:40 | pattern=continuity | - continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:909 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:40 | pattern=continuity | - continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:915 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:52 | pattern=continuity | != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:915 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:52 | pattern=continuity | != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:916 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:56 | pattern=continuity | F2 establishes that agreement, consensus, authority, admissibility, execution, effect occurrence, atomic completion, finality, reconciliation, and continuity are distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:917 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:56 | pattern=finality | F2 establishes that agreement, consensus, authority, admissibility, execution, effect occurrence, atomic completion, finality, reconciliation, and continuity are distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:928 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:77 | pattern=continuity | 8. custody continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:929 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:77 | pattern=custody | 8. custody continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:937 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | pattern=continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:937 | term=state continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | pattern=continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:938 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:96 | pattern=continuity | - reconstructed continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:943 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:127 | pattern=continuity | - distributed continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:975 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:194 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:975 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:194 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:976 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:194 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:976 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:194 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:994 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:223 | pattern=continuity | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:994 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:223 | pattern=continuity | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:995 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:223 | pattern=finality | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:995 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:223 | pattern=finality | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1011 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | pattern=continuity | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1011 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | pattern=continuity | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1012 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | pattern=finality | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1012 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | pattern=finality | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1013 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | pattern=irreversibility | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1013 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | pattern=irreversibility | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1140 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:631 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1140 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:631 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1141 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:631 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1141 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:631 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1326 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1373 | pattern=continuity | ## CE-11 — Final But Continuity Not Preserved
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1328 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1378 | pattern=continuity | historical chain reconstructed after discontinuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1329 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1382 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1329 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1382 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1330 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1382 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1330 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1382 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1349 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1473 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1349 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1473 | pattern=continuity | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1350 | term=continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1473 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1350 | term=continuity preservation | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1473 | pattern=finality | finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1378 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:138 | pattern=continuity | ## Theorem T5 — Reconciliation Does Not Establish Preserved Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1379 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:146 | pattern=continuity | ContinuityPreserved(H) = false.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1380 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:150 | pattern=continuity | an evidenced continuity break followed by complete reconciliation.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1381 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:158 | pattern=continuity | ## Theorem T6 — Functional Restoration Does Not Establish Preserved Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1382 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:166 | pattern=continuity | ContinuityPreserved(H_t) = false.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1383 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:244 | pattern=continuity | ## Theorem T9 — Residual Resolution Does Not Establish Preserved Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1384 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:252 | pattern=continuity | ContinuityPreserved(H_t) = false.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1385 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:310 | pattern=continuity | ## Safety S3 — Demonstrated Continuity Break Survives Later Equivalence
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1386 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:314 | pattern=continuity | ContinuityBroken(H_k)
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1387 | term=continuity | - formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:322 | pattern=continuity | Later equivalence does not retroactively create preserved continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1388 | term=continuity | - formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:93 | pattern=continuity | ## C5 — Reconciliation / Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1389 | term=continuity | - formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:103 | pattern=continuity | while the demonstrated historical continuity break remains.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1390 | term=continuity | - formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:107 | pattern=continuity | ## C6 — Functional Restoration / Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1391 | term=continuity | - formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:109 | pattern=continuity | Construct a failure causing continuity break.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1392 | term=continuity | - formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:119 | pattern=continuity | ContinuityPreserved = false.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1408 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:11 | pattern=continuity | ## PO-FIN-CON-001 — Continuity Is Independently Classified
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1409 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1409 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1410 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1410 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1411 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:17 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1412 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:19 | pattern=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1413 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1413 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1414 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1414 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1415 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1416 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:35 | pattern=continuity | ## PO-FIN-CON-002 — Reconstruction Does Not Restore Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1417 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1417 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1418 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1418 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1419 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:41 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1420 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:43 | pattern=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1421 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1421 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1422 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1422 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1423 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1424 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:59 | pattern=continuity | ## PO-FIN-CON-003 — Restored Function Does Not Restore Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1425 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1425 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1426 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1426 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1427 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:65 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1428 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:67 | pattern=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1429 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1429 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1430 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1430 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1431 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1432 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:83 | pattern=continuity | ## PO-FIN-CON-004 — Continuity Break Survives Later Equivalence
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1433 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1433 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1434 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1434 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1435 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:89 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1436 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:91 | pattern=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1437 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1437 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1438 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1438 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1439 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1440 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:107 | pattern=continuity | ## PO-FIN-CON-005 — Indeterminate Continuity Is Not Preserved Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1441 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1441 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1442 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1442 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1443 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:113 | pattern=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1444 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:115 | pattern=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1445 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1445 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1446 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1446 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1447 | term=continuity | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1496 | term=continuity | - formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:21 | pattern=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1497 | term=continuity | - formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:45 | pattern=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1498 | term=continuity | - formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:69 | pattern=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1500 | term=continuity | - formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:93 | pattern=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1501 | term=continuity | - formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:117 | pattern=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1506 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1507 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1510 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:19 | pattern=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1511 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:19 | pattern=finality | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1515 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1516 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1517 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1519 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1520 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1523 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:43 | pattern=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1524 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:43 | pattern=finality | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1528 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1529 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1530 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1533 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1534 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1537 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:67 | pattern=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1538 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:67 | pattern=finality | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1542 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1543 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1544 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1545 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:83 | pattern=continuity | ## PO-FIN-FIN-004 — Finality Does Not Establish Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1546 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:83 | pattern=finality | ## PO-FIN-FIN-004 — Finality Does Not Establish Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1547 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1548 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1551 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:91 | pattern=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1552 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:91 | pattern=finality | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1556 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1557 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1558 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1561 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1562 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1565 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:115 | pattern=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1566 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:115 | pattern=finality | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1570 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1571 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=finality | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1572 | term=continuity | - formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | pattern=reopen | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1579 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:11 | pattern=continuity | ## PO-FIN-REC-001 — Reconciliation Is Not Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1580 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1581 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:19 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1582 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1582 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1583 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:25 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1584 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1585 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:43 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1586 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1586 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1587 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:49 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1588 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1589 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:67 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1590 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1590 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1591 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:73 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1592 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1593 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:91 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1594 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1594 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1595 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:97 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1596 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1597 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:115 | pattern=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1598 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1598 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1599 | term=continuity | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:121 | pattern=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1649 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:3 | pattern=continuity | from .types import ContinuityClass, ReconciliationClass, Residual
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1650 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:22 | pattern=continuity | def classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1651 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:24 | pattern=continuity | continuity_break_demonstrated: bool,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1652 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:29 | pattern=continuity | ) -> ContinuityClass:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1653 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:32 | pattern=continuity | return ContinuityClass.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1654 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:34 | pattern=continuity | if continuity_break_demonstrated:
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1655 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:36 | pattern=continuity | return ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1656 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:39 | pattern=continuity | return ContinuityClass.FUNCTION_RESTORED_ONLY
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1657 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:41 | pattern=continuity | return ContinuityClass.BROKEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1658 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:44 | pattern=continuity | return ContinuityClass.PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1659 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:47 | pattern=continuity | return ContinuityClass.HISTORICALLY_RECONCILED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1660 | term=continuity | - reference-runtime/f1/reconciliation_engine.py:49 | pattern=continuity | return ContinuityClass.DEGRADED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1661 | term=continuity | - reference-runtime/f1/types.py:66 | pattern=continuity | class ContinuityClass(str, Enum):
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1662 | term=continuity | - reference-runtime/f1/types.py:67 | pattern=continuity | UNASSESSED = "F1_CONTINUITY_UNASSESSED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1663 | term=continuity | - reference-runtime/f1/types.py:68 | pattern=continuity | PRESERVED = "F1_CONTINUITY_PRESERVED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1664 | term=continuity | - reference-runtime/f1/types.py:69 | pattern=continuity | DEGRADED = "F1_CONTINUITY_DEGRADED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1665 | term=continuity | - reference-runtime/f1/types.py:70 | pattern=continuity | BROKEN = "F1_CONTINUITY_BROKEN"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1666 | term=continuity | - reference-runtime/f1/types.py:71 | pattern=continuity | RECONSTRUCTED = "F1_CONTINUITY_RECONSTRUCTED"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1667 | term=continuity | - reference-runtime/f1/types.py:74 | pattern=continuity | INDETERMINATE = "F1_CONTINUITY_INDETERMINATE"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1668 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:20 | pattern=continuity | classify_continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1669 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:28 | pattern=continuity | ContinuityClass,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1670 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:575 | pattern=continuity | class ContinuityCollapseAttacks(unittest.TestCase):
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1671 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:578 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1672 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:579 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1673 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:587 | pattern=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1674 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:592 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1675 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:596 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1676 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:597 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1677 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:605 | pattern=continuity | ContinuityClass.RECONSTRUCTED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1678 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:610 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1679 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:628 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1680 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:629 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1681 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:637 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1682 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:640 | pattern=continuity | def test_missing_continuity_evidence_is_indeterminate(self):
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1683 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:641 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1684 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:642 | pattern=continuity | continuity_break_demonstrated=False,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1685 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:650 | pattern=continuity | ContinuityClass.INDETERMINATE,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1687 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:723 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1688 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:724 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1689 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:732 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1690 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:736 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1691 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:737 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1692 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:745 | pattern=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1693 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:806 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1694 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:807 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1695 | term=continuity | - tests/f1/adversarial/test_f1_adversarial.py:815 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1696 | term=continuity | - tests/f1/fixtures/counterexamples.json:25 | pattern=continuity | "description": "Reconciled execution history with broken continuity"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1697 | term=continuity | - tests/f1/fixtures/counterexamples.json:30 | pattern=continuity | "description": "Function restored after demonstrated continuity break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1698 | term=continuity | - tests/f1/fixtures/counterexamples.json:45 | pattern=continuity | "description": "Residual resolved after historical continuity break"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1699 | term=continuity | - tests/f1/test_continuity.py:1 | pattern=continuity | from f1_runtime.continuity import classify_continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1700 | term=continuity | - tests/f1/test_continuity.py:2 | pattern=continuity | from f1_runtime.model import ContinuityClass, ContinuityInput
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1701 | term=continuity | - tests/f1/test_continuity.py:6 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1702 | term=continuity | - tests/f1/test_continuity.py:13 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1703 | term=continuity | - tests/f1/test_continuity.py:17 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1704 | term=continuity | - tests/f1/test_continuity.py:24 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.DEGRADED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1705 | term=continuity | - tests/f1/test_continuity.py:28 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1706 | term=continuity | - tests/f1/test_continuity.py:35 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.BROKEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1707 | term=continuity | - tests/f1/test_continuity.py:39 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1708 | term=continuity | - tests/f1/test_continuity.py:47 | pattern=continuity | result = classify_continuity(data)
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1709 | term=continuity | - tests/f1/test_continuity.py:49 | pattern=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1710 | term=continuity | - tests/f1/test_continuity.py:50 | pattern=continuity | assert result != ContinuityClass.PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1711 | term=continuity | - tests/f1/test_continuity.py:54 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1712 | term=continuity | - tests/f1/test_continuity.py:61 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1713 | term=continuity | - tests/f1/test_continuity.py:65 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1714 | term=continuity | - tests/f1/test_continuity.py:73 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1715 | term=continuity | - tests/f1/test_engine_integration.py:5 | pattern=continuity | ContinuityClass,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1716 | term=continuity | - tests/f1/test_engine_integration.py:6 | pattern=continuity | ContinuityInput,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1718 | term=continuity | - tests/f1/test_engine_integration.py:75 | pattern=continuity | def test_engine_records_reconstructed_continuity():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1719 | term=continuity | - tests/f1/test_engine_integration.py:78 | pattern=continuity | result = engine.classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1720 | term=continuity | - tests/f1/test_engine_integration.py:79 | pattern=continuity | ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1721 | term=continuity | - tests/f1/test_engine_integration.py:92 | pattern=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1722 | term=continuity | - tests/f1/test_f1_reference_runtime.py:14 | pattern=continuity | classify_continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1723 | term=continuity | - tests/f1/test_f1_reference_runtime.py:28 | pattern=continuity | ContinuityClass,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1724 | term=continuity | - tests/f1/test_f1_reference_runtime.py:266 | pattern=continuity | result = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1725 | term=continuity | - tests/f1/test_f1_reference_runtime.py:267 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1726 | term=continuity | - tests/f1/test_f1_reference_runtime.py:275 | pattern=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1727 | term=continuity | - tests/f1/test_f1_reference_runtime.py:341 | pattern=continuity | def test_ce005_reconciled_non_preserved_continuity(self):
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1728 | term=continuity | - tests/f1/test_f1_reference_runtime.py:342 | pattern=continuity | continuity = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1729 | term=continuity | - tests/f1/test_f1_reference_runtime.py:343 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1730 | term=continuity | - tests/f1/test_f1_reference_runtime.py:350 | pattern=continuity | continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1731 | term=continuity | - tests/f1/test_f1_reference_runtime.py:351 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1732 | term=continuity | - tests/f1/test_f1_reference_runtime.py:354 | pattern=continuity | def test_ce006_function_restored_non_preserved_continuity(self):
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1733 | term=continuity | - tests/f1/test_f1_reference_runtime.py:355 | pattern=continuity | continuity = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1734 | term=continuity | - tests/f1/test_f1_reference_runtime.py:356 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1735 | term=continuity | - tests/f1/test_f1_reference_runtime.py:363 | pattern=continuity | continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1736 | term=continuity | - tests/f1/test_f1_reference_runtime.py:364 | pattern=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1737 | term=continuity | - tests/f1/test_f1_reference_runtime.py:408 | pattern=continuity | def test_ce009_residual_resolution_non_preserved_continuity(self):
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1738 | term=continuity | - tests/f1/test_f1_reference_runtime.py:420 | pattern=continuity | continuity = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1739 | term=continuity | - tests/f1/test_f1_reference_runtime.py:421 | pattern=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1740 | term=continuity | - tests/f1/test_f1_reference_runtime.py:428 | pattern=continuity | continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1741 | term=continuity | - tests/f1/test_f1_reference_runtime.py:429 | pattern=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1765 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:1 | pattern=continuity | from f1_runtime.continuity import classify_continuity
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1766 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:3 | pattern=continuity | ContinuityClass,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1767 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:4 | pattern=continuity | ContinuityInput,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1768 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:9 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1769 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:21 | pattern=continuity | result = classify_continuity(data)
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1770 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:23 | pattern=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1771 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:24 | pattern=continuity | assert result != ContinuityClass.PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1772 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:28 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1773 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:39 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1774 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:43 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1775 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:53 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1776 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:57 | pattern=continuity | data = ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1777 | term=continuity | - tests/f1_adversarial/test_attack_continuity.py:68 | pattern=continuity | assert classify_continuity(data) == ContinuityClass.BROKEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1798 | term=continuity | - tests/f1_adversarial/test_attack_full_lineage.py:5 | pattern=continuity | ContinuityInput,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1799 | term=continuity | - tests/f1_adversarial/test_attack_full_lineage.py:11 | pattern=continuity | def test_full_origin_repair_reconcile_continuity_path_survives():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1801 | term=continuity | - tests/f1_adversarial/test_attack_full_lineage.py:50 | pattern=continuity | engine.classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1802 | term=continuity | - tests/f1_adversarial/test_attack_full_lineage.py:51 | pattern=continuity | ContinuityInput(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1803 | term=continuity | - tests/f1_adversarial/test_attack_full_lineage.py:75 | pattern=continuity | assert records[3].record_type == "CONTINUITY_CLASSIFICATION"
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1808 | term=continuity | - tests/f2/test_f2_runtime.py:17 | pattern=continuity | classify_continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1810 | term=continuity | - tests/f2/test_f2_runtime.py:27 | pattern=continuity | ContinuityState,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1827 | term=continuity | - tests/f2/test_f2_runtime.py:195 | pattern=continuity | def test_continuity_preserved():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1828 | term=continuity | - tests/f2/test_f2_runtime.py:196 | pattern=continuity | assert classify_continuity() == ContinuityState.PRESERVED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1829 | term=continuity | - tests/f2/test_f2_runtime.py:199 | pattern=continuity | def test_continuity_degraded():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1830 | term=continuity | - tests/f2/test_f2_runtime.py:200 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1831 | term=continuity | - tests/f2/test_f2_runtime.py:202 | pattern=continuity | ) == ContinuityState.DEGRADED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1832 | term=continuity | - tests/f2/test_f2_runtime.py:205 | pattern=continuity | def test_continuity_broken():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1833 | term=continuity | - tests/f2/test_f2_runtime.py:206 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1834 | term=continuity | - tests/f2/test_f2_runtime.py:208 | pattern=continuity | ) == ContinuityState.BROKEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1835 | term=continuity | - tests/f2/test_f2_runtime.py:211 | pattern=continuity | def test_continuity_reconstructed():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1836 | term=continuity | - tests/f2/test_f2_runtime.py:212 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1837 | term=continuity | - tests/f2/test_f2_runtime.py:215 | pattern=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1838 | term=continuity | - tests/f2/test_f2_runtime.py:218 | pattern=continuity | def test_continuity_indeterminate():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1839 | term=continuity | - tests/f2/test_f2_runtime.py:219 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1840 | term=continuity | - tests/f2/test_f2_runtime.py:221 | pattern=continuity | ) == ContinuityState.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1851 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:17 | pattern=continuity | classify_continuity,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1853 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:27 | pattern=continuity | ContinuityState,
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1874 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:239 | pattern=continuity | # CONTINUITY ATTACKS
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1875 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:243 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1876 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:245 | pattern=continuity | ) == ContinuityState.BROKEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1877 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:249 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1878 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:252 | pattern=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1879 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:255 | pattern=continuity | def test_missing_continuity_evidence_cannot_be_preserved():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1880 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:256 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1881 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:258 | pattern=continuity | ) == ContinuityState.INDETERMINATE
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1882 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:262 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1883 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:264 | pattern=continuity | ) == ContinuityState.DEGRADED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1884 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:268 | pattern=continuity | assert classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1885 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:272 | pattern=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1901 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:376 | pattern=continuity | def test_finality_does_not_force_continuity_preservation():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1902 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:376 | pattern=finality | def test_finality_does_not_force_continuity_preservation():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1904 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:381 | pattern=continuity | continuity = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1906 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:386 | pattern=continuity | assert continuity == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1907 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:389 | pattern=continuity | def test_reconciled_result_does_not_force_continuity_preservation():
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1908 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:394 | pattern=continuity | continuity = classify_continuity(
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1909 | term=continuity | - tests/f2_adversarial/test_f2_adversarial.py:399 | pattern=continuity | assert continuity == ContinuityState.BROKEN
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2033 | term=continuity | - finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:2033 | term=continuity preservation | - finality != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=continuity | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=continuity preservation | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:36 | term=continuity | - continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:36 | term=continuity preservation | - continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:49 | term=continuity | - record restoration != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:49 | term=continuity preservation | - record restoration != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=continuity classification | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:102 | term=continuity | Reconstruction does not automatically restore historical identity or continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:126 | term=continuity | ### F4-O-010 — Record-State Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:126 | term=continuity classification | ### F4-O-010 — Record-State Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:126 | term=state continuity | ### F4-O-010 — Record-State Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:128 | term=continuity | **Record-State Continuity Classification**
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:128 | term=continuity classification | **Record-State Continuity Classification**
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:128 | term=state continuity | **Record-State Continuity Classification**
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:130 | term=continuity | A typed classification of whether a record-state history preserves, disrupts, reconstructs, or fails to establish continuity across relevant transitions.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:132 | term=continuity | Continuity classification is distinct from functional restoration and record equality.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:132 | term=continuity classification | Continuity classification is distinct from functional restoration and record equality.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:146 | term=continuity | - record reconstruction != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:146 | term=continuity preservation | - record reconstruction != continuity preservation
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:171 | term=continuity | 10. continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:171 | term=continuity classification | 10. continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:204 | term=continuity | - F4-O-001 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:56 | term=ledger state | - ledger state
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:227 | term=continuity | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=ledger-state | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:227 | term=continuity preservation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=ledger-state | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:228 | term=continuity | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=state representation | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:228 | term=continuity preservation | - F4-O-001 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=state representation | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:242 | term=continuity | - F4-O-004 | 02-core/invariants/FIN-REC_INVARIANTS.md:33 | term=historical state | **Normative rule:** Reconstructed historical state SHALL NOT be classified as restored continuity merely because historical state can be reconstructed.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:245 | term=continuity | - F4-O-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:42 | term=historical state | Historical state has been reconstructed from surviving evidence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:246 | term=continuity | - F4-O-004 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:58 | term=historical record | Observed history has been reconciled sufficiently to establish a coherent historical record.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:251 | term=continuity | - F4-O-004 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:251 | term=continuity preservation | - F4-O-004 | 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | term=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:266 | term=continuity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:29 | term=historical identity | Economic equivalence != historical identity.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:267 | term=continuity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:166 | term=historical identity | - no material historical identity discontinuity occurred
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:268 | term=continuity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:206 | term=historical identity | - material historical identity break
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:269 | term=continuity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:218 | term=historical state | historical state and evidence were later rebuilt to establish a usable
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:270 | term=continuity | - F4-O-004 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:263 | term=historical state | Continuity concerns historical state lineage.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:287 | term=continuity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:168 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:287 | term=continuity preservation | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:168 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=continuity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:288 | term=continuity | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:169 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:288 | term=continuity preservation | - F4-O-004 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:169 | term=historical identity | - 03-registries/F1_CONTINUITY_RELATION_REGISTRY.csv:8 | pattern=historical identity | "F1-CNT-R007","Continuity Preservation != Historical Identity","YES"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:331 | term=continuity | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=historical identity | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:331 | term=continuity preservation | - F4-O-004 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:22 | term=historical identity | The supported problem is not merely whether an obligation is final. It is whether a ledger-state representation may validly encode, preserve, reopen, contradict, or reconstruct a financial state without collapsing record state into authority, historical identity, irreversibility, or continuity preservation.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:498 | term=continuity | - F4-O-010 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:90 | term=continuity classification | Continuity classification does not repair continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:498 | term=continuity classification | - F4-O-010 | 02-core/components/CANONICAL_FINANCIAL_COMPONENT_ARCHITECTURE.md:90 | term=continuity classification | Continuity classification does not repair continuity.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:499 | term=continuity | - F4-O-010 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:21 | term=continuity classification | Continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:499 | term=continuity classification | - F4-O-010 | 02-core/components/FIN-COMP-020_Continuity_Classifier.md:21 | term=continuity classification | Continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:500 | term=continuity | - F4-O-010 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:110 | term=continuity classification | -> finality and continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:500 | term=continuity classification | - F4-O-010 | 02-core/invariants/CANONICAL_FINANCIAL_INVARIANT_ARCHITECTURE.md:110 | term=continuity classification | -> finality and continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:501 | term=continuity | - F4-O-010 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:1 | term=continuity classification | # Financial Continuity Classification Model
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:501 | term=continuity classification | - F4-O-010 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:1 | term=continuity classification | # Financial Continuity Classification Model
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:502 | term=continuity | - F4-O-010 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:5 | term=continuity classification | Continuity classification determines whether execution-relevant integrity remained continuous across the financial transition history.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:502 | term=continuity classification | - F4-O-010 | 02-core/states/CONTINUITY_CLASSIFICATION_MODEL.md:5 | term=continuity classification | Continuity classification determines whether execution-relevant integrity remained continuous across the financial transition history.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:503 | term=continuity | - F4-O-010 | 02-core/states/FINANCIAL_STATE_MODEL.md:7 | term=continuity classification | State identity, transition existence, transition admissibility, transition execution, finality, and continuity classification are separate concepts.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:503 | term=continuity classification | - F4-O-010 | 02-core/states/FINANCIAL_STATE_MODEL.md:7 | term=continuity classification | State identity, transition existence, transition admissibility, transition execution, finality, and continuity classification are separate concepts.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:504 | term=continuity | - F4-O-010 | 02-core/states/FINANCIAL_STATE_MODEL.md:178 | term=continuity classification | The resulting execution has received explicit finality and continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:504 | term=continuity classification | - F4-O-010 | 02-core/states/FINANCIAL_STATE_MODEL.md:178 | term=continuity classification | The resulting execution has received explicit finality and continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:505 | term=continuity | - F4-O-010 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:121 | term=continuity classification | ## Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:505 | term=continuity classification | - F4-O-010 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:121 | term=continuity classification | ## Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:506 | term=continuity | - F4-O-010 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:131 | term=continuity classification | Continuity classification is separate from financial balance equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:506 | term=continuity classification | - F4-O-010 | 02-core/transitions/CANONICAL_FINANCIAL_TRANSITION_ALGEBRA.md:131 | term=continuity classification | Continuity classification is separate from financial balance equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:507 | term=continuity | - F4-O-010 | 02-core/transitions/TRANSITION_ADMISSIBILITY_BOUNDARY.md:37 | term=continuity classification | 14. What continuity classification applies?
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:507 | term=continuity classification | - F4-O-010 | 02-core/transitions/TRANSITION_ADMISSIBILITY_BOUNDARY.md:37 | term=continuity classification | 14. What continuity classification applies?
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:508 | term=continuity | - F4-O-010 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:241 | term=continuity classification | Reference to continuity classification inherited from upstream architectures.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:508 | term=continuity classification | - F4-O-010 | 02-core/types/CANONICAL_FINANCIAL_TYPE_SYSTEM.md:241 | term=continuity classification | Reference to continuity classification inherited from upstream architectures.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:509 | term=continuity | - F4-O-010 | 03-registries/COMPONENT_REGISTRY.csv:16 | term=continuity classification | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:509 | term=continuity classification | - F4-O-010 | 03-registries/COMPONENT_REGISTRY.csv:16 | term=continuity classification | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:510 | term=continuity | - F4-O-010 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | term=continuity classification | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:510 | term=continuity classification | - F4-O-010 | 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | term=continuity classification | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:511 | term=continuity | - F4-O-010 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | term=continuity classification | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:511 | term=continuity classification | - F4-O-010 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | term=continuity classification | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:512 | term=continuity | - F4-O-010 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | term=continuity classification | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:512 | term=continuity classification | - F4-O-010 | 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | term=continuity classification | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:513 | term=continuity | - F4-O-010 | 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | term=state continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:513 | term=state continuity | - F4-O-010 | 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | term=state continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:514 | term=continuity | - F4-O-010 | 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | term=continuity classification | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:514 | term=continuity classification | - F4-O-010 | 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | term=continuity classification | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:515 | term=continuity | - F4-O-010 | 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | term=continuity classification | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:515 | term=continuity classification | - F4-O-010 | 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | term=continuity classification | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:516 | term=continuity | - F4-O-010 | 03-registries/F1_SCOPE_REGISTRY.csv:11 | term=continuity classification | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:516 | term=continuity classification | - F4-O-010 | 03-registries/F1_SCOPE_REGISTRY.csv:11 | term=continuity classification | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:517 | term=continuity | - F4-O-010 | 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | term=state continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:517 | term=state continuity | - F4-O-010 | 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | term=state continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:518 | term=continuity | - F4-O-010 | 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | term=continuity classification | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:518 | term=continuity classification | - F4-O-010 | 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | term=continuity classification | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:519 | term=continuity | - F4-O-010 | 03-registries/INTERFACE_REGISTRY.csv:16 | term=continuity classification | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:519 | term=continuity classification | - F4-O-010 | 03-registries/INTERFACE_REGISTRY.csv:16 | term=continuity classification | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:520 | term=continuity | - F4-O-010 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | term=continuity classification | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:520 | term=continuity classification | - F4-O-010 | 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | term=continuity classification | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:521 | term=continuity | - F4-O-010 | 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | term=continuity classification | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:521 | term=continuity classification | - F4-O-010 | 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | term=continuity classification | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:522 | term=continuity | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:7 | term=state continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:522 | term=state continuity | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:7 | term=state continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:523 | term=continuity | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:27 | term=continuity classification | Distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:523 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_08_RESULT.md:27 | term=continuity classification | Distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:524 | term=continuity | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_10_RESULT.md:33 | term=continuity classification | - distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:524 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_10_RESULT.md:33 | term=continuity classification | - distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:525 | term=continuity | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_12_RESULT.md:38 | term=state continuity | - distributed economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:525 | term=state continuity | - F4-O-010 | 05-distributed-settlement/evidence/FIN_F2_12_RESULT.md:38 | term=state continuity | - distributed economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:526 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:298 | term=continuity classification | distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:526 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_ATOMICITY_SEMANTICS.md:298 | term=continuity classification | distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:527 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:131 | term=continuity classification | continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:527 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_CONTINUITY_TRANSITIONS.md:131 | term=continuity classification | continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:528 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:1 | term=state continuity | # FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:528 | term=state continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:1 | term=state continuity | # FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:529 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:5 | term=state continuity | Distributed economic-state continuity classifies whether the economic
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:529 | term=state continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:5 | term=state continuity | Distributed economic-state continuity classifies whether the economic
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:530 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:134 | term=continuity classification | ## 7. Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:530 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:134 | term=continuity classification | ## 7. Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:531 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:335 | term=continuity classification | as continuity classification within domain D_i.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:531 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:335 | term=continuity classification | as continuity classification within domain D_i.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:532 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:419 | term=continuity classification | Distributed continuity classification SHALL preserve:
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:532 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_ECONOMIC_STATE_CONTINUITY.md:419 | term=continuity classification | Distributed continuity classification SHALL preserve:
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:533 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:249 | term=continuity classification | Distributed continuity classification remains FIN-F2-08.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:533 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_DISTRIBUTED_RECONCILIATION.md:249 | term=continuity classification | Distributed continuity classification remains FIN-F2-08.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:534 | term=continuity | - F4-O-010 | 05-distributed-settlement/formal/F2_EXECUTION_LEG_COMPOSITION.md:256 | term=continuity classification | continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:534 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/formal/F2_EXECUTION_LEG_COMPOSITION.md:256 | term=continuity classification | continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:535 | term=continuity | - F4-O-010 | 05-distributed-settlement/runtime/f2_runtime/README.md:15 | term=continuity classification | - distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:535 | term=continuity classification | - F4-O-010 | 05-distributed-settlement/runtime/f2_runtime/README.md:15 | term=continuity classification | - distributed continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:536 | term=continuity | - F4-O-010 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:19 | term=state continuity | - economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:536 | term=state continuity | - F4-O-010 | 05-distributed-settlement/scope/F2_PROBLEM_BOUNDARY.md:19 | term=state continuity | - economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:537 | term=continuity | - F4-O-010 | 06-f3-discovery/FIN_F3_01_DISCOVERY.md:13 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:537 | term=state continuity | - F4-O-010 | 06-f3-discovery/FIN_F3_01_DISCOVERY.md:13 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:538 | term=continuity | - F4-O-010 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:13 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:538 | term=state continuity | - F4-O-010 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:13 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:539 | term=continuity | - F4-O-010 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:85 | term=state continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:539 | term=state continuity | - F4-O-010 | 06-f3-discovery/FIN_F3_01B_PROBLEM_BOUNDARY.md:85 | term=state continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:540 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:117 | term=continuity classification | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=continuity | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:540 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:117 | term=continuity classification | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=continuity | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:541 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:118 | term=continuity classification | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=finality | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:541 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:118 | term=continuity classification | - 03-registries/COMPONENT_REGISTRY.csv:16 | pattern=finality | "FI-CNT-001","Economic Continuity Classifier","CONTINUITY","Classify financial execution continuity independently from completion, balance equivalence, and settlement finality.","Execution history;EvidenceObject;EconomicState","Continuity classification","EIP;POB","F3"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:542 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:148 | term=continuity classification | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:542 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:148 | term=continuity classification | - 03-registries/F1_CONTINUITY_CLASS_REGISTRY.csv:6 | pattern=continuity | "F1-CNT-C005","INDETERMINATE","UNKNOWN","UNKNOWN","Evidence is insufficient to establish a unique continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:543 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:157 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | pattern=continuity | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:543 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:157 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:6 | pattern=continuity | "F1-CNT-PC005","COUNTEREXAMPLE","Two histories may terminate in economically equivalent states while possessing different continuity classifications.","FIN-CNT-004","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:544 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:160 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | pattern=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:544 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:160 | term=continuity classification | - 03-registries/F1_CONTINUITY_PROOF_CANDIDATES.csv:9 | pattern=continuity | "F1-CNT-PC008","TRACEABILITY","A reconstructed continuity classification preserves evidence of the preceding continuity break.","FIN-CNT-003;FIN-EVD-001","OPEN"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:545 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:200 | term=state continuity | - 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | pattern=continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:545 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:200 | term=state continuity | - 03-registries/F1_MANUSCRIPT_SECTION_SOURCE_MATRIX.csv:10 | pattern=continuity | "8 Economic-State Continuity","F1_ECONOMIC_CONTINUITY_ALGEBRA.md","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:546 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:202 | term=continuity classification | - 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | pattern=continuity | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:546 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:202 | term=continuity classification | - 03-registries/F1_NOVELTY_INHERITANCE_MATRIX.csv:11 | pattern=continuity | "Post-effect financial continuity classification","NEW-SPECIALIZATION","F1/EIP","FORMALIZE WITH EIP BINDING"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:547 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:258 | term=continuity classification | - 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | pattern=continuity | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:547 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:258 | term=continuity classification | - 03-registries/F1_RUNTIME_TEST_RESULTS.csv:9 | pattern=continuity | "F1-RT-TEST-008","F1 continuity classification","PASS","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:548 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:259 | term=continuity classification | - 03-registries/F1_SCOPE_REGISTRY.csv:11 | pattern=continuity | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:548 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:259 | term=continuity classification | - 03-registries/F1_SCOPE_REGISTRY.csv:11 | pattern=continuity | "F1-SCP-010","Post-effect continuity classification","IN-SCOPE","F1"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:549 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:261 | term=state continuity | - 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | pattern=continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:549 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:261 | term=state continuity | - 03-registries/F1_SEMANTIC_ARCHITECTURE_MATRIX.csv:7 | pattern=continuity | "FIN-F1-06","Economic-state continuity","ESTABLISHED"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:550 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:616 | term=continuity classification | - 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | pattern=continuity | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:550 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:616 | term=continuity classification | - 03-registries/FORBIDDEN_AUTHORITY_RELATIONSHIPS.csv:7 | pattern=continuity | "FIN-FORBID-006","Continuity Classifier","Create authority from continuity classification","Classification is descriptive/evaluative"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:551 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:619 | term=continuity classification | - 03-registries/INTERFACE_REGISTRY.csv:16 | pattern=continuity | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:551 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:619 | term=continuity classification | - 03-registries/INTERFACE_REGISTRY.csv:16 | pattern=continuity | "FI-IF-015","ClassifyEconomicContinuity","FI-CNT-001","history + evidence + state","continuity classification"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:552 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:681 | term=continuity classification | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | pattern=continuity | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:552 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:681 | term=continuity classification | - 03-registries/PROOF_OBLIGATION_REGISTRY.csv:41 | pattern=continuity | "FIN-PO-040","FIN-CNT-004","COUNTEREXAMPLE","Continuity Cannot Be Inferred From Balance Equality","Construct a valid financial history in which resulting balances are equal while execution continuity was broken, proving balance equality insufficient for continuity classification.","Settlement recovery","FIN-ARCH-04","F3","OPEN","","","",""
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:553 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:689 | term=continuity classification | - 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | pattern=continuity | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:553 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:689 | term=continuity classification | - 03-registries/STATE_OWNERSHIP_REGISTRY.csv:12 | pattern=continuity | "Continuity classification","FIN-COMP-020","NO"
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:554 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:714 | term=state continuity | - 15-publications/F1/F1_OUTLINE.md:5 | pattern=continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:554 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:714 | term=state continuity | - 15-publications/F1/F1_OUTLINE.md:5 | pattern=continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:555 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:715 | term=state continuity | - 15-publications/F1/F1_OUTLINE.md:56 | pattern=continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:555 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:715 | term=state continuity | - 15-publications/F1/F1_OUTLINE.md:56 | pattern=continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:556 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:736 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:556 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:736 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:557 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:737 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | pattern=continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:557 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:737 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | pattern=continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:558 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:748 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | pattern=continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:558 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:748 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | pattern=continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:559 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:758 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | pattern=continuity | different continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:559 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:758 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | pattern=continuity | different continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:560 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:766 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | pattern=continuity | -> Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:560 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:766 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | pattern=continuity | -> Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:561 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:772 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | pattern=continuity | Reconstruction adds a continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:561 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:772 | term=continuity classification | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | pattern=continuity | Reconstruction adds a continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:562 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:792 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | pattern=continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:562 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:792 | term=state continuity | - 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | pattern=continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:563 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:794 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:563 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:794 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | pattern=continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:564 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:800 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | pattern=continuity | economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:564 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:800 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | pattern=continuity | economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:565 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:807 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | pattern=continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:565 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:807 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | pattern=continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:566 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:845 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | pattern=continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:566 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:845 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | pattern=continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:567 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:849 | term=continuity classification | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | pattern=continuity | The inherited continuity classifications are:
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:567 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:849 | term=continuity classification | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | pattern=continuity | The inherited continuity classifications are:
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:568 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:891 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | pattern=continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:568 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:891 | term=state continuity | - 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | pattern=continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:569 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:902 | term=state continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | pattern=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:569 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:902 | term=state continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | pattern=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:570 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:937 | term=state continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | pattern=continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:570 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:937 | term=state continuity | - 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | pattern=continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:571 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1409 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:571 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1409 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:572 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1410 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:572 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1410 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:573 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1413 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:573 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1413 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:574 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1414 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:574 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1414 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:575 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1417 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:575 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1417 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:576 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1418 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:576 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1418 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:577 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1421 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:577 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1421 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:578 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1422 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:578 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1422 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:579 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1425 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:579 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1425 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:580 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1426 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:580 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1426 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:581 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1429 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:581 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1429 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:582 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1430 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:582 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1430 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:583 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1433 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:583 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1433 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:584 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1434 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:584 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1434 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:585 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1437 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:585 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1437 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:586 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1438 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:586 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1438 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:587 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1441 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:587 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1441 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:588 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1442 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:588 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1442 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | pattern=finality | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:589 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1445 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:589 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1445 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | pattern=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:590 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1446 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:590 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1446 | term=continuity classification | - formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:591 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1582 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:591 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1582 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:592 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1586 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:592 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1586 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:593 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1590 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:593 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1590 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:594 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1594 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:594 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1594 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:595 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1598 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:595 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01_BOUNDARY_DISCOVERY.md:1598 | term=continuity classification | - formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | pattern=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:596 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=continuity classification | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:596 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=continuity classification | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:596 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=continuity classification | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:597 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=record-state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:597 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=record-state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:597 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=record-state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:598 | term=continuity | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:598 | term=continuity classification | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:598 | term=state continuity | - F4-O-010 | 07-ledger/FIN_F4_01B_BOUNDARY_FREEZE.md:864 | term=state continuity | - record-state continuity classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:599 | term=continuity | - F4-O-010 | 15-publications/F1/F1_OUTLINE.md:5 | term=state continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:599 | term=state continuity | - F4-O-010 | 15-publications/F1/F1_OUTLINE.md:5 | term=state continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:600 | term=continuity | - F4-O-010 | 15-publications/F1/F1_OUTLINE.md:56 | term=state continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:600 | term=state continuity | - F4-O-010 | 15-publications/F1/F1_OUTLINE.md:56 | term=state continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:601 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | term=state continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:601 | term=state continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | term=state continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:602 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | term=state continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:602 | term=state continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | term=state continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:603 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | term=state continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:603 | term=state continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | term=state continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:604 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | term=continuity classification | different continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:604 | term=continuity classification | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | term=continuity classification | different continuity classifications.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:605 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | term=continuity classification | -> Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:605 | term=continuity classification | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | term=continuity classification | -> Continuity Classification
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:606 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | term=continuity classification | Reconstruction adds a continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:606 | term=continuity classification | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | term=continuity classification | Reconstruction adds a continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:607 | term=continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | term=state continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:607 | term=state continuity | - F4-O-010 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | term=state continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:608 | term=continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | term=state continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:608 | term=state continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | term=state continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:609 | term=continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | term=state continuity | economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:609 | term=state continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | term=state continuity | economic-state continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:610 | term=continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | term=state continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:610 | term=state continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | term=state continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:611 | term=continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | term=state continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:611 | term=state continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | term=state continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:612 | term=continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | term=continuity classification | The inherited continuity classifications are:
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:612 | term=continuity classification | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | term=continuity classification | The inherited continuity classifications are:
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:613 | term=continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | term=state continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:613 | term=state continuity | - F4-O-010 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | term=state continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:614 | term=continuity | - F4-O-010 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:614 | term=state continuity | - F4-O-010 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:615 | term=continuity | - F4-O-010 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | term=state continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:615 | term=state continuity | - F4-O-010 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | term=state continuity | - economic-state continuity;
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:616 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:616 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:617 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:617 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:618 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:618 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:619 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:619 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:620 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:620 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:621 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:621 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:622 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:622 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:623 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:623 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:624 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:624 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:625 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:625 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:626 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:626 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:627 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:627 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:628 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:628 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:629 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:629 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:630 | term=continuity | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:630 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:631 | term=continuity | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:631 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:632 | term=continuity | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:632 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:633 | term=continuity | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:633 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:634 | term=continuity | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:634 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:635 | term=continuity | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 07-ledger/FIN_F4_02_CANONICAL_OBJECT_TYPE_FREEZE.md:635 | term=continuity classification | - F4-O-010 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | 15-publications/F1/F1_OUTLINE.md:5 | term=continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/F1_OUTLINE.md:5 | term=state continuity | Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/F1_OUTLINE.md:56 | term=continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/F1_OUTLINE.md:56 | term=state continuity | ## 10. Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_ADVERSARIAL_REGISTER.md:225 | term=continuity | **Attack:** Collapse full e0 -> ec -> reconciliation -> continuity path to terminal state
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:209 | term=continuity | **Statement:** Reconciled does not imply continuity preserved
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:261 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:269 | term=continuity | **Statement:** Economic endpoint equivalence does not imply continuity preservation
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:269 | term=continuity preservation | **Statement:** Economic endpoint equivalence does not imply continuity preservation
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:273 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:281 | term=continuity | **Statement:** Reconciled state does not imply continuity preservation
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:281 | term=continuity preservation | **Statement:** Reconciled state does not imply continuity preservation
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:285 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:297 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:309 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:317 | term=continuity | **Statement:** Functional recovery does not imply continuity preservation
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:317 | term=continuity preservation | **Statement:** Functional recovery does not imply continuity preservation
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:321 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:329 | term=continuity | **Statement:** Unknown material continuity state cannot establish PRESERVED
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:333 | term=continuity | **Family:** CONTINUITY
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_FORMAL_RESULT_REGISTER.md:341 | term=continuity | **Statement:** RECONSTRUCTED preserves evidence of the prior continuity break
+- F4-SD-009 | 15-publications/F1/manuscript/APPENDIX_RUNTIME_CONFORMANCE_REGISTER.md:65 | term=continuity | **Basis:** Reconstructed continuity requires represented violation and remains distinct from PRESERVED
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | term=continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1 | term=state continuity | # Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | term=continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:25 | term=state continuity | operation; and classifies economic-state continuity as preserved, degraded,
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:30 | term=continuity | continuity therefore remain distinct from restoration of an uninterrupted prior
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:62 | term=continuity | > continuity survived the execution history?
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:87 | term=continuity | - reconstructed continuity is not preserved continuity.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:148 | term=continuity | > govern containment, compensation, reversal, reconciliation, and continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:503 | term=continuity | Reconciled != ContinuityPreserved.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | term=continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:507 | term=state continuity | # 8. Economic-State Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:509 | term=continuity | ## 8.1 Continuity as a Path Property
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:511 | term=continuity | Continuity is evaluated over history, not merely over the terminal financial
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:522 | term=continuity | denote the declared continuity requirements of a financial profile.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:540 | term=continuity | PRESERVED requires relevant continuity relations to remain satisfied throughout
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:553 | term=continuity | continuity relation without an accepted reconstruction describing the current
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:554 | term=continuity | continuity state.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:566 | term=continuity | Therefore reconstructed continuity contains a historical discontinuity.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:568 | term=continuity | It is not equivalent to preserved continuity.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:572 | term=continuity | If material continuity evidence remains unresolved:
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | term=continuity | different continuity classifications.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:581 | term=continuity classification | different continuity classifications.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:589 | term=continuity | ContinuityPreserved.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:670 | term=continuity | ## 9.5 Reconciliation and Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:678 | term=continuity | ContinuityPreserved
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:683 | term=continuity | continuity was previously broken.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:685 | term=continuity | ## 9.6 Preserved and Reconstructed Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:687 | term=continuity | For the same complete continuity interval:
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | term=continuity | -> Continuity Classification
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:720 | term=continuity classification | -> Continuity Classification
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:737 | term=continuity | reconciliation, and continuity records through its public interface.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:768 | term=continuity | - classify reconstructed continuity as preserved;
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:795 | term=continuity | - continuity break,
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | term=continuity | Reconstruction adds a continuity classification.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:809 | term=continuity classification | Reconstruction adds a continuity classification.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:829 | term=continuity | - that reconciliation establishes continuity preservation;
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:829 | term=continuity preservation | - that reconciliation establishes continuity preservation;
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:855 | term=continuity | operator; and classifies continuity over historical execution paths rather than
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:864 | term=continuity | effect, compensate an obligation, or reconstruct continuity while still preserving
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:910 | term=continuity | ## A.7 Continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:960 | term=continuity | continuity preservation.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:960 | term=continuity preservation | continuity preservation.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:964 | term=continuity | continuity preservation.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:964 | term=continuity preservation | continuity preservation.
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | term=continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 15-publications/F1/manuscript/F1_CANONICAL_MANUSCRIPT.md:1012 | term=state continuity | FIN-F1-06 — economic-state continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | term=continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1 | term=state continuity | # Distributed Settlement, Multiparty Authority, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:3 | term=continuity | ## A Formal Architecture for Agreement, Authority, Execution, Finality, Reconciliation, and Continuity Across Distributed Financial Systems
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:15 | term=continuity | as financial finality, or recovery as proof that continuity was never
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | term=continuity | economic-state continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:42 | term=state continuity | economic-state continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:50 | term=continuity | **settlement finality != reconciliation != continuity preservation**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:50 | term=continuity preservation | **settlement finality != reconciliation != continuity preservation**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:56 | term=continuity | state mutation. Reconstructed continuity remains distinct from preserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:57 | term=continuity | continuity.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | term=continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:85 | term=state continuity | - and whether economic-state continuity was preserved.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:109 | term=continuity | - preserved continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:110 | term=continuity | - degraded continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:111 | term=continuity | - broken continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:112 | term=continuity | - reconstructed continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:113 | term=continuity | - indeterminate continuity.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:131 | term=continuity | **reconciled != continuity preserved**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:133 | term=continuity | **reconstructed continuity != preserved continuity**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:135 | term=continuity | **functional recovery != continuity preservation**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:135 | term=continuity preservation | **functional recovery != continuity preservation**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:715 | term=continuity | Reconciled != ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | term=continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:722 | term=state continuity | # 18. Distributed Economic-State Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:736 | term=continuity | Continuity is a property of the path, not merely the endpoint.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:740 | term=continuity | ContinuityPreserved_d(q_d,t)
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:742 | term=continuity | relative to continuity profile:
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | term=continuity | The inherited continuity classifications are:
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:746 | term=continuity classification | The inherited continuity classifications are:
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:762 | term=continuity | # 19. Preserved vs Reconstructed Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:779 | term=continuity | # 20. Finality, Recovery, and Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:783 | term=continuity | AtomicComplete -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:785 | term=continuity | SettlementFinal -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:787 | term=continuity | Reconciled -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:789 | term=continuity | FunctionalRecovery -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:791 | term=continuity | CompensationSuccess -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:793 | term=continuity | ReversalSuccess -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:795 | term=continuity | CanonicalBranchSelected -> ContinuityPreserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:856 | term=continuity | 10. Reconstructed continuity is distinct from preserved continuity.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:859 | term=continuity | continuity.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:876 | term=continuity | - distributed continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:937 | term=continuity | - finality manufacturing continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:938 | term=continuity | - reconciliation manufacturing continuity,
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:997 | term=continuity | != continuity preservation**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:997 | term=continuity preservation | != continuity preservation**
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1069 | term=continuity | Functional recovery cannot prove continuity was preserved.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1079 | term=continuity | repair, finality, and continuity reconstruction.
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1127 | term=continuity | Reconciled != Continuity Preserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1129 | term=continuity | Functional Recovery != Continuity Preserved
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | term=continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_CANONICAL_MANUSCRIPT.md:1197 | term=state continuity | FIN-F2-08 — Distributed Economic-State Continuity
+- F4-SD-009 | 15-publications/F2/manuscript/F2_MANUSCRIPT_CONSTRUCTION_SUMMARY.md:58 | term=continuity | != continuity preservation
+- F4-SD-009 | 15-publications/F2/manuscript/F2_MANUSCRIPT_CONSTRUCTION_SUMMARY.md:58 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | term=continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:23 | term=state continuity | - F1 — Partial Settlement, Compensating Execution, and Economic-State Continuity
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:40 | term=continuity | - continuity preservation.
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:40 | term=continuity preservation | - continuity preservation.
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:52 | term=continuity | != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:52 | term=continuity preservation | != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:56 | term=continuity | F2 establishes that agreement, consensus, authority, admissibility, execution, effect occurrence, atomic completion, finality, reconciliation, and continuity are distinct.
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:77 | term=continuity | 8. custody continuity;
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | term=continuity | - economic-state continuity;
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:95 | term=state continuity | - economic-state continuity;
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:96 | term=continuity | - reconstructed continuity;
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:127 | term=continuity | - distributed continuity.
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:194 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:194 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:223 | term=continuity | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:223 | term=continuity preservation | - finality is insufficient for continuity preservation;
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | term=continuity | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:266 | term=continuity preservation | subject to inherited F1/F2 semantics and without collapsing finality into execution, consensus, atomic completion, reconciliation, irreversibility, or continuity preservation.
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:631 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:631 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1373 | term=continuity | ## CE-11 — Final But Continuity Not Preserved
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1378 | term=continuity | historical chain reconstructed after discontinuity
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1382 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1382 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1473 | term=continuity | finality != continuity preservation
+- F4-SD-009 | 15-publications/F3/manuscript/F3_CANONICAL_MANUSCRIPT.md:1473 | term=continuity preservation | finality != continuity preservation
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:138 | term=continuity | ## Theorem T5 — Reconciliation Does Not Establish Preserved Continuity
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:146 | term=continuity | ContinuityPreserved(H) = false.
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:150 | term=continuity | an evidenced continuity break followed by complete reconciliation.
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:158 | term=continuity | ## Theorem T6 — Functional Restoration Does Not Establish Preserved Continuity
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:166 | term=continuity | ContinuityPreserved(H_t) = false.
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:244 | term=continuity | ## Theorem T9 — Residual Resolution Does Not Establish Preserved Continuity
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:252 | term=continuity | ContinuityPreserved(H_t) = false.
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:310 | term=continuity | ## Safety S3 — Demonstrated Continuity Break Survives Later Equivalence
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:314 | term=continuity | ContinuityBroken(H_k)
+- F4-SD-009 | formal-proofs/f1/F1_FORMAL_THEOREM_FAMILY.md:322 | term=continuity | Later equivalence does not retroactively create preserved continuity.
+- F4-SD-009 | formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:93 | term=continuity | ## C5 — Reconciliation / Continuity
+- F4-SD-009 | formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:103 | term=continuity | while the demonstrated historical continuity break remains.
+- F4-SD-009 | formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:107 | term=continuity | ## C6 — Functional Restoration / Continuity
+- F4-SD-009 | formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:109 | term=continuity | Construct a failure causing continuity break.
+- F4-SD-009 | formal-proofs/f1/F1_NON_IMPLICATION_COUNTEREXAMPLE_SKELETONS.md:119 | term=continuity | ContinuityPreserved = false.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:11 | term=continuity | ## PO-FIN-CON-001 — Continuity Is Independently Classified
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | term=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:15 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:17 | term=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:19 | term=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | term=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:21 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | term=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:25 | term=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:35 | term=continuity | ## PO-FIN-CON-002 — Reconstruction Does Not Restore Continuity
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | term=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:39 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:41 | term=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:43 | term=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | term=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:45 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | term=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:49 | term=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:59 | term=continuity | ## PO-FIN-CON-003 — Restored Function Does Not Restore Continuity
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | term=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:63 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:65 | term=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:67 | term=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | term=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:69 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | term=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:73 | term=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:83 | term=continuity | ## PO-FIN-CON-004 — Continuity Break Survives Later Equivalence
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | term=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:87 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:89 | term=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:91 | term=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | term=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:93 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | term=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:97 | term=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:107 | term=continuity | ## PO-FIN-CON-005 — Indeterminate Continuity Is Not Preserved Continuity
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | term=continuity | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:111 | term=continuity classification | **Formal target:** Show that continuity classification is independent from reconstruction, restored function, finality, and later economic equivalence.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:113 | term=continuity | **Required premises:** Execution history; continuity-relevant evidence; reconstruction history; remediation history; classification basis.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:115 | term=continuity | **Counterexample condition:** Broken continuity is later classified preserved solely because function or balances were restored.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | term=continuity | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:117 | term=continuity classification | **Evidence requirement:** Continuity classification record; complete relevant execution/remediation history; evidence supporting preserved/broken/indeterminate status.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | term=continuity | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must expose explicit continuity classification.
+- F4-SD-009 | formal-proofs/FIN-CON_PROOF_OBLIGATIONS.md:121 | term=continuity | **Verification requirement:** Broken/restored/reconstructed/indeterminate continuity cases.
+- F4-SD-009 | formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:21 | term=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:45 | term=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:69 | term=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:93 | term=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | formal-proofs/FIN-EXE_PROOF_OBLIGATIONS.md:117 | term=continuity | **Evidence requirement:** Boundary verification trace; execution attempt record; identity continuity evidence; replay evidence.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:15 | term=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:19 | term=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:25 | term=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:39 | term=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:43 | term=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:49 | term=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:63 | term=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:67 | term=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:73 | term=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:83 | term=continuity | ## PO-FIN-FIN-004 — Finality Does Not Establish Continuity
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:87 | term=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:91 | term=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:97 | term=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:111 | term=continuity | **Formal target:** Show that finality is explicitly classified and remains distinct from execution completion, originating authority, historical validity, and continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:115 | term=continuity | **Counterexample condition:** Finality is inferred solely from completion, elapsed time, inclusion, or balance state, or is treated as proof of continuity.
+- F4-SD-009 | formal-proofs/FIN-FIN_PROOF_OBLIGATIONS.md:121 | term=continuity | **Verification requirement:** Premature-finality, reopened-finality, and finality/continuity separation cases.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:11 | term=continuity | ## PO-FIN-REC-001 — Reconciliation Is Not Continuity
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:15 | term=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:19 | term=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | term=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:23 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:25 | term=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:39 | term=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:43 | term=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | term=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:47 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:49 | term=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:63 | term=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:67 | term=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | term=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:71 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:73 | term=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:87 | term=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:91 | term=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | term=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:95 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:97 | term=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:111 | term=continuity | **Formal target:** Show that reconciliation, reconstruction, functional restoration, and preserved continuity remain non-equivalent and evidence-bound.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:115 | term=continuity | **Counterexample condition:** Reconciliation or reconstruction is classified as preserved continuity without sufficient continuity evidence.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | term=continuity | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:119 | term=continuity classification | **Implementation requirement:** Reference runtime must keep reconciliation/reconstruction/continuity classifications distinct.
+- F4-SD-009 | formal-proofs/FIN-REC_PROOF_OBLIGATIONS.md:121 | term=continuity | **Verification requirement:** Reconciliation/reconstruction/equivalence/continuity counterexamples.
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:3 | term=continuity | from .types import ContinuityClass, ReconciliationClass, Residual
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:22 | term=continuity | def classify_continuity(
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:24 | term=continuity | continuity_break_demonstrated: bool,
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:29 | term=continuity | ) -> ContinuityClass:
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:32 | term=continuity | return ContinuityClass.INDETERMINATE
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:34 | term=continuity | if continuity_break_demonstrated:
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:36 | term=continuity | return ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:39 | term=continuity | return ContinuityClass.FUNCTION_RESTORED_ONLY
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:41 | term=continuity | return ContinuityClass.BROKEN
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:44 | term=continuity | return ContinuityClass.PRESERVED
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:47 | term=continuity | return ContinuityClass.HISTORICALLY_RECONCILED
+- F4-SD-009 | reference-runtime/f1/reconciliation_engine.py:49 | term=continuity | return ContinuityClass.DEGRADED
+- F4-SD-009 | reference-runtime/f1/types.py:66 | term=continuity | class ContinuityClass(str, Enum):
+- F4-SD-009 | reference-runtime/f1/types.py:67 | term=continuity | UNASSESSED = "F1_CONTINUITY_UNASSESSED"
+- F4-SD-009 | reference-runtime/f1/types.py:68 | term=continuity | PRESERVED = "F1_CONTINUITY_PRESERVED"
+- F4-SD-009 | reference-runtime/f1/types.py:69 | term=continuity | DEGRADED = "F1_CONTINUITY_DEGRADED"
+- F4-SD-009 | reference-runtime/f1/types.py:70 | term=continuity | BROKEN = "F1_CONTINUITY_BROKEN"
+- F4-SD-009 | reference-runtime/f1/types.py:71 | term=continuity | RECONSTRUCTED = "F1_CONTINUITY_RECONSTRUCTED"
+- F4-SD-009 | reference-runtime/f1/types.py:74 | term=continuity | INDETERMINATE = "F1_CONTINUITY_INDETERMINATE"
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:20 | term=continuity | classify_continuity,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:28 | term=continuity | ContinuityClass,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:575 | term=continuity | class ContinuityCollapseAttacks(unittest.TestCase):
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:578 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:579 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:587 | term=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:592 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:596 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:597 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:605 | term=continuity | ContinuityClass.RECONSTRUCTED,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:610 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:628 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:629 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:637 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:640 | term=continuity | def test_missing_continuity_evidence_is_indeterminate(self):
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:641 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:642 | term=continuity | continuity_break_demonstrated=False,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:650 | term=continuity | ContinuityClass.INDETERMINATE,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:723 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:724 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:732 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:736 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:737 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:745 | term=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:806 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:807 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/adversarial/test_f1_adversarial.py:815 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1/fixtures/counterexamples.json:25 | term=continuity | "description": "Reconciled execution history with broken continuity"
+- F4-SD-009 | tests/f1/fixtures/counterexamples.json:30 | term=continuity | "description": "Function restored after demonstrated continuity break"
+- F4-SD-009 | tests/f1/fixtures/counterexamples.json:45 | term=continuity | "description": "Residual resolved after historical continuity break"
+- F4-SD-009 | tests/f1/test_continuity.py:1 | term=continuity | from f1_runtime.continuity import classify_continuity
+- F4-SD-009 | tests/f1/test_continuity.py:2 | term=continuity | from f1_runtime.model import ContinuityClass, ContinuityInput
+- F4-SD-009 | tests/f1/test_continuity.py:6 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1/test_continuity.py:13 | term=continuity | assert classify_continuity(data) == ContinuityClass.PRESERVED
+- F4-SD-009 | tests/f1/test_continuity.py:17 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1/test_continuity.py:24 | term=continuity | assert classify_continuity(data) == ContinuityClass.DEGRADED
+- F4-SD-009 | tests/f1/test_continuity.py:28 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1/test_continuity.py:35 | term=continuity | assert classify_continuity(data) == ContinuityClass.BROKEN
+- F4-SD-009 | tests/f1/test_continuity.py:39 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1/test_continuity.py:47 | term=continuity | result = classify_continuity(data)
+- F4-SD-009 | tests/f1/test_continuity.py:49 | term=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | tests/f1/test_continuity.py:50 | term=continuity | assert result != ContinuityClass.PRESERVED
+- F4-SD-009 | tests/f1/test_continuity.py:54 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1/test_continuity.py:61 | term=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | tests/f1/test_continuity.py:65 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1/test_continuity.py:73 | term=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | tests/f1/test_engine_integration.py:5 | term=continuity | ContinuityClass,
+- F4-SD-009 | tests/f1/test_engine_integration.py:6 | term=continuity | ContinuityInput,
+- F4-SD-009 | tests/f1/test_engine_integration.py:75 | term=continuity | def test_engine_records_reconstructed_continuity():
+- F4-SD-009 | tests/f1/test_engine_integration.py:78 | term=continuity | result = engine.classify_continuity(
+- F4-SD-009 | tests/f1/test_engine_integration.py:79 | term=continuity | ContinuityInput(
+- F4-SD-009 | tests/f1/test_engine_integration.py:92 | term=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:14 | term=continuity | classify_continuity,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:28 | term=continuity | ContinuityClass,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:266 | term=continuity | result = classify_continuity(
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:267 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:275 | term=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:341 | term=continuity | def test_ce005_reconciled_non_preserved_continuity(self):
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:342 | term=continuity | continuity = classify_continuity(
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:343 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:350 | term=continuity | continuity,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:351 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:354 | term=continuity | def test_ce006_function_restored_non_preserved_continuity(self):
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:355 | term=continuity | continuity = classify_continuity(
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:356 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:363 | term=continuity | continuity,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:364 | term=continuity | ContinuityClass.FUNCTION_RESTORED_ONLY,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:408 | term=continuity | def test_ce009_residual_resolution_non_preserved_continuity(self):
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:420 | term=continuity | continuity = classify_continuity(
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:421 | term=continuity | continuity_break_demonstrated=True,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:428 | term=continuity | continuity,
+- F4-SD-009 | tests/f1/test_f1_reference_runtime.py:429 | term=continuity | ContinuityClass.PRESERVED,
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:1 | term=continuity | from f1_runtime.continuity import classify_continuity
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:3 | term=continuity | ContinuityClass,
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:4 | term=continuity | ContinuityInput,
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:9 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:21 | term=continuity | result = classify_continuity(data)
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:23 | term=continuity | assert result == ContinuityClass.RECONSTRUCTED
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:24 | term=continuity | assert result != ContinuityClass.PRESERVED
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:28 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:39 | term=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:43 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:53 | term=continuity | assert classify_continuity(data) == ContinuityClass.INDETERMINATE
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:57 | term=continuity | data = ContinuityInput(
+- F4-SD-009 | tests/f1_adversarial/test_attack_continuity.py:68 | term=continuity | assert classify_continuity(data) == ContinuityClass.BROKEN
+- F4-SD-009 | tests/f1_adversarial/test_attack_full_lineage.py:5 | term=continuity | ContinuityInput,
+- F4-SD-009 | tests/f1_adversarial/test_attack_full_lineage.py:11 | term=continuity | def test_full_origin_repair_reconcile_continuity_path_survives():
+- F4-SD-009 | tests/f1_adversarial/test_attack_full_lineage.py:50 | term=continuity | engine.classify_continuity(
+- F4-SD-009 | tests/f1_adversarial/test_attack_full_lineage.py:51 | term=continuity | ContinuityInput(
+- F4-SD-009 | tests/f1_adversarial/test_attack_full_lineage.py:75 | term=continuity | assert records[3].record_type == "CONTINUITY_CLASSIFICATION"
+- F4-SD-009 | tests/f2/test_f2_runtime.py:17 | term=continuity | classify_continuity,
+- F4-SD-009 | tests/f2/test_f2_runtime.py:27 | term=continuity | ContinuityState,
+- F4-SD-009 | tests/f2/test_f2_runtime.py:195 | term=continuity | def test_continuity_preserved():
+- F4-SD-009 | tests/f2/test_f2_runtime.py:196 | term=continuity | assert classify_continuity() == ContinuityState.PRESERVED
+- F4-SD-009 | tests/f2/test_f2_runtime.py:199 | term=continuity | def test_continuity_degraded():
+- F4-SD-009 | tests/f2/test_f2_runtime.py:200 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2/test_f2_runtime.py:202 | term=continuity | ) == ContinuityState.DEGRADED
+- F4-SD-009 | tests/f2/test_f2_runtime.py:205 | term=continuity | def test_continuity_broken():
+- F4-SD-009 | tests/f2/test_f2_runtime.py:206 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2/test_f2_runtime.py:208 | term=continuity | ) == ContinuityState.BROKEN
+- F4-SD-009 | tests/f2/test_f2_runtime.py:211 | term=continuity | def test_continuity_reconstructed():
+- F4-SD-009 | tests/f2/test_f2_runtime.py:212 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2/test_f2_runtime.py:215 | term=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | tests/f2/test_f2_runtime.py:218 | term=continuity | def test_continuity_indeterminate():
+- F4-SD-009 | tests/f2/test_f2_runtime.py:219 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2/test_f2_runtime.py:221 | term=continuity | ) == ContinuityState.INDETERMINATE
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:17 | term=continuity | classify_continuity,
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:27 | term=continuity | ContinuityState,
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:239 | term=continuity | # CONTINUITY ATTACKS
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:243 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:245 | term=continuity | ) == ContinuityState.BROKEN
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:249 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:252 | term=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:255 | term=continuity | def test_missing_continuity_evidence_cannot_be_preserved():
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:256 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:258 | term=continuity | ) == ContinuityState.INDETERMINATE
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:262 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:264 | term=continuity | ) == ContinuityState.DEGRADED
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:268 | term=continuity | assert classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:272 | term=continuity | ) == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:376 | term=continuity | def test_finality_does_not_force_continuity_preservation():
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:381 | term=continuity | continuity = classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:386 | term=continuity | assert continuity == ContinuityState.RECONSTRUCTED
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:389 | term=continuity | def test_reconciled_result_does_not_force_continuity_preservation():
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:394 | term=continuity | continuity = classify_continuity(
+- F4-SD-009 | tests/f2_adversarial/test_f2_adversarial.py:399 | term=continuity | assert continuity == ContinuityState.BROKEN
+
+## Release controls
+
+No transition system frozen.
+
+No decision function frozen.
+
+No admissibility predicate frozen.
+
+No invariant registry frozen.
+
+No proof obligations frozen.
+
+No runtime created.
+
+No staging performed.
+
+No commit performed.
+
+No tag created.
+
+No push performed.
+
+## Next
+
+FIN-F4-04 — RELATION / PREDICATE DISCOVERY AND FREEZE
