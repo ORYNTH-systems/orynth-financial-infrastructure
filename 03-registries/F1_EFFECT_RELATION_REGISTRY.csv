@@ -1,0 +1,7 @@
+﻿"relation_id","relation","required_distinction","reason"
+"F1-EFR-001","Observed != Committed","YES","Observation may precede or lag commitment"
+"F1-EFR-002","Committed != Final","YES","Commitment does not establish financial finality"
+"F1-EFR-003","Observed != Economically Recognized","YES","Technical observation and economic consequence may differ"
+"F1-EFR-004","Not Observed != Did Not Occur","YES","Absence of observation is not proof of non-occurrence"
+"F1-EFR-005","Local Rollback != External Effect Erasure","YES","Externally committed economic mutation survives local rollback semantics"
+"F1-EFR-006","Effect Classification != Governance Validity","YES","Effect state and authority/admissibility are separate dimensions"

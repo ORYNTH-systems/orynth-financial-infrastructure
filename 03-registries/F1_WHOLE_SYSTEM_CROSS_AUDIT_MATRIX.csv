@@ -1,0 +1,8 @@
+﻿"layer","source","checked_against","status"
+"Manuscript Claim","F1_MANUSCRIPT_CLAIM_REGISTRY.csv","Proof/runtime closure","SEE-FINDINGS"
+"Definition","F1 formal corpus","Manuscript terminology / notation","SEE-FINDINGS"
+"Invariant","INVARIANT_REGISTRY.csv","Ownership / manuscript claims","UNRESOLVED"
+"Proof Result","F1_PROOF_DISCHARGE_REGISTRY.csv","Claim class","SEE-FINDINGS"
+"Runtime Surface","F1_RUNTIME_CONFORMANCE_REGISTRY.csv","Runtime implementation","SEE-FINDINGS"
+"Baseline Test","tests\f1","Current runtime","SEE-FINDINGS"
+"Adversarial Evidence","F1_ADVERSARIAL_VERIFICATION_MATRIX.csv","tests\f1_adversarial","SEE-FINDINGS"

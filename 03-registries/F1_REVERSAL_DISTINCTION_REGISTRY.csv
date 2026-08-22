@@ -1,0 +1,5 @@
+﻿"distinction_id","concept","question","grants_authority"
+"F1-REV-D001","REVERSAL-ELIGIBILITY","Does an applicable reversal mechanism exist?","NO"
+"F1-REV-D002","REVERSIBILITY","Can the current state still support the counter-transition?","NO"
+"F1-REV-D003","REVERSAL-AUTHORITY","Is the actor/event currently authorized to execute reversal?","AUTHORITY-STATE"
+"F1-REV-D004","SUCCESSFUL-REVERSAL","Did an admitted reversal execution complete the defined reversal goal?","NO"

@@ -1,0 +1,6 @@
+﻿"input_id","symbol","name","meaning"
+"F1-REC-I001","H_t","Execution History","Ordered surviving execution/transition lineage relevant to current state"
+"F1-REC-I002","E_t","Evidence State","Current evidence and provenance supporting occurrence, non-occurrence, and state claims"
+"F1-REC-I003","O_t","Obligation State","Current outstanding, satisfied, disputed, or unresolved financial obligations"
+"F1-REC-I004","R_t","Resource State","Current financial resource, balance, ownership, control, custody, and encumbrance state"
+"F1-REC-I005","D_t","Dependency State","Current unresolved or required external/internal dependency state"

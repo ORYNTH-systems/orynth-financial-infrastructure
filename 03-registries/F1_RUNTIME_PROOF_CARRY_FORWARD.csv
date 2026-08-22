@@ -1,0 +1,7 @@
+﻿"proof_id","family","statement","current_result","required_next_phase"
+"F1-SAFE-CMP-003","COMPENSATION","Compensation cannot cross consequential boundary without independent authority/admission","PARTIAL","FIN-F1-08/FIN-F1-09"
+"F1-SAFE-CMP-005","COMPENSATION","Recursive compensation requires independent admission","PARTIAL","FIN-F1-08/FIN-F1-09"
+"F1-SAFE-REV-004","REVERSAL","Reversal cannot cross consequential boundary without independent authority/admission","PARTIAL","FIN-F1-08/FIN-F1-09"
+"F1-TRACE-REV-006","REVERSAL","Origin and reversal remain independently reconstructable","PARTIAL","FIN-F1-08/FIN-F1-09"
+"F1-TRACE-REC-006","RECONCILIATION","Reconciliation preserves complete execution lineage","PARTIAL","FIN-F1-08/FIN-F1-09"
+"F1-TRACE-CNT-007","CONTINUITY","RECONSTRUCTED preserves evidence of the prior continuity break","PARTIAL","FIN-F1-08/FIN-F1-09"

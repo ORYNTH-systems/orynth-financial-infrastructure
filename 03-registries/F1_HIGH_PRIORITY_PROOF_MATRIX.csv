@@ -1,0 +1,8 @@
+﻿"priority_id","claim","proof_id","result"
+"F1-HP-001","Failure(e0) does not imply Authority(ec)","F1-NEQ-CMP-002","COUNTEREXAMPLE-DISCHARGED"
+"F1-HP-002","EligibleReverse(e0) does not imply Authority(er)","F1-NEQ-REV-002","COUNTEREXAMPLE-DISCHARGED"
+"F1-HP-003","S_after equivalent_E S_before does not imply S_after =_H S_before","F1-NEQ-CMP-004","COUNTEREXAMPLE-DISCHARGED"
+"F1-HP-004","Reconciled(S_R) does not imply ContinuityPreserved","F1-NEQ-REC-002","COUNTEREXAMPLE-DISCHARGED"
+"F1-HP-005","S_final equivalent_E S_initial does not imply ContinuityPreserved","F1-NEQ-CNT-001","COUNTEREXAMPLE-DISCHARGED"
+"F1-HP-006","RECONSTRUCTED != PRESERVED","F1-THM-CNT-003","PROVED"
+"F1-HP-007","[K=M* AND empty proper-subset M_econ proper-subset M*] implies C_F1=PARTIAL","F1-THM-EFF-001","PROVED"

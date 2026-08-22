@@ -1,0 +1,8 @@
+﻿"candidate_id","class","statement","linked_invariant","status"
+"F1-REC-PC001","NON-EQUIVALENCE","A reconciled financial state is not necessarily a restored financial state.","FIN-REC-002","OPEN"
+"F1-REC-PC002","NON-EQUIVALENCE","Successful reconciliation does not imply preserved execution continuity.","FIN-CNT-001","OPEN"
+"F1-REC-PC003","SAFETY","A clean reconciled state cannot be inferred solely from insufficient evidence.","FIN-REC-001;FIN-EVD-001","OPEN"
+"F1-REC-PC004","TRACEABILITY","Reconciliation preserves originating, compensating, and reversal events in historical lineage.","FIN-EFF-004;FIN-EVD-001","OPEN"
+"F1-REC-PC005","NON-EQUIVALENCE","Terminal balance equality is insufficient to establish complete reconciled financial-state identity.","FIN-OBJ-003","OPEN"
+"F1-REC-PC006","THEOREM","Under complete consistent inputs and a unique accepted candidate state, the reconciliation operator returns a determinate reconciled state.","FIN-REC-001","OPEN"
+"F1-REC-PC007","NON-EQUIVALENCE","Reconciliation failure and temporary reconciliation indeterminacy are distinct outcomes.","FIN-REC-001","OPEN"

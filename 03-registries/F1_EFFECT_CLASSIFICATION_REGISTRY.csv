@@ -1,0 +1,5 @@
+﻿"class_id","classification","knowledge_condition","effect_condition","semantic"
+"F1-EC-001","NO-EFFECT","K = M*","M_econ = empty","No recognized economic mutation occurred under complete material occurrence knowledge"
+"F1-EC-002","PARTIAL","K = M*","empty proper-subset M_econ proper-subset M*","A strict non-empty proper subset of intended economic mutations occurred"
+"F1-EC-003","COMPLETED","K = M*","M_econ = M*","All intended economic mutations occurred"
+"F1-EC-004","INDETERMINATE","K != M* for material mutations","Insufficient knowledge to classify effect completely","Occurrence state remains materially unresolved"

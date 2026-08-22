@@ -1,0 +1,7 @@
+﻿"conformance_id","proof_id","runtime_surface","expected_property","status"
+"F1-RUN-C001","F1-SAFE-CMP-003","compensation.py -> authority.py -> boundary.py","Unauthorized compensation receives no boundary permit","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+"F1-RUN-C002","F1-SAFE-CMP-005","compensation.py + event identity","Compensation repair uses distinct event identity and cannot inherit execution solely from origin","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+"F1-RUN-C003","F1-SAFE-REV-004","reversal.py -> authority.py -> boundary.py","Unauthorized reversal receives no boundary permit","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+"F1-RUN-C004","F1-TRACE-REV-006","evidence.py","Origin and reversal remain separately identifiable","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+"F1-RUN-C005","F1-TRACE-REC-006","engine.py + evidence.py","Reconciliation appends current-state evidence without replacing historical events","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"
+"F1-RUN-C006","F1-TRACE-CNT-007","continuity.py + engine.py + evidence.py","Reconstructed continuity remains distinguishable from preserved continuity and retains the relevant history","IMPLEMENTED-NOT-ADVERSARIALLY-VERIFIED"

@@ -1,0 +1,4 @@
+﻿"check_id","severity","category","message","evidence"
+"XL-OWN-001","UNRESOLVED","OWNERSHIP","Invariant registry does not expose a recognized ownership field for mechanical upstream-owner verification.","Expected one of: owner, canonical_owner, source_owner, repository_owner, source"
+"XL-TEST-001","CRITICAL","RUNTIME","Baseline F1 runtime test suite failed during cross-audit.",""
+"XL-TEST-002","CRITICAL","RUNTIME","Adversarial F1 runtime test suite failed during cross-audit.",""

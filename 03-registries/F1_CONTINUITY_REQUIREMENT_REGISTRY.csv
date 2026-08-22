@@ -1,0 +1,7 @@
+﻿"requirement_id","dimension","requirement","mandatory_profile_definition"
+"F1-CNT-G001","Execution lineage","Required execution relationships remain traceable through the relevant history","YES"
+"F1-CNT-G002","Obligation relation","Required obligations remain satisfied, validly transitioned, or explicitly reconstructed","YES"
+"F1-CNT-G003","Resource relation","Required resource relationships remain within profile-defined continuity constraints","YES"
+"F1-CNT-G004","Authority-bound transition","Required consequential state changes remain bound to valid execution authority","YES"
+"F1-CNT-G005","Evidence continuity","Required evidence lineage remains sufficient to reconstruct continuity-relevant history","YES"
+"F1-CNT-G006","Dependency continuity","Required external/internal dependencies remain satisfied or explicitly classified","YES"

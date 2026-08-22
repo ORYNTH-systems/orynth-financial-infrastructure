@@ -1,0 +1,8 @@
+﻿"candidate_id","class","statement","linked_invariant","status"
+"F1-REV-PC001","THEOREM","A reversal execution is a distinct execution event from its originating execution.","FIN-REV-001","OPEN"
+"F1-REV-PC002","NON-EQUIVALENCE","Reversal eligibility does not imply reversal authority.","FIN-REV-002","OPEN"
+"F1-REV-PC003","SAFETY","A reversal cannot cross the consequential boundary without independent authority and admission.","FIN-REV-003","OPEN"
+"F1-REV-PC004","NON-EQUIVALENCE","Successful reversal does not erase historical occurrence of the originating execution.","FIN-REV-004","OPEN"
+"F1-REV-PC005","NON-EQUIVALENCE","Economic equivalence after reversal does not imply historical-state identity.","FIN-OBJ-003","OPEN"
+"F1-REV-PC006","NON-EQUIVALENCE","Technical reversibility does not imply governance authority to reverse.","FIN-REV-002","OPEN"
+"F1-REV-PC007","TRACEABILITY","The original execution and reversal execution remain separately reconstructable in historical lineage.","FIN-EFF-004;FIN-EVD-001","OPEN"

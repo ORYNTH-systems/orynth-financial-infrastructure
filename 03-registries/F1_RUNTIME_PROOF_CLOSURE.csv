@@ -1,0 +1,7 @@
+﻿"proof_id","prior_result","runtime_result","basis","generality"
+"F1-SAFE-CMP-003","PARTIAL","RUNTIME-CONFORMANT","Authority absence, stale authority, invalid scope, and permit-boundary attacks blocked","REFERENCE-RUNTIME"
+"F1-SAFE-CMP-005","PARTIAL","RUNTIME-CONFORMANT","Origin event identity cannot be reused for compensation; distinct repair-event construction enforced","REFERENCE-RUNTIME"
+"F1-SAFE-REV-004","PARTIAL","RUNTIME-CONFORMANT","Eligibility/reversibility do not create authority; stale and invalid-scope reversal attacks blocked","REFERENCE-RUNTIME"
+"F1-TRACE-REV-006","PARTIAL","RUNTIME-CONFORMANT","Origin and reversal/repair identities remain independently represented; returned ledger values cannot mutate retained records","REFERENCE-RUNTIME-IN-MEMORY"
+"F1-TRACE-REC-006","PARTIAL","RUNTIME-CONFORMANT","Reconciliation preserves supplied execution lineage and does not overwrite prior evidence records","REFERENCE-RUNTIME-IN-MEMORY"
+"F1-TRACE-CNT-007","PARTIAL","RUNTIME-CONFORMANT","Reconstructed continuity requires represented violation and remains distinct from PRESERVED","REFERENCE-RUNTIME"

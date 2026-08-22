@@ -1,0 +1,7 @@
+﻿"candidate_id","class","statement","linked_invariant","status"
+"F1-CMP-PC001","THEOREM","A compensation execution is distinct from its originating execution.","FIN-CMP-001","OPEN"
+"F1-CMP-PC002","NON-EQUIVALENCE","Failure of an originating execution does not imply authority for a compensation execution.","FIN-CMP-002","OPEN"
+"F1-CMP-PC003","SAFETY","A compensation execution cannot cross its consequential boundary without independent current authority and admission.","FIN-CMP-003","OPEN"
+"F1-CMP-PC004","NON-EQUIVALENCE","Successful compensation does not erase historical occurrence of the originating execution.","FIN-CMP-004","OPEN"
+"F1-CMP-PC005","NON-EQUIVALENCE","Economic equivalence after compensation does not imply historical-state identity.","FIN-OBJ-003","OPEN"
+"F1-CMP-PC006","SAFETY","A compensation event that itself partially effects state requires any later repair to be independently instantiated and admitted.","FIN-CMP-001;FIN-CMP-003","OPEN"
