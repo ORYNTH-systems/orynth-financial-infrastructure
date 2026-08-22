@@ -34,3 +34,6 @@ htmlcov/
 # Do not silently ingest external historical source packages
 _external/
 _recovery/
+
+# Local repository state export
+FIN_REPO_STATE_EXPORT.txt
