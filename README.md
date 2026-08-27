@@ -122,6 +122,56 @@ Studies partial financial effectuation, compensation, reversal, reconciliation, 
 
 Historical or parallel directories are preserved where they form part of the repository's development lineage. Their presence does not imply that multiple directories are independently canonical owners of the same family.
 
+## Verification & Evidence
+
+The repository includes distinct formal-proof, counterexample, reference-runtime, test, and conformance surfaces. These evidence classes are intentionally separated and should not be treated as interchangeable.
+
+For F3 — **Obligation Finality, Custody-State Integrity, and Consequential Financial Closure** — the public verification chain is directly inspectable:
+
+### Formal proof and counterexample discharge
+
+- [`06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md`](06-f3-discovery/proofs/F3_POSITIVE_PROOF_DISCHARGE.md) — positive proof discharge for admitted F3 proof obligations
+- [`06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md`](06-f3-discovery/proofs/F3_COUNTEREXAMPLE_DISCHARGE.md) — counterexample discharge for invalid implications and non-equivalences
+- [`03-registries/F3_PROOF_DISCHARGE_REGISTRY.csv`](03-registries/F3_PROOF_DISCHARGE_REGISTRY.csv) — obligation-level disposition registry linking F3 proof obligations to their evidence surfaces
+
+The F3 proof registry contains 40 discharged obligations across distinct claim classes, including formally proved, counterexample-discharged, and reference-runtime-conformant obligations.
+
+### Reference runtime
+
+- [`06-f3-discovery/runtime/f3_runtime/`](06-f3-discovery/runtime/f3_runtime/) — F3 reference-runtime package
+- [`06-f3-discovery/runtime/f3_runtime/engine.py`](06-f3-discovery/runtime/f3_runtime/engine.py) — deterministic F3 runtime evaluation logic
+- [`06-f3-discovery/runtime/f3_runtime/models.py`](06-f3-discovery/runtime/f3_runtime/models.py) — runtime data and state models
+
+The reference runtime is a bounded technical implementation for exercised F3 semantics. It is not represented as production financial infrastructure.
+
+### Runtime tests and conformance
+
+- [`tests/f3/test_f3_runtime.py`](tests/f3/test_f3_runtime.py) — F3 runtime test suite
+- [`03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv`](03-registries/F3_RUNTIME_CONFORMANCE_MATRIX.csv) — direct mapping from runtime proof obligations to named test surfaces and dispositions
+
+The current F3 runtime-conformance matrix records six `REFERENCE-RUNTIME-CONFORMANT` obligations covering:
+
+1. execution-only finality rejection;
+2. consensus-only finality rejection;
+3. custody-possession-only authority rejection;
+4. unresolved-finality-conflict blocking;
+5. historical-finality preservation after reopening;
+6. explicit post-finality contradiction.
+
+### Evidence interpretation
+
+The repository preserves the following distinctions:
+
+`formal proof != counterexample discharge != runtime conformance != adversarial evidence != production validation`
+
+A formal derivation establishes a result within the locked model.
+
+A counterexample discharge defeats a specified implication or equivalence; it does not automatically prove a different positive theorem.
+
+Reference-runtime conformance establishes behavior of the specific implementation under the exercised test conditions.
+
+None of these evidence classes, individually or together, establish production deployment, regulatory approval, institutional adoption, legal sufficiency, or universal correctness.
+
 ## Publication Surface
 
 `15-publications/` contains the repository-controlled research publication surface for F1-F8.
