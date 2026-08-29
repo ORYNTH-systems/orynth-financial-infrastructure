@@ -1,0 +1,49 @@
+FIN-PAPER-03P-R4A-R1
+F3 R7C FORMAL-REGISTER PAGE-INTEGRITY REPAIR
+EXACT ROUND-TRIP RECOVERY
+
+STATUS: GENERATED — FINAL VISUAL ADMISSION PENDING
+
+PARENT
+R7B Typst SHA256            : 19D3DC80FA4CA43A87CD430832F54B502931DB3347D4708DE8A8CC40A9DB5F94
+R7B PDF SHA256              : CC5933998456718F3AEA5750014D5016E083E4F87CF2C0B77F30601C5617A150
+R7B mutation                : NONE
+
+RECOVERY
+Prior R4A block cause       : NORMALIZATION-GATE DEFECT
+Artifact defect             : NONE ESTABLISHED
+Recovery method             : EXACT FORWARD / REVERSE ROUND-TRIP
+Round-trip                  : PASS
+
+AUTHORIZED COMPOSITION CHANGE
+Close columns after §8      : YES
+Page break before §9        : YES
+Reopen columns before §9    : YES
+Existing §11 colbreak       : PRESERVED
+Section 9 formal register   : WHOLE-UNIT PAGE MOVE
+
+CONTENT
+Prose mutation              : NONE
+Architectural mutation      : NONE
+Proof mutation              : NONE
+Runtime mutation            : NONE
+Section count               : 13
+
+TYPOGRAPHY
+Hyphenation                 : DISABLED
+Line breaking               : OPTIMIZED
+
+R7C
+Typst SHA256                : AA275EE9797D28F46C0E0D7440352D5CF98DAEDCE3935D86D8C1C4D0D737BC74
+PDF SHA256                  : C602D5415B9E38024348DC48934441733047FF69E406087111247F1F98D82B9A
+PDF bytes                   : 61773
+Typst exit                  : 0
+
+REPOSITORY
+Staging                     : NONE
+Commit                      : NONE
+Tag                         : NONE
+Push                        : NONE
+
+FINAL VISUAL ADMISSION      : PENDING
+EXTERNAL PUBLICATION        : NOT ESTABLISHED
